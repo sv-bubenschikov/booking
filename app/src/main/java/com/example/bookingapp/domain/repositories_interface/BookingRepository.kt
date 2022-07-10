@@ -4,7 +4,7 @@ import com.example.bookingapp.domain.entities.Booking
 
 interface BookingRepository {
 
-    fun getBookingInfo(): List<Booking>
+    fun getBookingsInfoByUserId(userId: Int): List<Booking>
 
     fun getBookingInfoById(id: Int): Booking
 
