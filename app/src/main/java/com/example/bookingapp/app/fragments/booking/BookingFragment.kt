@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.example.bookingapp.R
 import com.example.bookingapp.app.fragments.companies.CompaniesFragment
@@ -18,14 +19,16 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentBookingBinding.bind(view)
 
-        requireActivity().actionBar?.title = "Запланировано"
+        val supportActionBar = (activity as AppCompatActivity).supportActionBar
+        supportActionBar?.title = "Запланировано"
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         binding.addBooking.setOnClickListener {
             openCompaniesFragment()
         }
     }
 
-    private fun openCompaniesFragment(){
+    private fun openCompaniesFragment() {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_view, CompaniesFragment())
             .addToBackStack(null)
