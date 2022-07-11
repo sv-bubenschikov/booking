@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.fragments.booking_place.BookingPlaceFragment">
+    tools:context=".app.fragments.booking_place.BookingPlaceFragment"
+    android:background="@color/background_color">
 
     <TextView
         android:layout_width="match_parent"
