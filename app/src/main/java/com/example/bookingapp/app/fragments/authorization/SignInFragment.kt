@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.fragments.booking.BookingViewModel
+import com.example.bookingapp.app.fragments.ui_elements.LoadingDialog
 import com.example.bookingapp.data.repositories.UserRepositoryImpl
 import com.example.bookingapp.databinding.FragmentSignInBinding
 import com.example.bookingapp.domain.entities.User
@@ -31,14 +32,27 @@ class SignInFragment : Fragment() {
         _binding = FragmentSignInBinding.inflate(inflater, container, false)
         val editEmail = binding.editEmail
         val editPassword = binding.editPassword
+        val loadingDialog = LoadingDialog(inflater, context!!)
 
         binding.signInBtn.setOnClickListener {
-            val user = User(email = editEmail.text.toString(), password = editPassword.text.toString())
-            if(viewModel.signInUser(user)) {
-                findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_home)
+            val email = editEmail.text.toString()
+            val password = editPassword.text.toString()
+            if(email.isNotEmpty() && password.isNotEmpty()) {
+                loadingDialog.startLoading()
+                viewModel.signInUser(email, password)
+                    .addOnCompleteListener {
+                        if(it.isSuccessful) {
+                            findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_home)
+                        }
+                        else {
+                            val msg = it.exception.toString().substringAfter(':')
+                            Toast.makeText(context, "Error: $msg", Toast.LENGTH_LONG).show()
+                        }
+                        loadingDialog.dismiss()
+                    }
             }
             else {
-                Toast.makeText(context, "Error: registering failed ", Toast.LENGTH_LONG).show() // как сделать без boolean?
+                Toast.makeText(context, "Указаны не все данные", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -47,8 +61,18 @@ class SignInFragment : Fragment() {
         }
 
         binding.signInAsGuest.setOnClickListener {
-            viewModel.signInAsGuest()
-            findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_home)
+            loadingDialog.startLoading()
+            viewModel.signInAsGuest().addOnCompleteListener {
+                if(it.isSuccessful) {
+                    findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_home)
+                }
+                else {
+                    val msg = it.exception.toString().substringAfter(':')
+                    Toast.makeText(context, "Error: $msg", Toast.LENGTH_LONG).show()
+                }
+
+                loadingDialog.dismiss()
+            }
         }
 
         return binding.root

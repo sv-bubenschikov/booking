@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * определяет на каких фрагментах показывать toolbar
+     * определяет на каких фрагментах скрывать toolbar
      */
     private fun visibilityNavElements(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
