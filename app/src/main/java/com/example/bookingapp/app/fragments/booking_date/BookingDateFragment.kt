@@ -14,50 +14,42 @@ import com.google.android.material.chip.Chip
 class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
 
     private val viewModel: BookingDateViewModel by viewModels()
-    private lateinit var binding: FragmentBookingDateBinding
-    private val dateAdapter: DateAdapter = DateAdapter()
-
-    private val fakeDates = listOf(
-        DateWeek("1", "ПН"),
-        DateWeek("2", "ВТ"),
-        DateWeek("3", "СР"),
-        DateWeek("4", "ЧТ"),
-        DateWeek("5", "ПТ"),
-        DateWeek("6", "СБ"),
-        DateWeek("7", "ВС"),
-        DateWeek("8", "ПН"),
-        DateWeek("9", "ВТ"),
-        DateWeek("10", "СР"),
-        DateWeek("11", "ЧТ"),
-        DateWeek("12", "ПТ"),
-        DateWeek("13", "СБ"),
-        DateWeek("14", "ВС")
-    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentBookingDateBinding.bind(view)
+
+        val binding = FragmentBookingDateBinding.bind(view)
+        val dateAdapter = DateAdapter()
 
         val supportActionBar = (activity as AppCompatActivity).supportActionBar
         supportActionBar?.title = "Компания"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        dateAdapter.addList(fakeDates)
+        dateAdapter.addList(viewModel.getDates())
+
+        val curDateList = viewModel.getDateMorning()
+
 
         with(binding) {
             //для проверки
-            btnSelect.setOnClickListener {
+            for (time in curDateList) {
                 val chip = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
-                chip.text = "8:00 - 8:30"
-
-                val chip2 = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
-                chip2.text = "8:00 - 8:30"
-
-                val chip3 = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
-                chip3.text = "8:00 - 8:30"
+                chip.text = time
+                groupMorning.addView(chip)
+            }
+            for (time in curDateList) {
+                val chip = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
+                chip.text = time
                 groupDay.addView(chip)
-                groupEvening.addView(chip2)
-                groupMorning.addView(chip3)
+            }
+            for (time in curDateList) {
+                val chip = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
+                chip.text = time
+                groupEvening.addView(chip)
+            }
+
+            btnSelect.setOnClickListener {
+                //переход дальше
             }
 
             recFilter.apply {
