@@ -9,4 +9,8 @@
     <string name="place_type_stub">Тип места</string>
     <string name="place_name_stub">Название</string>
     <string name="place_floor_stub">Этаж</string>
+    <string name="select">Выбрать</string>
+    <string name="evening">Вечер</string>
+    <string name="day">День</string>
+    <string name="morning">Утро</string>
 </resources>
