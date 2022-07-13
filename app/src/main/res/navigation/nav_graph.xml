@@ -52,9 +52,9 @@
 
     <fragment
         android:id="@+id/booking_place_fragment"
-        android:name="com.example.bookingapp.app.fragments.booking_place.BookingPlaceFragment"
+        android:name="com.example.bookingapp.app.fragments.booking_date.BookingDateFragment"
         android:label="@string/booking_place_fragment_label"
-        tools:layout="@layout/fragment_booking_place">
+        tools:layout="@layout/fragment_booking_date">
         <action android:id="@+id/action_bookingPlacesFragment_to_bookingConfirmationFragment" />
     </fragment>
 
