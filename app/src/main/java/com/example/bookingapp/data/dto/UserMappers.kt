@@ -7,8 +7,6 @@ fun User.toFB(): UserEntityForFB =
     UserEntityForFB(
         id = this.id,
         name = this.name,
-        surname = this.surname,
-        patronymic = this.patronymic,
         email = this.email,
         password = this.password
     )
@@ -17,8 +15,6 @@ fun UserEntityForFB.toDomain(): User =
     User(
         id = this.id,
         name = this.name,
-        surname = this.surname,
-        patronymic = this.patronymic,
         email = this.email,
         password = this.password
     )

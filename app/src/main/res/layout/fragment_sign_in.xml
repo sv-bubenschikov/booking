@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="app.fragments.authorization.SignInFragment"
+    android:background="@color/background_color">
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/marginTopAuthLogo"
+        android:id="@+id/linearLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/logo"
+            style="@style/LogoAuthStyle"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/AuthAppNameStyle"
+            android:text="@string/app_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/logo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/AuthLinearLayoutStyle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+        <EditText
+            android:autofillHints="emailAddress"
+            android:id="@+id/edit_email"
+            style="@style/EditTextAuthStyle"
+            android:hint="@string/login_hint"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:autofillHints="password"
+            android:id="@+id/edit_password"
+            style="@style/EditTextAuthStyle"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/sign_in_btn"
+            android:text="@string/login_btn_text"
+            style="@style/LoginButtonStyle" />
+
+        <Button
+            android:id="@+id/sign_in_as_guest"
+            android:text="@string/guest_sign_in_text"
+            style="@style/LoginButtonStyle" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/register_btn"
+        style="@style/ButtonStyle"
+        android:text="@string/register_btn_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1070850615954",
+    "firebase_url": "https://tensor-booking-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "tensor-booking",
+    "storage_bucket": "tensor-booking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070850615954:android:eb891e3ca05134a7fb944b",
+        "android_client_info": {
+          "package_name": "com.example.bookingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070850615954-t9kvetn5amkqan18pl465vbc0at4rrlb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL7qinHU50gv-4KEPGuqzGrjqlC5pLbAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1070850615954-t9kvetn5amkqan18pl465vbc0at4rrlb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

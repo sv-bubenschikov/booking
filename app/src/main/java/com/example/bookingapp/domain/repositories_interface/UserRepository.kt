@@ -11,5 +11,9 @@ interface UserRepository {
     // Потом нужно будет все на многопоточность перенести.
     fun registerUser(user: User): Boolean
 
+    fun signInUser(user: User): Boolean
+
     fun updateUserInfo(user: User): Boolean
+
+    fun signInAsGuest()
 }
