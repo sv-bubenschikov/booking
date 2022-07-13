@@ -1,11 +1,13 @@
 package com.example.bookingapp.app.fragments.booking
 
 import android.os.Bundle
-import android.view.MenuItem
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
@@ -23,12 +25,27 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentBookingBinding.bind(view)
 
-        val supportActionBar = (activity as AppCompatActivity).supportActionBar
-        supportActionBar?.title = "Запланировано"
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.main_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.menu_profile -> {
+                        findNavController(view).navigate(R.id.action_bookingFragment_to_profileFragment)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.addBooking.setOnClickListener {
             findNavController(view).navigate(R.id.action_bookingFragment_to_companiesFragment)
         }
     }
+
 }

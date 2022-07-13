@@ -22,10 +22,6 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val supportActionBar = (activity as AppCompatActivity).supportActionBar
-        supportActionBar?.title = "Компании"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         val binding = FragmentCompaniesBinding.bind(view)
 
         binding.buttonNextFragment.setOnClickListener {

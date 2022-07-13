@@ -8,17 +8,20 @@
     <fragment
         android:id="@+id/booking_fragment"
         android:name="com.example.bookingapp.app.fragments.booking.BookingFragment"
-        android:label="Бронирование"
+        android:label="@string/booking_fragment_label"
         tools:layout="@layout/fragment_booking">
         <action
             android:id="@+id/action_bookingFragment_to_companiesFragment"
             app:destination="@id/companies_fragment" />
+        <action
+            android:id="@+id/action_bookingFragment_to_profileFragment"
+            app:destination="@+id/profile_fragment" />
     </fragment>
 
     <fragment
         android:id="@+id/companies_fragment"
         android:name="com.example.bookingapp.app.fragments.companies.CompaniesFragment"
-        android:label="Компании"
+        android:label="@string/companies_fragment_label"
         tools:layout="@layout/fragment_companies">
         <action
             android:id="@+id/action_companiesFragment_to_placesFragment"
@@ -28,7 +31,7 @@
     <fragment
         android:id="@+id/places_fragment"
         android:name="com.example.bookingapp.app.fragments.places.PlacesFragment"
-        android:label="Места"
+        android:label="@string/places_fragment_label"
         tools:layout="@layout/fragment_places">
         <action
             android:id="@+id/action_placesFragment_to_bookingPlaceFragment"
@@ -38,8 +41,14 @@
     <fragment
         android:id="@+id/booking_place_fragment"
         android:name="com.example.bookingapp.app.fragments.booking_place.BookingPlaceFragment"
-        android:label="Место"
+        android:label="@string/booking_place_fragment_label"
         tools:layout="@layout/fragment_booking_place">
         <action android:id="@+id/action_bookingPlacesFragment_to_bookingConfirmationFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/profile_fragment"
+        android:name="com.example.bookingapp.app.fragments.profile.ProfileFragment"
+        android:label="@string/profile_fragment_label"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.fragments.booking.BookingFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +18,8 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
+
+        setupActionBarWithNavController(navController)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
