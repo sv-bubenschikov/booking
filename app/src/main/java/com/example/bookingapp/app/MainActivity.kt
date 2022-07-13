@@ -3,32 +3,60 @@ package com.example.bookingapp.app
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.example.bookingapp.R
-import com.example.bookingapp.app.fragments.booking.BookingFragment
+import com.example.bookingapp.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setBookingFragment()
-    }
+        setContentView(binding.root)
+        val toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
+        val navController = findNavController(R.id.fragment_container_view)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+        visibilityNavElements(navController)
 
-    private fun setBookingFragment() {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container_view, BookingFragment())
-            .commit()
-    }
+        val currentUser = FirebaseAuth.getInstance().currentUser
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                super.onBackPressed()
-                return true
+        if (currentUser == null)
+            navController.navigate(R.id.action_navigation_home_to_navigation_sign_in)
+        else {
+            currentUser.getIdToken(true).addOnCompleteListener {
+                if(!it.isSuccessful) {
+                    navController.navigate(R.id.action_navigation_home_to_navigation_sign_in)
+                }
             }
         }
-        return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * определяет на каких фрагментах показывать toolbar
+     */
+    private fun visibilityNavElements(navController: NavController) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.navigation_sign_in,
+                R.id.navigation_register -> binding.toolbar.visibility = View.GONE
+                else -> binding.toolbar.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
