@@ -3,6 +3,7 @@ package com.example.bookingapp.app
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.navigation.fragment.NavHostFragment
 import com.example.bookingapp.R
 import com.example.bookingapp.app.fragments.booking.BookingFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,13 +14,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setBookingFragment()
-    }
-
-    private fun setBookingFragment() {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container_view, BookingFragment())
-            .commit()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
+        val navController = navHostFragment.navController
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
