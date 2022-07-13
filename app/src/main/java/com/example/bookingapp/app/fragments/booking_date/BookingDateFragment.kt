@@ -21,12 +21,7 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         val binding = FragmentBookingDateBinding.bind(view)
         val dateAdapter = DateAdapter()
 
-        val supportActionBar = (activity as AppCompatActivity).supportActionBar
-        supportActionBar?.title = "Компания"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         dateAdapter.addList(viewModel.getDates())
-
         val curDateList = viewModel.getDateMorning()
 
 
@@ -60,8 +55,6 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
                     false
                 )
             }
-
         }
     }
-
 }
