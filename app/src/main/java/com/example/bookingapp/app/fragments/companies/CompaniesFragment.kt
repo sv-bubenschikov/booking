@@ -15,7 +15,6 @@ import com.example.bookingapp.databinding.FragmentCompaniesBinding
 class CompaniesFragment : Fragment(R.layout.fragment_companies) {
 
     private val viewModel: CompaniesViewModel by viewModels()
-    private lateinit var binding: FragmentCompaniesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,11 +22,10 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
         val supportActionBar = (activity as AppCompatActivity).supportActionBar
         supportActionBar?.title = "Компании"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentCompaniesBinding.bind(view)
+        val binding = FragmentCompaniesBinding.bind(view)
     }
 }

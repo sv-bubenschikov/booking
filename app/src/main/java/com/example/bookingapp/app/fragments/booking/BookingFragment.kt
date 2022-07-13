@@ -13,11 +13,10 @@ import com.example.bookingapp.databinding.FragmentBookingBinding
 class BookingFragment : Fragment(R.layout.fragment_booking) {
 
     private val viewModel: BookingViewModel by viewModels()
-    private lateinit var binding: FragmentBookingBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentBookingBinding.bind(view)
+        val binding = FragmentBookingBinding.bind(view)
 
         val supportActionBar = (activity as AppCompatActivity).supportActionBar
         supportActionBar?.title = "Запланировано"
