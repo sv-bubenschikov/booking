@@ -6,4 +6,7 @@
     <string name="booking_place_fragment_label">Место</string>
     <string name="profile_fragment_label">Профиль</string>
     <string name="menu_profile_title">Профиль</string>
+    <string name="place_type_stub">Тип места</string>
+    <string name="place_name_stub">Название</string>
+    <string name="place_floor_stub">Этаж</string>
 </resources>
