@@ -7,44 +7,6 @@
     android:background="@color/background_color"
     tools:context=".app.fragments.booking.BookingFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/booking_title"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/primary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageButton
-            android:id="@+id/return_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginStart="19dp"
-            android:background="@drawable/left_arrow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginStart="15dp"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:text="Встреча"
-            app:layout_constraintStart_toEndOf="@id/return_button"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <TextView
         android:id="@+id/you_have_booked_text"
         android:layout_width="320dp"
@@ -56,110 +18,35 @@
         android:text="Вы забронировали:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/booking_title"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include layout="@layout/booking_details_element"
         android:id="@+id/booking_organisation_block"
         android:layout_width="320dp"
         android:layout_height="88dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/white_view_with_rounded_corners"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/you_have_booked_text">
-        <TextView
-            android:id="@+id/booking_organisation_block_title"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:textColor="@color/strokes"
-            android:gravity="bottom"
-            android:textSize="20sp"
-            android:text="ОРГАНИЗАЦИЯ:"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-        <TextView
-            android:id="@+id/booking_organisation_block_text"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:text="Тензор"
-            app:layout_constraintTop_toBottomOf="@id/booking_organisation_block_title"
-            app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/you_have_booked_text" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include layout="@layout/booking_details_element"
         android:id="@+id/booking_place_block"
         android:layout_width="320dp"
         android:layout_height="88dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/white_view_with_rounded_corners"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/booking_organisation_block">
-        <TextView
-            android:id="@+id/booking_place_block_title"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:textColor="@color/strokes"
-            android:gravity="bottom"
-            android:textSize="20sp"
-            android:text="МЕСТО:"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-        <TextView
-            android:id="@+id/booking_place_block_text"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:text="Переговорная Hawaii"
-            app:layout_constraintTop_toBottomOf="@id/booking_place_block_title"
-            app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/booking_organisation_block" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include layout="@layout/booking_details_element"
         android:id="@+id/booking_datetime_block"
         android:layout_width="320dp"
         android:layout_height="88dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/white_view_with_rounded_corners"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/booking_place_block">
-        <TextView
-            android:id="@+id/booking_datetime_block_title"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:textColor="@color/strokes"
-            android:gravity="bottom"
-            android:textSize="20sp"
-            android:text="Время:"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-        <TextView
-            android:id="@+id/booking_datetime_block_text"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:text="26.05 ЧТ 15.30-17.00"
-            app:layout_constraintTop_toBottomOf="@id/booking_datetime_block_title"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@id/booking_place_block" />
 
     <Button
         android:id="@+id/cancel_booking_button"

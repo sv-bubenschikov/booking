@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/lenovo/Desktop/tensor booking project/app/src/main/res/drawable/white_view_with_rounded_corners.xml" value="0.1" />
+        <entry key="..\:/Users/lenovo/Desktop/tensor booking project/app/src/main/res/layout/booking_details_element.xml" value="0.1307785888077859" />
+        <entry key="..\:/Users/lenovo/Desktop/tensor booking project/app/src/main/res/layout/fragment_booking.xml" value="0.2" />
+        <entry key="..\:/Users/lenovo/Desktop/tensor booking project/app/src/main/res/layout/fragment_booking_details.xml" value="0.15572916666666667" />
+        <entry key="..\:/Users/lenovo/Desktop/tensor booking project/app/src/main/res/layout/fragment_booking_place.xml" value="0.15572916666666667" />
         <entry key="..\:/Users/rusta/AndroidStudioProjects/BookingApp/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/rusta/AndroidStudioProjects/BookingApp/app/src/main/res/layout/booking_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/rusta/AndroidStudioProjects/BookingApp/app/src/main/res/layout/card_place.xml" value="0.36666666666666664" />
