@@ -10,4 +10,6 @@
     
     <color name="primary">#165D70</color>
     <color name="background_color">#269CBD</color>
+    <color name="strokes">#C4C4C4</color>
+    <color name="button_background">#31C7F0</color>
 </resources>
