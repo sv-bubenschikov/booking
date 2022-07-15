@@ -33,10 +33,7 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
             findNavController(view).navigate(R.id.action_placesFragment_to_bookingPlaceFragment)
         }
         with(binding) {
-            recyclePlaces.apply {
-                //layoutManager = GridLayoutManager(this.context, 2)
-                adapter = placeAdapter
-            }
+            recyclePlaces.adapter = placeAdapter
 
             // Пока что добавил заглушку, чтобы можно было проверить верстку
             val attributes = listOf("1 этаж", "2 этаж", "3 этаж", "Переговорка", "4 этаж", "5 этаж")
