@@ -6,11 +6,11 @@ import javax.inject.Inject
 
 class PlaceRepositoryImpl @Inject constructor() : PlaceRepository {
     private val places = listOf(
-        Place(1, "Алиса", "Переговорка", 2, 6, emptyList()),
-        Place(2, "Hawaii", "Переговорка", 3, 6, emptyList()),
-        Place(3, "", "Бильярдный стол", 3, 2, emptyList()),
-        Place(4, "", "Бильярдный стол", 2, 2, emptyList()),
-        Place(5, "ChinaTown", "Переговорка", 3, 10, emptyList())
+        Place(1, "Алиса", "Переговорка", "2 этаж", 6, emptyList()),
+        Place(2, "Hawaii", "Переговорка", "3 этаж", 6, emptyList()),
+        Place(3, "", "Бильярдный стол", "3 этаж", 2, emptyList()),
+        Place(4, "", "Бильярдный стол", "2 этаж", 2, emptyList()),
+        Place(5, "ChinaTown", "Переговорка", "3 этаж", 10, emptyList())
     )
 
 

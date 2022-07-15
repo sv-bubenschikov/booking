@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bookingapp.databinding.CardPlaceBinding
 import com.example.bookingapp.domain.entities.Place
 
+//issue #11 https://github.com/sv-bubenschikov/booking/projects/1#card-84218188
 class PlaceAdapter(private val clickListener: () -> Unit) :
     RecyclerView.Adapter<PlaceAdapter.PlaceHolder>() {
 
@@ -25,9 +26,10 @@ class PlaceAdapter(private val clickListener: () -> Unit) :
         with(holder.viewBinding) {
             placeType.text = item.type
             placeName.text = item.name
-            placeFloor.text = "${item.floor} этаж"
+            placeFloor.text = item.floor
         }
 
+        //issue #12 https://github.com/sv-bubenschikov/booking/projects/1#card-84218285
         holder.itemView.setOnClickListener {
             clickListener.invoke()
         }

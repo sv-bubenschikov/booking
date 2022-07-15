@@ -4,7 +4,7 @@ data class PlaceEntityForFB(
     val id: Int,
     val name: String,
     val type: String,
-    val floor: Int,
+    val floor: String,
     val numberParticipants: Int,
     val attributes: List<String>
 )

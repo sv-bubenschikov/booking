@@ -43,6 +43,8 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
+        //issue #15 https://github.com/sv-bubenschikov/booking/projects/1#card-84219374
+        //issue #16 https://github.com/sv-bubenschikov/booking/projects/1#card-84219374
         binding.addBooking.setOnClickListener {
             findNavController(view).navigate(R.id.action_bookingFragment_to_companiesFragment)
         }

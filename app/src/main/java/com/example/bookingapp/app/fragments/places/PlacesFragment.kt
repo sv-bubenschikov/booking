@@ -34,7 +34,7 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
         }
         with(binding) {
             recyclePlaces.apply {
-                layoutManager = GridLayoutManager(this.context, 2)
+                //layoutManager = GridLayoutManager(this.context, 2)
                 adapter = placeAdapter
             }
 
