@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookingapp.databinding.CardDateBinding
-import com.example.bookingapp.domain.entities.DateWeek
+import com.example.bookingapp.domain.entities.DayBooking
+import org.joda.time.DateTime
 
 class DateAdapter() : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
 
-    private var dates: List<DateWeek> = emptyList()
+    private var dates: List<DayBooking> = emptyList()
 
     class DateViewHolder(val viewBinding: CardDateBinding) :
         RecyclerView.ViewHolder(viewBinding.root)
@@ -20,10 +21,19 @@ class DateAdapter() : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: DateViewHolder, position: Int) {
-        with(holder.viewBinding){
+        with(holder.viewBinding) {
             val item = dates[position]
-            date.text = item.date
-            dayWeek.text = item.dayOfWeek
+            date.text = DateTime(item.date).dayOfMonth().asText
+            dayWeek.text = when (DateTime(item.date).dayOfWeek().asText) {
+                "Monday" -> "Пн"
+                "Tuesday" -> "Вт"
+                "Wednesday" -> "Ср"
+                "Thursday" -> "Чт"
+                "Friday" -> "Пт"
+                "Saturday" -> "Сб"
+                "Sunday" -> "Вс"
+                else -> "ER"
+            }
         }
     }
 
@@ -32,7 +42,7 @@ class DateAdapter() : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addList(list: List<DateWeek>) {
+    fun addList(list: List<DayBooking>) {
         dates = list
         notifyDataSetChanged()
     }

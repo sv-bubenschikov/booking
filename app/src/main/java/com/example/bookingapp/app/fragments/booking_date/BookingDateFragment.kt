@@ -3,12 +3,10 @@ package com.example.bookingapp.app.fragments.booking_date
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookingapp.R
 import com.example.bookingapp.databinding.FragmentBookingDateBinding
-import com.example.bookingapp.domain.entities.DateWeek
 import com.google.android.material.chip.Chip
 
 class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
@@ -17,10 +15,9 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val binding = FragmentBookingDateBinding.bind(view)
-        val dateAdapter = DateAdapter()
 
+        val dateAdapter = DateAdapter()
         dateAdapter.addList(viewModel.getDates())
         val curDateList = viewModel.getDateMorning()
 

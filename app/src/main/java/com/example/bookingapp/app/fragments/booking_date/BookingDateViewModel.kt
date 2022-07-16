@@ -1,28 +1,24 @@
 package com.example.bookingapp.app.fragments.booking_date
 
 import androidx.lifecycle.ViewModel
-import com.example.bookingapp.domain.entities.DateWeek
+import com.example.bookingapp.domain.entities.DayBooking
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class BookingDateViewModel @Inject constructor() : ViewModel() {
     //fake data нуно определиться с классом, в  котором будет удобно хранить все данные
     private val fakeDates = listOf(
-        DateWeek("1", "ПН"),
-        DateWeek("2", "ВТ"),
-        DateWeek("3", "СР"),
-        DateWeek("4", "ЧТ"),
-        DateWeek("5", "ПТ"),
-        DateWeek("6", "СБ"),
-        DateWeek("7", "ВС"),
-        DateWeek("8", "ПН"),
-        DateWeek("9", "ВТ"),
-        DateWeek("10", "СР"),
-        DateWeek("11", "ЧТ"),
-        DateWeek("12", "ПТ"),
-        DateWeek("13", "СБ"),
-        DateWeek("14", "ВС")
+        DayBooking(1, 1,DateTime.now().millis),
+        DayBooking(2, 1,DateTime.now().millis),
+        DayBooking(3, 1,DateTime.now().millis),
+        DayBooking(4, 1,DateTime.now().millis),
+        DayBooking(5, 1,DateTime.now().millis),
+        DayBooking(6, 1,DateTime.now().millis),
+        DayBooking(7, 1,DateTime.now().millis),
+        DayBooking(8, 1,DateTime.now().millis),
+        DayBooking(9, 1,DateTime.now().millis),
     )
 
     private val fakeDate = listOf(
@@ -37,7 +33,7 @@ class BookingDateViewModel @Inject constructor() : ViewModel() {
     )
 
     //пока возвращает значение
-    fun getDates(): List<DateWeek> {
+    fun getDates(): List<DayBooking> {
         return fakeDates
     }
 
