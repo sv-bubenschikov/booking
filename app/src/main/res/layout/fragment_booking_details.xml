@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="?screenPaddingHorizontal"
     android:paddingVertical="?screenPaddingVertical"
-    android:background="@color/background_color"
     tools:context=".app.fragments.booking.BookingFragment">
 
     <TextView
@@ -42,13 +41,13 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?textAppearanceHeadline5"
                 android:gravity="bottom"
-                tools:text="Название блока"/>
+                tools:text="Организация:"/>
             <TextView
                 android:id="@+id/booking_organisation_block_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?textAppearanceBody1"
-                tools:text="Значение блока"/>
+                tools:text="Тензор"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -74,13 +73,13 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?textAppearanceHeadline5"
                 android:gravity="bottom"
-                tools:text="Название блока"/>
+                tools:text="Место:"/>
             <TextView
                 android:id="@+id/booking_place_block_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?textAppearanceBody1"
-                tools:text="Значение блока"/>
+                tools:text="Переговорная Гавайи (3 этаж)"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -106,21 +105,20 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?textAppearanceHeadline5"
                 android:gravity="bottom"
-                tools:text="Название блока"/>
+                tools:text="Дата и время"/>
             <TextView
                 android:id="@+id/booking_datetime_block_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?textAppearanceBody1"
-                tools:text="Значение блока"/>
+                tools:text="26.09 - ЧТ; 11:00-13:00"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <Button
         android:id="@+id/cancel_booking_button"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/button_background"
         android:textAppearance="?textAppearanceBody2"
         android:text="@string/cancel_booking"
         android:visibility="gone"
@@ -132,7 +130,6 @@
         android:id="@+id/return_to_place_choosing_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/button_background"
         android:textAppearance="?textAppearanceBody2"
         android:text="@string/confirm_booking_return"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -144,7 +141,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="?horizontalSpacing"
-        android:backgroundTint="@color/button_background"
         android:textAppearance="?textAppearanceBody2"
         android:text="@string/confirm_booking_confirm"
         app:layout_constraintBottom_toBottomOf="parent"
