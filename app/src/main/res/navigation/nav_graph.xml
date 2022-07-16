@@ -47,11 +47,11 @@
         tools:layout="@layout/fragment_places">
         <action
             android:id="@+id/action_placesFragment_to_bookingPlaceFragment"
-            app:destination="@id/booking_place_fragment" />
+            app:destination="@id/booking_date_fragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/booking_place_fragment"
+        android:id="@+id/booking_date_fragment"
         android:name="com.example.bookingapp.app.fragments.booking_date.BookingDateFragment"
         android:label="@string/booking_place_fragment_label"
         tools:layout="@layout/fragment_booking_date">
