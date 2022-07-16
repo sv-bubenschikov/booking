@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookingapp.R
 import com.example.bookingapp.databinding.FragmentBookingDateBinding
 import com.google.android.material.chip.Chip
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
+import org.joda.time.format.DateTimeFormat
+import java.util.*
 
 class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
 
@@ -26,17 +30,20 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
             //для проверки
             for (time in curDateList) {
                 val chip = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
-                chip.text = time
+                chip.text = time.timeStart.toStringDate("HH:mm") +
+                        " - " + time.timeEnd.toStringDate("HH:mm")
                 groupMorning.addView(chip)
             }
             for (time in curDateList) {
                 val chip = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
-                chip.text = time
+                chip.text = time.timeStart.toStringDate("HH:mm") +
+                        " - " + time.timeEnd.toStringDate("HH:mm")
                 groupDay.addView(chip)
             }
             for (time in curDateList) {
                 val chip = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
-                chip.text = time
+                chip.text = time.timeStart.toStringDate("HH:mm") +
+                        " - " + time.timeEnd.toStringDate("HH:mm")
                 groupEvening.addView(chip)
             }
 
@@ -53,5 +60,12 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
                 )
             }
         }
+    }
+
+    private fun Long.toStringDate(pattern: String): String {
+        return DateTimeFormat
+            .forPattern(pattern)
+            .withZone(DateTimeZone.forID("Asia/Yekaterinburg"))
+            .print(this)
     }
 }
