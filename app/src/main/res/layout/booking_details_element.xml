@@ -4,31 +4,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="?listPreferredItemSpacingVertical">
-
-    <TextView
-        android:id="@+id/block_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?verticalSpacing"
-        android:layout_marginHorizontal="?horizontalSpacing"
-        android:textAppearance="?textAppearanceLabelSmall"
-        android:gravity="bottom"
-        tools:text="Название блока"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <TextView
-        android:id="@+id/block_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="?horizontalSpacing"
-        android:textAppearance="?textAppearanceBody1"
-        tools:text="Значение блока"
-        app:layout_constraintTop_toBottomOf="@id/block_title"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-</androidx.cardview.widget.CardView>
+    android:layout_marginBottom="?listPreferredItemSpacingVertical"
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingVertical="?listPreferredItemPaddingVertical"
+            android:paddingStart="?listPreferredItemPaddingStart"
+            android:paddingEnd="?listPreferredItemPaddingEnd">
+            <TextView
+                android:id="@+id/block_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?textAppearanceHeadline5"
+                android:gravity="bottom"
+                tools:text="Название блока"/>
+            <TextView
+                android:id="@+id/block_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?textAppearanceBody1"
+                tools:text="Значение блока"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
