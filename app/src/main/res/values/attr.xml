@@ -11,5 +11,7 @@
     <attr name="screenPaddingVertical" format="dimension|reference"/>
     <!-- Горизонтальный отступ внутри контентной области (отступы слева и справа) -->
     <attr name="screenPaddingHorizontal" format="dimension|reference"/>
+    <!-- Горизонтальный отступ между элементами контента (пример: между кнопками) -->
+    <attr name="horizontalSpacing" format="dimension|reference"/>
 
 </resources>

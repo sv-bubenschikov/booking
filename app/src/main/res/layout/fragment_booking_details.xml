@@ -120,9 +120,8 @@
         android:id="@+id/cancel_booking_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_30"
         android:backgroundTint="@color/button_background"
-        android:textAppearance="@style/booking_buttons_text"
+        android:textAppearance="?textAppearanceBody2"
         android:text="@string/cancel_booking"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -131,12 +130,10 @@
 
     <Button
         android:id="@+id/return_to_place_choosing_button"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="30dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/button_background"
-        android:paddingHorizontal="5dp"
-        android:textAppearance="@style/booking_buttons_text"
+        android:textAppearance="?textAppearanceBody2"
         android:text="@string/confirm_booking_return"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/you_have_booked_text"
@@ -144,15 +141,14 @@
 
     <Button
         android:id="@+id/confirm_booking_button"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="?horizontalSpacing"
         android:backgroundTint="@color/button_background"
-        android:paddingHorizontal="5dp"
-        android:textAppearance="@style/booking_buttons_text"
+        android:textAppearance="?textAppearanceBody2"
         android:text="@string/confirm_booking_confirm"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/return_to_place_choosing_button"/>
+        app:layout_constraintStart_toEndOf="@id/return_to_place_choosing_button"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
