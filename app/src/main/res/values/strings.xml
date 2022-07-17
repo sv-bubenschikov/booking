@@ -16,4 +16,8 @@
     <string name="company">Компания:</string>
     <string name="place">Место:</string>
     <string name="data_and_time">Дата и время</string>
+    <string name="select">Выбрать</string>
+    <string name="evening">Вечер</string>
+    <string name="day">День</string>
+    <string name="morning">Утро</string>
 </resources>
