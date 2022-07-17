@@ -23,5 +23,6 @@
         <item name="listPreferredItemPaddingStart">16dp</item>
         <item name="listPreferredItemPaddingEnd">16dp</item>
         <item name="verticalSpacing">8dp</item>
+        <item name="horizontalSpacing">20dp</item>
     </style>
 </resources>
