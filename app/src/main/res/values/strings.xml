@@ -11,6 +11,9 @@
     <string name="place_floor_stub">Этаж</string>
     <string name="you_have_booked">Вы забронировали:</string>
     <string name="cancel_booking">Отменить встречу</string>
-    <string name="confirm_booking_return">Отмена</string>
+    <string name="confirm_booking_return">Отменить</string>
     <string name="confirm_booking_confirm">Подтвердить</string>
+    <string name="company">Компания:</string>
+    <string name="place">Место:</string>
+    <string name="data_and_time">Дата и время</string>
 </resources>

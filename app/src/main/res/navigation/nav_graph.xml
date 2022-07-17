@@ -47,6 +47,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/booking_details_fragment"
+        android:name="com.example.bookingapp.app.fragments.booking_place.BookingPlaceFragment"
+        android:label="@string/you_have_booked"
+        tools:layout="@layout/fragment_booking_details">
+    </fragment>
+
+    <fragment
         android:id="@+id/profile_fragment"
         android:name="com.example.bookingapp.app.fragments.profile.ProfileFragment"
         android:label="@string/profile_fragment_label"
