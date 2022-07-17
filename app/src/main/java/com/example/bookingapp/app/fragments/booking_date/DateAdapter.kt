@@ -8,7 +8,8 @@ import com.example.bookingapp.databinding.CardDateBinding
 import com.example.bookingapp.domain.entities.Day
 import org.joda.time.DateTime
 
-class DateAdapter() : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
+class DateAdapter(private val clickListener: (Int) -> Unit) :
+    RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
 
     private var dates: List<Day> = emptyList()
 
@@ -21,8 +22,9 @@ class DateAdapter() : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: DateViewHolder, position: Int) {
+        val item = dates[position]
         with(holder.viewBinding) {
-            val item = dates[position]
+
             date.text = DateTime(item.date).dayOfMonth().asText
             dayWeek.text = when (DateTime(item.date).dayOfWeek().asText) {
                 "Monday" -> "Пн"
@@ -34,6 +36,9 @@ class DateAdapter() : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
                 "Sunday" -> "Вс"
                 else -> "ER"
             }
+        }
+        holder.itemView.setOnClickListener {
+            clickListener.invoke(item.id)
         }
     }
 
