@@ -23,5 +23,66 @@
         <item name="listPreferredItemPaddingStart">16dp</item>
         <item name="listPreferredItemPaddingEnd">16dp</item>
         <item name="verticalSpacing">8dp</item>
+        <item name="horizontalSpacing">20dp</item>
+        <item name="authTitleMarginTop">60dp</item>
+        <item name="authEditTextMarginTop">80dp</item>
+        <item name="largeLogoSize">60dp</item>
+        <item name="buttonHeight">65dp</item>
+        <item name="EditTextHeight">50dp</item>
+    </style>
+
+    <style name="ButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?buttonHeight</item>
+        <item name="android:layout_marginStart">?horizontalSpacing</item>
+        <item name="android:layout_marginEnd">?horizontalSpacing</item>
+        <item name="android:layout_marginBottom">?listPreferredItemSpacingVertical</item>
+        <item name="android:backgroundTint">@color/button_color</item>
+        <item name="android:textAppearance">?textAppearanceBody1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="LoginButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?buttonHeight</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/background_color</item>
+        <item name="android:textAppearance">?textAppearanceBody1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="EditTextAuthStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?EditTextHeight</item>
+        <item name="android:layout_marginBottom">?verticalSpacing</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingStart">?listPreferredItemPaddingStart</item>
+        <item name="android:paddingEnd">?listPreferredItemPaddingStart</item>
+    </style>
+
+    <style name="AuthAppNameStyle">
+        <item name="android:paddingStart">?screenPaddingVertical</item>
+        <item name="android:textAppearance">?textAppearanceHeadline4</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="LogoAuthStyle">
+        <item name="android:layout_width">?largeLogoSize</item>
+        <item name="android:layout_height">?largeLogoSize</item>
+        <item name="android:src">@drawable/ic_logo</item>
+        <item name="android:tint">@color/white</item>
+        <item name="android:contentDescription">@string/auth_app_logo</item>
+    </style>
+
+    <style name="AuthLinearLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">?authEditTextMarginTop</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginStart">?horizontalSpacing</item>
+        <item name="android:layout_marginEnd">?horizontalSpacing</item>
     </style>
 </resources>

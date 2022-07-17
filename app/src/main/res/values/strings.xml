@@ -9,4 +9,16 @@
     <string name="place_type_stub">Тип места</string>
     <string name="place_name_stub">Название</string>
     <string name="place_floor_stub">Этаж</string>
+    <string name="register_btn_text">Зарегистрироваться</string>
+    <string name="login_btn_text">Войти</string>
+    <string name="login_hint">Логин</string>
+    <string name="password_hint">Пароль</string>
+    <string name="auth_app_logo">Auth app logo</string>
+    <string name="user_name">Фио</string>
+    <string name="email_hint">Электронная почта</string>
+    <string name="confirm_password_hint">Подтвердите пароль</string>
+    <string name="sign_in_hint">Уже есть аккаунт? Войти</string>
+    <string name="loading_bar_text">Loading…</string>
+    <string name="guest_sign_in_text">Войти как гость</string>
+    <string name="app_logo_description">App logo image for authorization</string>
 </resources>

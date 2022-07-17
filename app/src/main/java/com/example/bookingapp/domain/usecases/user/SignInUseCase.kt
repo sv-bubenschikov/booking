@@ -6,8 +6,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import javax.inject.Inject
 
-class RegisterUserUseCase @Inject constructor(private val userRepository: UserRepository) {
+class SignInUseCase @Inject constructor(private val userRepository: UserRepository) {
     operator fun invoke(email: String, password: String): Task<AuthResult> {
-        return userRepository.registerUser(email, password)
+        return userRepository.signInUser(email, password)
     }
 }
