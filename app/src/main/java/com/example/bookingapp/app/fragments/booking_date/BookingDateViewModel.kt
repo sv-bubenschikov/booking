@@ -6,7 +6,6 @@ import com.example.bookingapp.domain.entities.Period
 import com.example.bookingapp.domain.usecases.date.GetDaysInfoByPlaceIdUseCase
 import com.example.bookingapp.domain.usecases.date.GetPeriodsByDayIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.joda.time.DateTime
 import javax.inject.Inject
 
 @HiltViewModel
