@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookingapp.databinding.CardDateBinding
-import com.example.bookingapp.domain.entities.DayBooking
+import com.example.bookingapp.domain.entities.Day
 import org.joda.time.DateTime
 
 class DateAdapter() : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
 
-    private var dates: List<DayBooking> = emptyList()
+    private var dates: List<Day> = emptyList()
 
     class DateViewHolder(val viewBinding: CardDateBinding) :
         RecyclerView.ViewHolder(viewBinding.root)
@@ -42,7 +42,7 @@ class DateAdapter() : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addList(list: List<DayBooking>) {
+    fun addList(list: List<Day>) {
         dates = list
         notifyDataSetChanged()
     }
