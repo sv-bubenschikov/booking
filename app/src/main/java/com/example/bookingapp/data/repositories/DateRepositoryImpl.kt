@@ -22,11 +22,13 @@ class DateRepositoryImpl @Inject constructor() : DateRepository {
 
 
     private val fakePeriods = listOf(
-        Period(1, 1, DateTime.now().millis, DateTime.now().millis, false),
-        Period(2, 1, DateTime.now().millis, DateTime.now().millis, false),
-        Period(3, 1, DateTime.now().millis, DateTime.now().millis, false),
-        Period(4, 2, DateTime.now().millis, DateTime.now().millis, false),
-        Period(5, 2, DateTime.now().millis, DateTime.now().millis, false),
+        Period(1, 1, 7200000, 9000000, false),
+        Period(2, 1, 32400000, 34200000, false),
+        Period(3, 1, 54000000, 55800000, false),
+        Period(4, 2, 32400000, 34200000, false),
+        Period(5, 2, 54000000, 55800000, false),
+        Period(6, 1, 9000000, 10800000, false),
+        Period(7, 1, 10800000, 12600000, false),
     )
 
 

@@ -1,6 +1,7 @@
 package com.example.bookingapp.app.fragments.booking_date
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -31,26 +32,24 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         //dayId - затычка
         val periods = viewModel.getPeriods(1)
 
-
         with(binding) {
-            //для проверки
             for (time in periods) {
                 val chip = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
                 chip.text = time.timeStart.toStringDate("HH:mm") +
                         " - " + time.timeEnd.toStringDate("HH:mm")
-                groupMorning.addView(chip)
-            }
-            for (time in periods) {
-                val chip = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
-                chip.text = time.timeStart.toStringDate("HH:mm") +
-                        " - " + time.timeEnd.toStringDate("HH:mm")
-                groupDay.addView(chip)
-            }
-            for (time in periods) {
-                val chip = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
-                chip.text = time.timeStart.toStringDate("HH:mm") +
-                        " - " + time.timeEnd.toStringDate("HH:mm")
-                groupEvening.addView(chip)
+
+                val timeStart = DateTime(time.timeStart)
+                    .withZone(DateTimeZone.forID("Asia/Yekaterinburg"))
+                    .hourOfDay()
+                    .get()
+
+                Log.e("time11", timeStart.toString())
+                if (timeStart < 12)//если меньше 12 -> утреннее время
+                    groupMorning.addView(chip)
+                else if (timeStart < 17)//если меньше 17 -> дневное время
+                    groupDay.addView(chip)
+                else//-> вечернее время
+                    groupEvening.addView(chip)
             }
 
             btnSelect.setOnClickListener {
