@@ -21,4 +21,13 @@
     <string name="loading_bar_text">Загрузка…</string>
     <string name="guest_sign_in_text">Войти как гость</string>
     <string name="required_edit_text">Незаполненное поле ввода</string>
+    <string name="invalid_email">Введите свою почту</string>
+    <string name="password_invalid_len">Пароль должен состоять минимум из 8 символов</string>
+    <string name="password_invalid_upper_letters">Пароль должен содержать минимум 1 заглавную букву</string>
+    <string name="password_invalid_lower_letters">Пароль должен содержать минимум 1 строчную букву</string>
+    <string name="password_invalid_numbers">Пароль должен содержать минимум 1 цифру</string>
+    <string name="invalid_input_form_title">Ошибка ввода</string>
+    <string name="accept_invalid_form_btn">Ок</string>
+    <string name="empty_input_text">"Это поле не должно быть пустым"</string>
+    <string name="confirmed_password_is_not_matching">Подтверждённый пароль не совпадает</string>
 </resources>
