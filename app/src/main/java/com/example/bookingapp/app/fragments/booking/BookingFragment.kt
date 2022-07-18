@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.HostViewModel
+import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.BOOKING_ID
 import com.example.bookingapp.databinding.FragmentBookingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -51,23 +52,23 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentBookingBinding.bind(view)
-
-        val currentUser = viewModel.getCurrentUser()
-        if (currentUser == null)
-            findNavController().navigate(R.id.action_navigation_home_to_navigation_sign_in)
-        else {
-            currentUser.getIdToken(true).addOnCompleteListener {
-                if(!it.isSuccessful) {
-                    findNavController().navigate(R.id.action_navigation_home_to_navigation_sign_in)
-                }
+        val adapter = BookingListAdapter { booking ->
+            val arg = Bundle().apply {
+                putInt(BOOKING_ID, booking.id)
             }
+            findNavController().navigate(R.id.actionBookingFragment_to_bookingDetailsFragment, arg)
         }
+        binding.bookingList.adapter = adapter
 
-        //issue #15 https://github.com/sv-bubenschikov/booking/projects/1#card-84219374
         hostViewModel.setActionButtonVisible(true)
         viewLifecycleOwner.lifecycleScope.launch {
             hostViewModel.actionButtonClicked.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.bookingList.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { bookingList ->
+                adapter.submitList(bookingList)
             }
         }
     }

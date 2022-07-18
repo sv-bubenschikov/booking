@@ -9,6 +9,13 @@
     <string name="place_type_stub">Тип места</string>
     <string name="place_name_stub">Название</string>
     <string name="place_floor_stub">Этаж</string>
+    <string name="you_have_booked">Вы забронировали:</string>
+    <string name="cancel_booking">Отменить встречу</string>
+    <string name="confirm_booking_return">Отменить</string>
+    <string name="confirm_booking_confirm">Подтвердить</string>
+    <string name="company">Компания:</string>
+    <string name="place">Место:</string>
+    <string name="data_and_time">Дата и время</string>
     <string name="register_btn_text">Зарегистрироваться</string>
     <string name="sign_in_btn_text">Войти</string>
     <string name="login_hint">Логин</string>

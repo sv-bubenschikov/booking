@@ -21,6 +21,13 @@
             app:destination="@id/navigation_sign_in"
             app:popUpTo="@id/booking_place_fragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/actionBookingFragment_to_bookingDetailsFragment"
+            app:destination="@id/booking_details_fragment">
+            <argument
+                android:name="booking_id"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment
@@ -81,4 +88,10 @@
             android:id="@+id/action_navigation_sign_in_to_navigation_register"
             app:destination="@id/navigation_register" />
     </fragment>
+
+    <fragment
+        android:id="@+id/booking_details_fragment"
+        android:name="com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment"
+        android:label="@string/you_have_booked"
+        tools:layout="@layout/fragment_booking_details" />
 </navigation>

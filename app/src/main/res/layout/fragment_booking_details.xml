@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="?screenPaddingHorizontal"
+    android:paddingVertical="?screenPaddingVertical"
+    tools:context=".app.fragments.booking.BookingFragment">
+
+    <TextView
+        android:id="@+id/you_have_booked_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/you_have_booked"
+        android:textAppearance="?textAppearanceHeadline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/booking_organisation_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?listPreferredItemSpacingVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/you_have_booked_text">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingVertical="?listPreferredItemPaddingVertical"
+            android:paddingStart="?listPreferredItemPaddingStart"
+            android:paddingEnd="?listPreferredItemPaddingEnd">
+
+            <TextView
+                android:id="@+id/booking_organisation_block_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="@string/company"
+                android:textAppearance="?textAppearanceHeadline5" />
+
+            <TextView
+                android:id="@+id/booking_organisation_block_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?textAppearanceBody1"
+                tools:text="Тензор" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/booking_place_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?listPreferredItemSpacingVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booking_organisation_block">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingVertical="?listPreferredItemPaddingVertical"
+            android:paddingStart="?listPreferredItemPaddingStart"
+            android:paddingEnd="?listPreferredItemPaddingEnd">
+
+            <TextView
+                android:id="@+id/booking_place_block_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="@string/place"
+                android:textAppearance="?textAppearanceHeadline5" />
+
+            <TextView
+                android:id="@+id/booking_place_block_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?textAppearanceBody1"
+                tools:text="Переговорная Гавайи (3 этаж)" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/booking_datetime_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?listPreferredItemSpacingVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booking_place_block">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingVertical="?listPreferredItemPaddingVertical"
+            android:paddingStart="?listPreferredItemPaddingStart"
+            android:paddingEnd="?listPreferredItemPaddingEnd">
+
+            <TextView
+                android:id="@+id/booking_datetime_block_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="@string/data_and_time"
+                android:textAppearance="?textAppearanceHeadline5" />
+
+            <TextView
+                android:id="@+id/booking_datetime_block_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?textAppearanceBody1"
+                tools:text="26.09 - ЧТ; 11:00-13:00" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/cancel_booking_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_booking"
+        android:textAppearance="?textAppearanceBody2"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/return_to_place_choosing_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm_booking_return"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/confirm_booking_button"
+        app:layout_constraintStart_toStartOf="@id/you_have_booked_text" />
+
+    <Button
+        android:id="@+id/confirm_booking_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="?horizontalSpacing"
+        android:text="@string/confirm_booking_confirm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/return_to_place_choosing_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
