@@ -6,7 +6,7 @@ import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
 class UpdateUserInfoUseCase @Inject constructor(private val userRepository: UserRepository) {
-    operator fun invoke(user: User): Task<Void> {
+    suspend operator fun invoke(user: User): Boolean {
         return userRepository.updateUserInfo(user)
     }
 }

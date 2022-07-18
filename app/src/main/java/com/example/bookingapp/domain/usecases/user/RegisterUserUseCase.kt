@@ -7,7 +7,7 @@ import com.google.firebase.auth.AuthResult
 import javax.inject.Inject
 
 class RegisterUserUseCase @Inject constructor(private val userRepository: UserRepository) {
-    operator fun invoke(email: String, password: String): Task<AuthResult> {
+    suspend operator fun invoke(email: String, password: String): AuthResult? {
         return userRepository.registerUser(email, password)
     }
 }

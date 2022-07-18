@@ -1,75 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="app.fragments.authorization.SignInFragment"
-    android:background="@color/background_color">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_marginTop="?authTitleMarginTop"
-        android:id="@+id/linearLayout4"
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.example.bookingapp.app.fragments.authorization.SignInViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="app.fragments.authorization.SignInFragment"
+        android:background="?colorPrimary">
+
+    <TextView
+        android:layout_marginTop="60dp"
+        android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:text="@string/app_name"
+        android:textAppearance="?textAppearanceHeadline4"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/logo"
-            android:contentDescription="@string/app_logo_description"
-            style="@style/LogoAuthStyle"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            style="@style/AuthAppNameStyle"
-            android:textAppearance="?textAppearanceHeadline4"
-            android:text="@string/app_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/logo" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/AuthLinearLayoutStyle"
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_email_layout"
+        android:layout_marginHorizontal="?screenPaddingHorizontal"
+        android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        app:helperText="@string/required_edit_text"
+        app:helperTextTextColor="?colorSecondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:autofillHints="emailAddress"
-            android:id="@+id/edit_email"
-            style="@style/EditTextAuthStyle"
+        <com.google.android.material.textfield.TextInputEditText
+            android:text="@={viewModel.email}"
+            android:inputType="textEmailAddress"
             android:hint="@string/login_hint"
-            android:inputType="textEmailAddress" />
+            android:id="@+id/edit_email"
+            android:lines="1"
+            android:autofillHints="emailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:autofillHints="password"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_password_layout"
+        android:layout_marginTop="?verticalSpacing"
+        android:layout_marginHorizontal="?screenPaddingHorizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:counterEnabled="true"
+        app:counterMaxLength="16"
+        app:counterTextColor="?colorSecondary"
+        app:passwordToggleEnabled="true"
+        app:helperText="@string/required_edit_text"
+        app:helperTextTextColor="?colorSecondary"
+        app:layout_constraintTop_toBottomOf="@+id/edit_email_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_password"
-            style="@style/EditTextAuthStyle"
+            android:maxLength="16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lines="1"
+            android:autofillHints="password"
             android:hint="@string/password_hint"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:text="@={viewModel.password}" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/sign_in_btn"
-            android:text="@string/login_btn_text"
-            style="@style/LoginButtonStyle" />
+    <Button
+        android:id="@+id/sign_in_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="?screenPaddingVertical"
+        android:layout_marginHorizontal="?screenPaddingHorizontal"
+        style="@style/ButtonStyle"
+        android:text="@string/sign_in_btn_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_password_layout" />
 
         <Button
             android:id="@+id/sign_in_as_guest"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="?verticalSpacing"
+            android:layout_marginHorizontal="?screenPaddingHorizontal"
+            style="@style/ButtonStyle"
             android:text="@string/guest_sign_in_text"
-            style="@style/LoginButtonStyle" />
-
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_btn" />
 
     <Button
         android:id="@+id/register_btn"
-        style="@style/ButtonStyle"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="?screenPaddingVertical"
+        android:layout_marginHorizontal="?screenPaddingHorizontal"
+        style="@style/LoginButtonStyle"
         android:text="@string/register_btn_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

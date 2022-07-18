@@ -2,7 +2,6 @@ package com.example.bookingapp.app
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
@@ -12,8 +11,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.databinding.ActivityMainBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -46,20 +43,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
 
-        visibilityNavElements(navController, binding)
+        visibilityNavElements(navController)
 
         setupActionBarWithNavController(navController)
-
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        if (currentUser == null)
-            navController.navigate(R.id.action_navigation_home_to_navigation_sign_in)
-        else {
-            currentUser.getIdToken(true).addOnCompleteListener {
-                if(!it.isSuccessful) {
-                    navController.navigate(R.id.action_navigation_home_to_navigation_sign_in)
-                }
-            }
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -75,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * определяет на каких фрагментах скрывать actionBar и floating button
      */
-    private fun visibilityNavElements(navController: NavController, binding: ActivityMainBinding) {
+    private fun visibilityNavElements(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_sign_in,

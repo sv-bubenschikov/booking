@@ -7,7 +7,7 @@ import com.google.firebase.auth.AuthResult
 import javax.inject.Inject
 
 class SignInAsGuestUseCase @Inject constructor(private val userRepository: UserRepository) {
-    operator fun invoke(): Task<AuthResult> {
+    suspend operator fun invoke(): AuthResult? {
         return userRepository.signInAsGuest()
     }
 }

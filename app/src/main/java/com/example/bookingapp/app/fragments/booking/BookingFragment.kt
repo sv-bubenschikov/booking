@@ -52,6 +52,17 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentBookingBinding.bind(view)
 
+        val currentUser = viewModel.getCurrentUser()
+        if (currentUser == null)
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_sign_in)
+        else {
+            currentUser.getIdToken(true).addOnCompleteListener {
+                if(!it.isSuccessful) {
+                    findNavController().navigate(R.id.action_navigation_home_to_navigation_sign_in)
+                }
+            }
+        }
+
         //issue #15 https://github.com/sv-bubenschikov/booking/projects/1#card-84219374
         hostViewModel.setActionButtonVisible(true)
         viewLifecycleOwner.lifecycleScope.launch {

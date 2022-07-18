@@ -8,29 +8,29 @@ import com.example.bookingapp.domain.usecases.user.SignInUseCase
 import com.example.bookingapp.domain.usecases.user.UpdateUserInfoUseCase
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthorizationViewModel @Inject constructor(
-    private val registerUserUseCase: RegisterUserUseCase,
+class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val signInAsGuestUseCase: SignInAsGuestUseCase,
-    private val updateUserInfoUseCase: UpdateUserInfoUseCase
 ) : ViewModel() {
-    fun registerUser(email: String, password: String): Task<AuthResult> {
-        return registerUserUseCase(email, password)
-    }
+    val email = MutableStateFlow("")
+    val password = MutableStateFlow("")
 
-    fun signInUser(email: String, password: String): Task<AuthResult> {
+    suspend fun signInUser(): AuthResult? {
+        val email = email.value.apply { if(trim().isEmpty()) return null }
+        val password = password.value.apply { if(trim().isEmpty()) return null }
+
         return signInUseCase(email, password)
     }
 
-    fun signInAsGuest():  Task<AuthResult> {
+    suspend fun signInAsGuest(): AuthResult? {
         return signInAsGuestUseCase()
-    }
-
-    fun updateUserInfo(user: User): Task<Void> {
-        return updateUserInfoUseCase(user)
     }
 }

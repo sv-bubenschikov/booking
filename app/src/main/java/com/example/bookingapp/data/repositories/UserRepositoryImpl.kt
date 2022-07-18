@@ -5,8 +5,11 @@ import com.example.bookingapp.domain.repositories_interface.UserRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor() : UserRepository {
@@ -14,28 +17,63 @@ class UserRepositoryImpl @Inject constructor() : UserRepository {
         TODO("Not yet implemented")
     }
 
-    override fun registerUser(email: String, password: String): Task<AuthResult> {
+    override suspend fun registerUser(email: String, password: String): AuthResult? {
+        email.apply { if(trim().isEmpty()) return null }
+        password.apply { if(trim().isEmpty()) return null }
         val mAuth = FirebaseAuth.getInstance()
-        return mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.signOut()
+        return try {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                .await()
+        } catch (ex: Exception) {
+            null
+        }
     }
 
-    override fun updateUserInfo(user: User): Task<Void> {
-        val mAuth = FirebaseAuth.getInstance()
-        val currentUserID = mAuth.currentUser!!.uid
-        val userRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Users")
+    override suspend fun updateUserInfo(user: User): Boolean {
         val userMap = HashMap<String, Any>()
-        userMap["id"] = currentUserID
+        userMap["id"] = user.id
         userMap["name"] = user.name
         userMap["email"] = user.email
-        return userRef.child(currentUserID).setValue(userMap)
+        return try {
+            FirebaseDatabase.getInstance().reference
+                .child("Users")
+                .child(user.id)
+                .setValue(userMap)
+                .await()
+            true
+        } catch (ex: Exception) {
+            false
+        }
     }
 
-    override fun signInUser(email: String, password: String): Task<AuthResult> {
+    override suspend fun signInUser(email: String, password: String): AuthResult? {
+        email.apply { if(trim().isEmpty()) return null }
+        password.apply { if(trim().isEmpty()) return null }
         val mAuth = FirebaseAuth.getInstance()
-        return mAuth.signInWithEmailAndPassword(email, password)
+        return try {
+            mAuth.signInWithEmailAndPassword(email, password)
+                .await()
+        } catch (ex: Exception) {
+            null
+        }
     }
 
-    override fun signInAsGuest():  Task<AuthResult> {
-        return FirebaseAuth.getInstance().signInAnonymously()
+    override suspend fun signInAsGuest(): AuthResult? {
+        val mAuth = FirebaseAuth.getInstance()
+        return try {
+            mAuth.signInAnonymously()
+                .await()
+        } catch (ex: Exception) {
+            null
+        }
+    }
+
+    override fun signOut() {
+        FirebaseAuth.getInstance().signOut()
+    }
+
+    override fun getCurrentUser(): FirebaseUser? {
+        return FirebaseAuth.getInstance().currentUser
     }
 }
