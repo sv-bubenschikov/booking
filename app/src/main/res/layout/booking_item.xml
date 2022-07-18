@@ -29,6 +29,7 @@
             tools:text="Летняя практика Android. Обсуждение макета приложения" />
 
         <TextView
+            android:id="@+id/company_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="?verticalSpacing"
