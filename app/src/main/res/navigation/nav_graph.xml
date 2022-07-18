@@ -16,6 +16,13 @@
         <action
             android:id="@+id/action_bookingFragment_to_profileFragment"
             app:destination="@+id/profile_fragment" />
+        <action
+            android:id="@+id/actionBookingFragment_to_bookingDetailsFragment"
+            app:destination="@id/booking_details_fragment">
+            <argument
+                android:name="booking_id"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment
@@ -48,10 +55,9 @@
 
     <fragment
         android:id="@+id/booking_details_fragment"
-        android:name="com.example.bookingapp.app.fragments.booking_place.BookingPlaceFragment"
+        android:name="com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment"
         android:label="@string/you_have_booked"
-        tools:layout="@layout/fragment_booking_details">
-    </fragment>
+        tools:layout="@layout/fragment_booking_details" />
 
     <fragment
         android:id="@+id/profile_fragment"
