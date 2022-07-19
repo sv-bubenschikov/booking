@@ -9,8 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bookingapp.R
+import com.example.bookingapp.app.fragments.booking_date.BookingDateFragment.Companion.PLACE_ID
+import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment
 import com.example.bookingapp.databinding.FragmentCompaniesBinding
 import com.example.bookingapp.databinding.FragmentPlacesBinding
 import com.example.bookingapp.domain.entities.Place
@@ -29,8 +32,11 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
 
         val binding = FragmentPlacesBinding.bind(view)
 
-        placeAdapter = PlaceAdapter {
-            findNavController(view).navigate(R.id.action_placesFragment_to_bookingPlaceFragment)
+        placeAdapter = PlaceAdapter { place_id ->
+            val arg = Bundle().apply {
+                putInt(PLACE_ID, place_id)
+            }
+            findNavController(view).navigate(R.id.action_placesFragment_to_bookingDateFragment, arg)
         }
         with(binding) {
             recyclePlaces.adapter = placeAdapter

@@ -28,7 +28,7 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
 
         with(binding) {
             btnSelect.setOnClickListener {
-                //переход дальше
+                //findNavController().navigate(R.id.action_bookingDateFragment_to_bookingDetailsFragment)
             }
 
             recFilter.adapter = dateAdapter
@@ -37,14 +37,14 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.days.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { dayList ->
                 dateAdapter.submitList(dayList)
-                viewModel.getPeriods(dayList.first().id) // Вопрос. Я это написал, чтобы при первой загрузке появлялись чипсы, но при повороте тогда будет некорректно
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.periods.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { periodList ->
-                setPeriods(periodList,binding)
-            }
+            viewModel.periods.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { periodList ->
+                    setPeriods(periodList, binding)
+                }
         }
     }
 
@@ -74,5 +74,9 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
 
     private fun onDayClicked(dayId: Int) {
         viewModel.getPeriods(dayId)
+    }
+
+    companion object {
+        const val PLACE_ID = "place_id"
     }
 }

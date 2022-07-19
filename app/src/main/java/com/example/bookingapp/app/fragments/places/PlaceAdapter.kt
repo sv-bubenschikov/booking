@@ -8,7 +8,7 @@ import com.example.bookingapp.databinding.CardPlaceBinding
 import com.example.bookingapp.domain.entities.Place
 
 //issue #11 https://github.com/sv-bubenschikov/booking/projects/1#card-84218188
-class PlaceAdapter(private val clickListener: () -> Unit) :
+class PlaceAdapter(private val clickListener: (Int) -> Unit) :
     RecyclerView.Adapter<PlaceAdapter.PlaceHolder>() {
 
     private var places: List<Place> = emptyList()
@@ -31,7 +31,7 @@ class PlaceAdapter(private val clickListener: () -> Unit) :
 
         //issue #12 https://github.com/sv-bubenschikov/booking/projects/1#card-84218285
         holder.itemView.setOnClickListener {
-            clickListener.invoke()
+            clickListener.invoke(item.id)
         }
     }
 

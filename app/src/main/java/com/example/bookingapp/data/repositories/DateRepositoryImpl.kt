@@ -22,7 +22,6 @@ class DateRepositoryImpl @Inject constructor() : DateRepository {
         Day(9, 1, DateTime.now().millis),
     )
 
-
     private val fakePeriods = listOf(
         Period(1, 1, 7200000, 9000000, false),
         Period(2, 1, 32400000, 34200000, false),
@@ -32,7 +31,6 @@ class DateRepositoryImpl @Inject constructor() : DateRepository {
         Period(6, 1, 9000000, 10800000, false),
         Period(7, 1, 10800000, 12600000, false),
     )
-
 
     override fun getDaysInfoByPlaceId(placeId: Int): StateFlow<List<Day>> {
         return MutableStateFlow(fakeDays.filter { day -> day.placeId == placeId })

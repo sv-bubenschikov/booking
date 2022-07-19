@@ -1,7 +1,9 @@
 package com.example.bookingapp.app.fragments.booking_date
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.bookingapp.app.entities.PeriodForFragment
+import com.example.bookingapp.app.fragments.booking_date.BookingDateFragment.Companion.PLACE_ID
 import com.example.bookingapp.domain.entities.Day
 import com.example.bookingapp.domain.usecases.date.GetDaysInfoByPlaceIdUseCase
 import com.example.bookingapp.domain.usecases.date.GetPeriodsByDayIdUseCase
@@ -15,9 +17,13 @@ import javax.inject.Inject
 class BookingDateViewModel @Inject constructor(
     private val getDaysInfoByPlaceId: GetDaysInfoByPlaceIdUseCase,
     private val getPeriodsByDayId: GetPeriodsByDayIdUseCase,
+    stateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val days: StateFlow<List<Day>> = getDaysInfoByPlaceId(1) //TODO Получение по id метса
+    val days: StateFlow<List<Day>> = getDaysInfoByPlaceId(stateHandle[PLACE_ID]!!).apply {
+        if (this.value.isNotEmpty())
+            getPeriods(this.value.first().id)
+    }
 
     val periods: MutableStateFlow<List<PeriodForFragment>> = MutableStateFlow(emptyList())
 
