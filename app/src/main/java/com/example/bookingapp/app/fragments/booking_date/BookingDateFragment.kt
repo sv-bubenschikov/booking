@@ -24,7 +24,7 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         }
 
         //placeId - затычка
-        dateAdapter.addList(viewModel.getDays(1))
+        dateAdapter.submitList(viewModel.getDays(1))
 
         //dayId - затычка
         val periods = viewModel.getPeriods(1)
