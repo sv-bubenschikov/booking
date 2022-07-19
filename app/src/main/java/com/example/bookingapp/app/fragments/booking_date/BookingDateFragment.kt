@@ -65,8 +65,6 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         }
     }
 
-
-
     private fun onDayClicked(dayId: Int, binding: FragmentBookingDateBinding) {
         setPeriods(viewModel.getPeriods(dayId), binding)
     }
