@@ -5,13 +5,10 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.bookingapp.R
+import com.example.bookingapp.app.entities.PeriodForFragment
 import com.example.bookingapp.databinding.FragmentBookingDateBinding
-import com.example.bookingapp.domain.entities.Period
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import org.joda.time.DateTime
-import org.joda.time.DateTimeZone
-import org.joda.time.format.DateTimeFormat
 
 @AndroidEntryPoint
 class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
@@ -44,19 +41,17 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         }
     }
 
-    private fun setPeriods(periods: List<Period>, binding: FragmentBookingDateBinding) {
+    private fun setPeriods(periods: List<PeriodForFragment>, binding: FragmentBookingDateBinding) {
         with(binding) {
             groupMorning.removeAllViews()
             groupDay.removeAllViews()
             groupEvening.removeAllViews()
 
-            for (time in periods) {
+            for (period in periods) {
                 val chip = Chip(this@BookingDateFragment.context)
-                chip.text = time.timeStart.toStringDate("HH:mm") +
-                        " - " + time.timeEnd.toStringDate("HH:mm")
+                chip.text = period.toString()
 
-                val timeStart = DateTime(time.timeStart)
-                    .withZone(DateTimeZone.forID("Asia/Yekaterinburg"))
+                val timeStart = period.timeStart
                     .hourOfDay()
                     .get()
 
@@ -70,12 +65,7 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         }
     }
 
-    private fun Long.toStringDate(pattern: String): String {
-        return DateTimeFormat
-            .forPattern(pattern)
-            .withZone(DateTimeZone.forID("Asia/Yekaterinburg"))
-            .print(this)
-    }
+
 
     private fun onDayClicked(dayId: Int, binding: FragmentBookingDateBinding) {
         setPeriods(viewModel.getPeriods(dayId), binding)
