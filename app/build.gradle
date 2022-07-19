@@ -33,11 +33,21 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 }
 
 dependencies {
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:30.1.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth:21.0.6'
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+    implementation 'com.google.firebase:firebase-database-ktx'
+    implementation 'com.firebaseui:firebase-ui-database:8.0.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.1'
 
+    //Origin
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
@@ -50,6 +60,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //Hilt
-    implementation "com.google.dagger:hilt-android:2.40"
-    kapt "com.google.dagger:hilt-compiler:2.40"
+    implementation "com.google.dagger:hilt-android:2.42"
+    kapt "com.google.dagger:hilt-compiler:2.42"
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -20,6 +20,7 @@ import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.BOOKING_ID
 import com.example.bookingapp.databinding.FragmentBookingBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,6 +32,14 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         context as AppCompatActivity
+
+        lifecycleScope.launch {
+            hostViewModel.updateCurrentUserRef().join()
+            hostViewModel.currentUserRef.flowWithLifecycle(lifecycle).collect { user ->
+                if (user == null)
+                    findNavController().navigate(R.id.action_navigation_home_to_navigation_sign_in)
+            }
+        }
 
         context.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -61,13 +70,14 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         binding.bookingList.adapter = adapter
 
         hostViewModel.setActionButtonVisible(true)
-        viewLifecycleOwner.lifecycleScope.launch {
-            hostViewModel.actionButtonClicked.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
+        lifecycleScope.launch {
+            hostViewModel.actionButtonClicked.flowWithLifecycle(lifecycle).collect {
                 findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.bookingList.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { bookingList ->
+
+        lifecycleScope.launch {
+            viewModel.bookingList.flowWithLifecycle(lifecycle).collect { bookingList ->
                 adapter.submitList(bookingList)
             }
         }

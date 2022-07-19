@@ -5,7 +5,6 @@ import com.example.bookingapp.domain.repositories_interface.UserRepository
 import javax.inject.Inject
 
 class UpdateUserInfoUseCase @Inject constructor(private val userRepository: UserRepository) {
-    operator fun invoke(user: User): Boolean {
-        return userRepository.updateUserInfo(user)
-    }
+    suspend operator fun invoke(user: User) =
+        userRepository.updateUserInfo(user)
 }
