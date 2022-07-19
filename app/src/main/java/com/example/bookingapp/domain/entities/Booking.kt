@@ -5,5 +5,6 @@ data class Booking(
     val userId: Int,
     val company: Company,
     val place: Place,
-    val bookingDate: BookingDate
+    val bookingDate: BookingDate,
+    val bookingName: String
 )

@@ -75,6 +75,21 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?textAppearanceBody1"
                 tools:text="26.09 - ЧТ; 11:00-13:00" />
+
+            <TextView
+                android:id="@+id/booking_name_block_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="@string/booking_name"
+                android:textAppearance="?textAppearanceHeadline5" />
+
+            <TextView
+                android:id="@+id/booking_name_block_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?textAppearanceBody1"
+                tools:text="Обсуждение таинственной пропажи минералки из кулера" />
         </LinearLayout>
 
     <Button

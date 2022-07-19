@@ -17,7 +17,8 @@ class BookingRepositoryImpl @Inject constructor() : BookingRepository {
                 userId,
                 Company(0, "Тензор", ""),
                 Place(0, "Переговорная Hawaii", "Переговорная", "3", 8, emptyList()),
-                BookingDate()
+                BookingDate(),
+                "Важные переговоры"
             )
         )
     )
@@ -28,7 +29,8 @@ class BookingRepositoryImpl @Inject constructor() : BookingRepository {
             0,
             Company(0, "Тензор", ""),
             Place(0, "Переговорная Hawaii", "Переговорная", "3", 8, emptyList()),
-            BookingDate()
+            BookingDate(),
+            "Важные переговоры"
         )
     )
 

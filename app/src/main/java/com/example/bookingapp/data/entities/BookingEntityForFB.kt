@@ -6,5 +6,6 @@ data class BookingEntityForFB(
     val userId: Int,
     val company: CompanyEntityForFB,
     val place: PlaceEntityForFB,
-    val bookingDate: BookingDateEntityForFB
+    val bookingDate: BookingDateEntityForFB,
+    val bookingName: String
 )

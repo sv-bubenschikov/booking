@@ -9,7 +9,8 @@ fun Booking.toFB(): BookingEntityForFB =
         userId = this.userId,
         company = this.company.toFB(),
         place = this.place.toFB(),
-        bookingDate = this.bookingDate.toFB()
+        bookingDate = this.bookingDate.toFB(),
+        bookingName = this.bookingName
     )
 
 fun BookingEntityForFB.toDomain(): Booking =
@@ -18,5 +19,6 @@ fun BookingEntityForFB.toDomain(): Booking =
         userId = this.userId,
         company = this.company.toDomain(),
         place = this.place.toDomain(),
-        bookingDate = this.bookingDate.toDomain()
+        bookingDate = this.bookingDate.toDomain(),
+        bookingName = this.bookingName
     )
