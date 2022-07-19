@@ -1,151 +1,154 @@
 package com.example.bookingapp.app.fragments.authorization
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Patterns
-import android.view.LayoutInflater
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.bookingapp.R
-import com.example.bookingapp.app.ui_elements.LoadingDialog
 import com.example.bookingapp.domain.entities.User
+import com.example.bookingapp.domain.usecases.user.GetCurrentUserRefUseCase
 import com.example.bookingapp.domain.usecases.user.RegisterUserUseCase
 import com.example.bookingapp.domain.usecases.user.UpdateUserInfoUseCase
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registerUserUseCase: RegisterUserUseCase,
-    private val updateUserInfoUseCase: UpdateUserInfoUseCase
+    private val updateUserInfoUseCase: UpdateUserInfoUseCase,
+    private val getCurrentUserRefUseCase: GetCurrentUserRefUseCase
 ) : ViewModel() {
 
     val username = MutableStateFlow("")
     val email = MutableStateFlow("")
     val password = MutableStateFlow("")
     val confirmedPassword = MutableStateFlow("")
-    val editEmailHelper = MutableStateFlow<String?>(null)
-    val editUserNameHelper = MutableStateFlow<String?>(null)
-    val editConfirmedPasswordHelper = MutableStateFlow<String?>(null)
-    val editPasswordHelper = MutableStateFlow<String?>(null)
-    private lateinit var loadingDialog: LoadingDialog
-    @SuppressLint("StaticFieldLeak")
-    private lateinit var context: Context
+    val editEmailHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
+    val editUserNameHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
+    val editConfirmedPasswordHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
+    val editPasswordHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
 
-    fun initContext(inflater: LayoutInflater, context: Context) {
-        loadingDialog = LoadingDialog(inflater, context)
-        this.context = context
+    init {
+        viewModelScope.launch {
+            username.collect {
+                validateUserName(it)
+            }
+        }
+
+        viewModelScope.launch {
+            email.collect {
+                validateEmail(it)
+            }
+        }
+
+        viewModelScope.launch {
+            password.collect {
+                validatePassword(it)
+            }
+        }
+
+        viewModelScope.launch {
+            confirmedPassword.collect {
+                validateConfirmedPassword(it)
+            }
+        }
     }
 
-    suspend fun registerUser(): AuthResult? {
-        return if(submitForm()) {
-            registerUserUseCase(email.value, password.value)
-        } else
-            null
+    fun onUserRegisterClicked(): Job {
+        return viewModelScope.launch {
+            finalValidateConfirmedPassword(confirmedPassword.value)
+
+            if(isValidForm()) {
+                try {
+                    registerUserUseCase(email.value, password.value)
+                    updateUserInfo()
+                }
+                catch (ex: FirebaseAuthWeakPasswordException) {
+                    editPasswordHelper.value = R.string.weak_password
+                }
+                catch (ex: FirebaseAuthInvalidCredentialsException) {
+                    editEmailHelper.value = R.string.invalid_email
+                }
+                catch (ex: FirebaseAuthUserCollisionException) {
+                    editEmailHelper.value = R.string.email_already_exists
+                }
+            }
+        }
     }
 
-    suspend fun updateUserInfo(): Boolean {
-        val userRef = FirebaseAuth.getInstance().currentUser.apply { if(this == null) return false}
-        return if(submitForm()) {
-            val user = User(userRef!!.uid, username.value, email.value)
+    fun isValidForm(): Boolean {
+        return editEmailHelper.value == null &&
+                editPasswordHelper.value == null &&
+                editConfirmedPasswordHelper.value == null &&
+                editUserNameHelper.value == null
+    }
+
+    private fun updateUserInfo() {
+        viewModelScope.launch {
+            val user = User(getCurrentUserRefUseCase()!!.uid, username.value, email.value)
             updateUserInfoUseCase(user)
-        } else false
-    }
-
-    fun emailChangeListener() {
-        editEmailHelper.value = validEmail(email.value)
-    }
-
-    private fun validEmail(str: String): String? {
-        if(!Patterns.EMAIL_ADDRESS.matcher(str).matches()) {
-            return context.getString(R.string.invalid_email)
-        }
-        return null
-    }
-
-    fun userNameChangeListener() {
-        editUserNameHelper.value = validUserName(username.value)
-    }
-
-    private fun validUserName(str: String): String? {
-        return if(str.isNotEmpty()) {
-            null
-        } else {
-            context.getString(R.string.empty_input_text)
         }
     }
 
-    fun passwordChangeListener() {
-        editPasswordHelper.value = validPassword(password.value)
-    }
-
-    fun confirmedPasswordChangeListener() {
-        val valid = validPassword(confirmedPassword.value)
-        if(valid == null) {
-            if(confirmedPassword.value == password.value) {
-                editConfirmedPasswordHelper.value = valid
-            }
-            else {
-                editConfirmedPasswordHelper.value = context.getString(R.string.confirmed_password_is_not_matching)
-            }
+    private fun validateEmail(email: String) {
+        if(email.trim().isEmpty()) {
+            editEmailHelper.value = R.string.empty_input_text
         }
-        else
-            editConfirmedPasswordHelper.value = valid
+        else if(!Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()) {
+            editEmailHelper.value = R.string.invalid_email
+        } else
+            editEmailHelper.value = null
     }
 
-    private fun validPassword(password: String): String? {
-        if(password.length < 8) {
-            return context.getString(R.string.password_invalid_len)
+    private fun validatePassword(password: String) {
+        if(password.isEmpty()) {
+            editPasswordHelper.value = R.string.empty_input_text
+        }
+        else if(password.length < 8) {
+            editPasswordHelper.value = R.string.password_invalid_len
         }
 
         else if(!password.matches(".*[A-ZА-Я].*".toRegex())) {
-            return context.getString(R.string.password_invalid_upper_letters)
+            editPasswordHelper.value = R.string.password_invalid_upper_letters
         }
 
         else if(!password.matches(".*[a-zа-я].*".toRegex())) {
-            return context.getString(R.string.password_invalid_lower_letters)
+            editPasswordHelper.value = R.string.password_invalid_lower_letters
         }
 
         else if(!password.matches(".*[1-9].*".toRegex())) {
-            return context.getString(R.string.password_invalid_numbers)
+            editPasswordHelper.value = R.string.password_invalid_numbers
         }
         else
-            return null
+            editPasswordHelper.value = null
     }
 
-    private fun submitForm(): Boolean {
-        val validEmail = editEmailHelper.value == null
-        val validPassword = editPasswordHelper.value == null
-        val validConfirmedPassword = editConfirmedPasswordHelper.value == null
-        val validUsername = editUserNameHelper.value == null
-
-        return if(validEmail && validPassword && validUsername && validConfirmedPassword) {
-            true
+    private fun validateUserName(userName: String) {
+        editUserNameHelper.value = if(userName.isNotEmpty()) {
+            null
         } else {
-            invalidForm()
-            false
+            R.string.empty_input_text
         }
     }
 
-    private fun invalidForm() {
-        var message = ""
-        if(editUserNameHelper.value != null)
-            message += "\n\nФио: ${editUserNameHelper.value}"
-        if(editEmailHelper.value != null)
-            message += "\n\nЛогин: ${editEmailHelper.value}"
-        if(editPasswordHelper.value != null)
-            message += "\n\nПароль: ${editPasswordHelper.value}"
-        if(editConfirmedPasswordHelper.value != null)
-            message += "\n\nПодтвержденный пароль: ${editConfirmedPasswordHelper.value}"
+    private fun finalValidateConfirmedPassword(confirmedPassword: String) {
+        editConfirmedPasswordHelper.value =
+        if(password.value != confirmedPassword)
+            R.string.confirmed_password_does_not_match
+        else
+            null
+    }
 
-        MaterialAlertDialogBuilder(context)
-            .setTitle(context.getString(R.string.invalid_input_form_title))
-            .setMessage(message)
-            .setPositiveButton(context.getString(R.string.accept_invalid_form_btn)) { _, _ ->
-                //do nothing
-            }.show()
+    private fun validateConfirmedPassword(confirmedPassword: String) {
+        editConfirmedPasswordHelper.value =
+            if(confirmedPassword.isEmpty())
+                R.string.empty_input_text
+            else {
+                null
+            }
     }
 }

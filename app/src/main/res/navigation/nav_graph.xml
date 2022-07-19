@@ -19,7 +19,7 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_sign_in"
             app:destination="@id/navigation_sign_in"
-            app:popUpTo="@id/booking_place_fragment"
+            app:popUpTo="@id/booking_fragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/actionBookingFragment_to_bookingDetailsFragment"

@@ -12,15 +12,17 @@ interface UserRepository {
     // Тут должнен был быть тип Completable из реактивного программирования, но т.к. будем использовать
     // coroutines, поставил пока что тип Boolean, потому что с coroutines еще не работал.
     // Потом нужно будет все на многопоточность перенести.
-    suspend fun registerUser(email: String, password: String): AuthResult?
+    suspend fun registerUser(email: String, password: String): AuthResult
 
-    suspend fun signInUser(email: String, password: String): AuthResult?
+    suspend fun signInUser(email: String, password: String): AuthResult
 
-    suspend fun updateUserInfo(user: User): Boolean
+    suspend fun updateUserInfo(user: User): Void
 
-    suspend fun signInAsGuest(): AuthResult?
+    suspend fun signInAsGuest(): AuthResult
 
     fun signOut()
 
-    fun getCurrentUser(): FirebaseUser?
+    suspend fun updateCurrentUserRef()
+
+    fun getCurrentUserRef(): FirebaseUser?
 }

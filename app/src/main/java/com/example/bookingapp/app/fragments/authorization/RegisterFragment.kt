@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.bookingapp.R
+import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.app.ui_elements.LoadingDialog
 import com.example.bookingapp.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +21,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private val viewModel: RegisterViewModel by viewModels()
+    private val hostViewModel: HostViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,47 +33,43 @@ class RegisterFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        viewModel.initContext(inflater, requireContext())
         lifecycleScope.launch {
             viewModel.email.flowWithLifecycle(lifecycle).collect {
-                viewModel.emailChangeListener()
-                binding.editEmailLayout.helperText = viewModel.editEmailHelper.value
+                viewModel.editEmailHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
+                    binding.editEmailLayout.helperText = messageIdRes?.let { it -> getText(it) }
+                }
             }
         }
 
         lifecycleScope.launch {
             viewModel.password.flowWithLifecycle(lifecycle).collect {
-                viewModel.passwordChangeListener()
-                binding.editPasswordLayout.helperText = viewModel.editPasswordHelper.value
+                viewModel.editPasswordHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
+                    binding.editPasswordLayout.helperText = messageIdRes?.let { it -> getText(it) }
+                }
             }
         }
 
         lifecycleScope.launch {
             viewModel.username.flowWithLifecycle(lifecycle).collect {
-                viewModel.userNameChangeListener()
-                binding.editUserNameLayout.helperText = viewModel.editUserNameHelper.value
+                viewModel.editUserNameHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
+                    binding.editUserNameLayout.helperText = messageIdRes?.let { it -> getText(it) }
+                }
             }
         }
 
         lifecycleScope.launch {
             viewModel.confirmedPassword.flowWithLifecycle(lifecycle).collect {
-                viewModel.confirmedPasswordChangeListener()
-                binding.editConfirmPasswordLayout.helperText = viewModel.editConfirmedPasswordHelper.value
+                viewModel.editConfirmedPasswordHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
+                    binding.editConfirmPasswordLayout.helperText = messageIdRes?.let { it -> getText(it) }
+                }
             }
         }
 
-
-
-
         binding.registerBtn.setOnClickListener {
-            lifecycleScope.launch {
-                loadingDialog.startLoading()
-                if(viewModel.registerUser() != null) {
-                    viewModel.updateUserInfo()
+            loadingDialog.startLoading()
+            viewModel.onUserRegisterClicked().invokeOnCompletion {
+                if (viewModel.isValidForm()) {
                     findNavController().navigate(R.id.action_navigation_register_to_navigation_home)
-                }
-                else {
-                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_LONG).show()
                 }
                 loadingDialog.dismiss()
             }
@@ -79,6 +78,7 @@ class RegisterFragment : Fragment() {
         binding.signInBtn.setOnClickListener {
             findNavController().navigateUp()
         }
+
         return binding.root
     }
 }
