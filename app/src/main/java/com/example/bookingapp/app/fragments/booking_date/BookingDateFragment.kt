@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookingapp.R
 import com.example.bookingapp.databinding.FragmentBookingDateBinding
 import com.example.bookingapp.domain.entities.Period
@@ -18,14 +17,13 @@ import org.joda.time.format.DateTimeFormat
 class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
 
     private val viewModel: BookingDateViewModel by viewModels()
-    private lateinit var binding: FragmentBookingDateBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentBookingDateBinding.bind(view)
+        val binding = FragmentBookingDateBinding.bind(view)
 
         val dateAdapter = DateAdapter { id ->
-            onDayClicked(id)
+            onDayClicked(id, binding)
         }
 
         //placeId - затычка
@@ -33,7 +31,7 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
 
         //dayId - затычка
         val periods = viewModel.getPeriods(1)
-        setPeriods(periods)
+        setPeriods(periods, binding)
 
         with(binding) {
             btnSelect.setOnClickListener {
@@ -42,23 +40,18 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
 
             recFilter.apply {
                 adapter = dateAdapter
-                layoutManager = LinearLayoutManager(
-                    this@BookingDateFragment.context,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
             }
         }
     }
 
-    private fun setPeriods(periods: List<Period>) {
+    private fun setPeriods(periods: List<Period>, binding: FragmentBookingDateBinding) {
         with(binding) {
             groupMorning.removeAllViews()
             groupDay.removeAllViews()
             groupEvening.removeAllViews()
 
             for (time in periods) {
-                val chip = layoutInflater.inflate(R.layout.chip_layout, groupDay, false) as Chip
+                val chip = Chip(this@BookingDateFragment.context)
                 chip.text = time.timeStart.toStringDate("HH:mm") +
                         " - " + time.timeEnd.toStringDate("HH:mm")
 
@@ -66,7 +59,7 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
                     .withZone(DateTimeZone.forID("Asia/Yekaterinburg"))
                     .hourOfDay()
                     .get()
-                
+
                 if (timeStart < 12)//если меньше 12 -> утреннее время
                     groupMorning.addView(chip)
                 else if (timeStart < 17)//если меньше 17 -> дневное время
@@ -84,7 +77,7 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
             .print(this)
     }
 
-    private fun onDayClicked(dayId: Int) {
-        setPeriods(viewModel.getPeriods(dayId))
+    private fun onDayClicked(dayId: Int, binding: FragmentBookingDateBinding) {
+        setPeriods(viewModel.getPeriods(dayId), binding)
     }
 }
