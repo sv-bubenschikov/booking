@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.example.bookingapp.R
 import com.example.bookingapp.app.entities.PeriodForFragment
 import com.example.bookingapp.databinding.FragmentBookingDateBinding
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
@@ -20,23 +23,27 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         val binding = FragmentBookingDateBinding.bind(view)
 
         val dateAdapter = DateAdapter { id ->
-            onDayClicked(id, binding)
+            onDayClicked(id)
         }
-
-        //placeId - затычка
-        dateAdapter.submitList(viewModel.getDays(1))
-
-        //dayId - затычка
-        val periods = viewModel.getPeriods(1)
-        setPeriods(periods, binding)
 
         with(binding) {
             btnSelect.setOnClickListener {
                 //переход дальше
             }
 
-            recFilter.apply {
-                adapter = dateAdapter
+            recFilter.adapter = dateAdapter
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.days.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { dayList ->
+                dateAdapter.submitList(dayList)
+                viewModel.getPeriods(dayList.first().id) // Вопрос. Я это написал, чтобы при первой загрузке появлялись чипсы, но при повороте тогда будет некорректно
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.periods.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { periodList ->
+                setPeriods(periodList,binding)
             }
         }
     }
@@ -65,7 +72,7 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         }
     }
 
-    private fun onDayClicked(dayId: Int, binding: FragmentBookingDateBinding) {
-        setPeriods(viewModel.getPeriods(dayId), binding)
+    private fun onDayClicked(dayId: Int) {
+        viewModel.getPeriods(dayId)
     }
 }

@@ -3,6 +3,8 @@ package com.example.bookingapp.data.repositories
 import com.example.bookingapp.domain.entities.Day
 import com.example.bookingapp.domain.entities.Period
 import com.example.bookingapp.domain.repositories_interface.DateRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.joda.time.DateTime
 import javax.inject.Inject
 
@@ -32,11 +34,11 @@ class DateRepositoryImpl @Inject constructor() : DateRepository {
     )
 
 
-    override fun getDaysInfoByPlaceId(placeId: Int): List<Day> {
-        return fakeDays.filter { day -> day.placeId == placeId }
+    override fun getDaysInfoByPlaceId(placeId: Int): StateFlow<List<Day>> {
+        return MutableStateFlow(fakeDays.filter { day -> day.placeId == placeId })
     }
 
-    override fun getPeriodsByDayId(dayId: Int): List<Period> {
-        return fakePeriods.filter { period -> period.dayId == dayId }
+    override fun getPeriodsByDayId(dayId: Int): StateFlow<List<Period>> {
+        return MutableStateFlow(fakePeriods.filter { period -> period.dayId == dayId })
     }
 }

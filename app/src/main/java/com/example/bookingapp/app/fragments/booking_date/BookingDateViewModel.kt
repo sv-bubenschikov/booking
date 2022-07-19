@@ -6,6 +6,7 @@ import com.example.bookingapp.domain.entities.Day
 import com.example.bookingapp.domain.usecases.date.GetDaysInfoByPlaceIdUseCase
 import com.example.bookingapp.domain.usecases.date.GetPeriodsByDayIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import javax.inject.Inject
@@ -16,14 +17,18 @@ class BookingDateViewModel @Inject constructor(
     private val getPeriodsByDayId: GetPeriodsByDayIdUseCase,
 ) : ViewModel() {
 
-    fun getDays(placeId: Int): List<Day> = getDaysInfoByPlaceId(placeId)
+    val days: StateFlow<List<Day>> = getDaysInfoByPlaceId(1) //TODO Получение по id метса
 
-    fun getPeriods(dayId: Int): List<PeriodForFragment> = getPeriodsByDayId(dayId).map { p ->
-        PeriodForFragment(
-            id = p.id,
-            timeStart = DateTime(p.timeStart).withZone(DateTimeZone.forID("Asia/Yekaterinburg")),
-            timeEnd = DateTime(p.timeEnd).withZone(DateTimeZone.forID("Asia/Yekaterinburg")),
-            statusBooking = p.statusBooking
-        )
+    val periods: MutableStateFlow<List<PeriodForFragment>> = MutableStateFlow(emptyList())
+
+    fun getPeriods(dayId: Int) {
+        periods.value = getPeriodsByDayId(dayId).value.map { p ->
+            PeriodForFragment(
+                id = p.id,
+                timeStart = DateTime(p.timeStart).withZone(DateTimeZone.forID("Asia/Yekaterinburg")),
+                timeEnd = DateTime(p.timeEnd).withZone(DateTimeZone.forID("Asia/Yekaterinburg")),
+                statusBooking = p.statusBooking
+            )
+        }
     }
 }
