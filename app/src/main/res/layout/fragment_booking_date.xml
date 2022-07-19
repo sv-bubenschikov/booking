@@ -10,11 +10,11 @@
         android:id="@+id/rec_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="8"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/card_date"
-        tools:orientation="horizontal" />
+        tools:listitem="@layout/card_date" />
 
     <ScrollView
         android:layout_width="match_parent"
