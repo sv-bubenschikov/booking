@@ -18,13 +18,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="?verticalSpacing"
         android:paddingHorizontal="?screenPaddingHorizontal"
-        android:scrollbars="none"
-        app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toTopOf="@id/btn_select"
-        app:layout_constraintTop_toBottomOf="@id/rec_filter"
-        app:layout_constraintVertical_bias="0">
+        app:layout_constraintTop_toBottomOf="@id/rec_filter">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,14 +78,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="?screenPaddingHorizontal"
-        android:layout_marginBottom="?listPreferredItemSpacingVertical"
-        android:paddingVertical="?verticalSpacing"
+        android:layout_marginBottom="?screenPaddingVertical"
         android:text="@string/select"
-        android:textAllCaps="false"
-        android:textAppearance="?textAppearanceHeadline5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
