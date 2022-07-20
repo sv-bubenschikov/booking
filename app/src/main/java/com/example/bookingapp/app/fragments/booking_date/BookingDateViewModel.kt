@@ -20,15 +20,17 @@ class BookingDateViewModel @Inject constructor(
     stateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    val periods: MutableStateFlow<List<PeriodForFragment>> = MutableStateFlow(emptyList())
+
     val days: StateFlow<List<Day>> = getDaysInfoByPlaceId(stateHandle[PLACE_ID]!!).apply {
         if (this.value.isNotEmpty())
             getPeriods(this.value.first().id)
     }
 
-    val periods: MutableStateFlow<List<PeriodForFragment>> = MutableStateFlow(emptyList())
-
     fun getPeriods(dayId: Int) {
-        periods.value = getPeriodsByDayId(dayId).value.map { p ->
+
+        periods.value =
+            getPeriodsByDayId(dayId).value.map { p ->
             PeriodForFragment(
                 id = p.id,
                 timeStart = DateTime(p.timeStart).withZone(DateTimeZone.forID("Asia/Yekaterinburg")),
