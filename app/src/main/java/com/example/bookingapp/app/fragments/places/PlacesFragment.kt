@@ -8,7 +8,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation.findNavController
 import com.example.bookingapp.R
-import com.example.bookingapp.app.fragments.booking_place.BookingPlaceFragment.Companion.PLACE_ID
+import com.example.bookingapp.app.fragments.booking_date.BookingDateFragment.Companion.PLACE_ID
 import com.example.bookingapp.databinding.FragmentPlacesBinding
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +29,7 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
                 putInt(PLACE_ID, place.id)
             }
             findNavController(view).navigate(
-                R.id.action_placesFragment_to_bookingPlaceFragment,
+                R.id.action_placesFragment_to_bookingDateFragment,
                 arg
             )
         }

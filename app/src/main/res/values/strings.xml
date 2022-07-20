@@ -3,7 +3,7 @@
     <string name="booking_fragment_label">Забронировано</string>
     <string name="companies_fragment_label">Компании</string>
     <string name="places_fragment_label">Места</string>
-    <string name="booking_place_fragment_label">Место</string>
+    <string name="booking_date_fragment_label">Место</string>
     <string name="profile_fragment_label">Профиль</string>
     <string name="menu_profile_title">Профиль</string>
     <string name="you_have_booked">Вы забронировали:</string>
@@ -38,4 +38,8 @@
     <string name="incorrect_credentials">Введен неверный логин или пароль</string>
     <string name="weak_password">Пароль недостаточно надежный</string>
     <string name="email_already_exists">Эта почта уже используется</string>
+    <string name="select">Выбрать</string>
+    <string name="evening">Вечер</string>
+    <string name="day">День</string>
+    <string name="morning">Утро</string>
 </resources>
