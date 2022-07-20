@@ -22,8 +22,8 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentBookingDateBinding.bind(view)
 
-        val dateAdapter = DateAdapter { id ->
-            onDayClicked(id)
+        val dateAdapter = DateAdapter { dayId ->
+            viewModel.onDayClicked(dayId)
         }
 
         with(binding) {
@@ -55,7 +55,7 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
             groupEvening.removeAllViews()
 
             for (period in periods) {
-                val chip = Chip(this@BookingDateFragment.context)
+                val chip = Chip(requireContext())
                 chip.text = period.toString()
 
                 val timeStart = period.timeStart
@@ -70,10 +70,6 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
                     groupEvening.addView(chip)
             }
         }
-    }
-
-    private fun onDayClicked(dayId: Int) {
-        viewModel.getPeriods(dayId)
     }
 
     companion object {

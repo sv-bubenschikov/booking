@@ -9,8 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.fragments.booking_date.BookingDateFragment.Companion.PLACE_ID
-import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment
-import com.example.bookingapp.app.fragments.booking_place.BookingPlaceFragment.Companion.PLACE_ID
 import com.example.bookingapp.databinding.FragmentPlacesBinding
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
