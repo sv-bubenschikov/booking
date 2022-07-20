@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.HostViewModel
+import com.example.bookingapp.app.fragments.places.PlacesFragment.Companion.COMPANY_ID
+import com.example.bookingapp.app.fragments.places.PlacesFragment.Companion.COMPANY_TITLE
 import com.example.bookingapp.databinding.FragmentCompaniesBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,8 +24,15 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
         val binding = FragmentCompaniesBinding.bind(view)
 
         hostViewModel.setActionButtonVisible(false)
+
+        // TODO #26
         binding.buttonNextFragment.setOnClickListener {
-            findNavController(view).navigate(R.id.action_companiesFragment_to_placesFragment)
+            val arg = Bundle().apply {
+                putInt(COMPANY_ID, 1)
+                // Хардкодом прописал название компании, для проверки его отправки на следующий фрагмент
+                putString(COMPANY_TITLE, "Тензор")
+            }
+            findNavController(view).navigate(R.id.action_companiesFragment_to_placesFragment, arg)
         }
     }
 }

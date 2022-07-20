@@ -48,7 +48,12 @@
         <action
             android:id="@+id/action_placesFragment_to_bookingDateFragment"
             app:destination="@id/booking_date_fragment">
-
+            <argument
+                android:name="company_id"
+                app:argType="integer" />
+            <argument
+                android:name="company_title"
+                app:argType="string" />
             <argument
                 android:name="place_id"
                 app:argType="integer" />
