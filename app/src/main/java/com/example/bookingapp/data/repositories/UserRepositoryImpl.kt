@@ -1,6 +1,6 @@
 package com.example.bookingapp.data.repositories
 
-import com.example.bookingapp.domain.entities.User
+import com.example.bookingapp.domain.entities.*
 import com.example.bookingapp.domain.repositories_interface.UserRepository
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -23,14 +23,18 @@ class UserRepositoryImpl @Inject constructor() : UserRepository {
     }
 
     override suspend fun updateUserInfo(user: User): Void {
-        val userMap = HashMap<String, Any>()
-        userMap["id"] = user.id
-        userMap["name"] = user.name
-        userMap["email"] = user.email
         return FirebaseDatabase.getInstance().reference
             .child("Users")
             .child(user.id)
-            .setValue(userMap)
+            .setValue(user)
+            .await()
+    }
+
+    override suspend fun deleteUserInfoById(id: String): Void {
+        return FirebaseDatabase.getInstance().reference
+            .child("Users")
+            .child(id)
+            .removeValue()
             .await()
     }
 

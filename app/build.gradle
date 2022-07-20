@@ -47,6 +47,9 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:8.0.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.1'
 
+    //Joda time
+    implementation('joda-time:joda-time:2.10.14')
+
     //Origin
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'

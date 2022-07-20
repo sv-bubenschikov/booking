@@ -1,7 +1,7 @@
 package com.example.bookingapp.domain.entities
 
 data class Company(
-    val id: Int,
     val name: String,
-    val logoUrl: String
+    val logoUrl: String,
+    var id: String = "",
 )

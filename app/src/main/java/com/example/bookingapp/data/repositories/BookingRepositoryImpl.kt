@@ -1,42 +1,57 @@
 package com.example.bookingapp.data.repositories
 
-import com.example.bookingapp.domain.entities.Booking
-import com.example.bookingapp.domain.entities.BookingDate
-import com.example.bookingapp.domain.entities.Company
-import com.example.bookingapp.domain.entities.Place
+import com.example.bookingapp.domain.entities.*
 import com.example.bookingapp.domain.repositories_interface.BookingRepository
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.tasks.await
+import org.joda.time.LocalDate
+import java.sql.Time
+import java.util.*
 import javax.inject.Inject
 
 class BookingRepositoryImpl @Inject constructor() : BookingRepository {
 
-    override fun getBookingsInfoByUserId(userId: Int) = MutableStateFlow(
+    override fun getBookingsInfoByUserId(userId: String) = MutableStateFlow(
         listOf(
             Booking(
-                0,
                 userId,
-                Company(0, "Тензор", ""),
-                Place(0, "Переговорная Hawaii", "Переговорная", "3", 8, emptyList()),
-                BookingDate()
+                "Летняя практика Android. Обсуждение макета приложения",
+                "place id",
+                LocalDate.now().toDate().time,
+                57600000,
+                61200000
             )
         )
     )
 
-    override fun getBookingInfoById(id: Int) = MutableStateFlow(
+    override fun getBookingInfoById(id: String) = MutableStateFlow(
         Booking(
-            id,
-            0,
-            Company(0, "Тензор", ""),
-            Place(0, "Переговорная Hawaii", "Переговорная", "3", 8, emptyList()),
-            BookingDate()
+            "",
+            "Летняя практика Android. Обсуждение макета приложения",
+            "place id",
+            LocalDate.now().toDate().time,
+            57600000,
+            61200000
         )
     )
 
-    override fun createBooking(booking: Booking): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun createBooking(booking: Booking): Void {
+        val postRef = FirebaseDatabase.getInstance().reference
+            .child("Bookings")
+        val newPostRef = postRef
+            .push()
+        booking.id = newPostRef.key!!
+        return newPostRef
+            .setValue(booking)
+            .await()
     }
 
-    override fun deleteBookingById(id: Int): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun deleteBookingById(id: String): Void {
+        return FirebaseDatabase.getInstance().reference
+            .child("Bookings")
+            .child(id)
+            .removeValue()
+            .await()
     }
 }

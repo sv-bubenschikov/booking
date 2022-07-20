@@ -7,16 +7,20 @@ fun Booking.toFB(): BookingEntityForFB =
     BookingEntityForFB(
         id = this.id,
         userId = this.userId,
-        company = this.company.toFB(),
-        place = this.place.toFB(),
-        bookingDate = this.bookingDate.toFB()
+        bookingName = this.bookingName,
+        placeId = this.placeId,
+        bookingDate = this.bookingDate,
+        startTime = this.startTime,
+        endTime = this.endTime
     )
 
 fun BookingEntityForFB.toDomain(): Booking =
     Booking(
         id = this.id,
         userId = this.userId,
-        company = this.company.toDomain(),
-        place = this.place.toDomain(),
-        bookingDate = this.bookingDate.toDomain()
+        bookingName = this.bookingName,
+        placeId = this.placeId,
+        bookingDate = this.bookingDate,
+        startTime = this.startTime,
+        endTime = this.endTime
     )

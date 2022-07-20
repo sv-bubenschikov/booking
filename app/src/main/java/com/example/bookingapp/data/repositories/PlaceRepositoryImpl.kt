@@ -2,15 +2,17 @@ package com.example.bookingapp.data.repositories
 
 import com.example.bookingapp.domain.entities.Place
 import com.example.bookingapp.domain.repositories_interface.PlaceRepository
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class PlaceRepositoryImpl @Inject constructor() : PlaceRepository {
     private val places = listOf(
-        Place(1, "Алиса", "Переговорка", "2 этаж", 6, emptyList()),
-        Place(2, "Hawaii", "Переговорка", "3 этаж", 6, emptyList()),
-        Place(3, "", "Бильярдный стол", "3 этаж", 2, emptyList()),
-        Place(4, "", "Бильярдный стол", "2 этаж", 2, emptyList()),
-        Place(5, "ChinaTown", "Переговорка", "3 этаж", 10, emptyList())
+        Place("Алиса", "Переговорка", 2, 6, "company id", emptyList()),
+        Place("Hawaii", "Переговорка", 3, 6, "company id", emptyList()),
+        Place("", "Бильярдный стол", 3, 2,"company id", emptyList()),
+        Place("", "Бильярдный стол", 2, 2,"company id", emptyList()),
+        Place("ChinaTown", "Переговорка", 3, 10, "company id", emptyList())
     )
 
 
@@ -20,5 +22,24 @@ class PlaceRepositoryImpl @Inject constructor() : PlaceRepository {
 
     override fun getPlaceInfoById(id: Int): Place {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun createPlace(place: Place): Void {
+        val postRef = FirebaseDatabase.getInstance().reference
+            .child("Places")
+        val newPostRef = postRef
+            .push()
+        place.id = newPostRef.key!!
+        return newPostRef
+            .setValue(place)
+            .await()
+    }
+
+    override suspend fun deletePlaceById(id: String): Void {
+        return FirebaseDatabase.getInstance().reference
+            .child("Places")
+            .child(id)
+            .removeValue()
+            .await()
     }
 }

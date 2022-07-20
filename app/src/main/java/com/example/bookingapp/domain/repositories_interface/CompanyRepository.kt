@@ -7,4 +7,9 @@ interface CompanyRepository {
     fun getCompaniesInfo(): List<Company>
 
     fun getCompanyInfoById(id: Int): Company
+
+    suspend fun createCompany(company: Company): Void
+
+    suspend fun deleteCompanyById(id: String): Void
+
 }

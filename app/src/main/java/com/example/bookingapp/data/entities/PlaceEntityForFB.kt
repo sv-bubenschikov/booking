@@ -1,10 +1,13 @@
 package com.example.bookingapp.data.entities
 
+import com.example.bookingapp.domain.entities.Period
+
 data class PlaceEntityForFB(
-    val id: Int,
     val name: String,
     val type: String,
-    val floor: String,
+    val floor: Int,
+    val companyId: String,
     val numberParticipants: Int,
-    val attributes: List<String>
+    val periods: List<Period>,
+    val id: String ="",
 )
