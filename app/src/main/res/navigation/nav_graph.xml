@@ -59,6 +59,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/booking_details_fragment"
+        android:name="com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment"
+        android:label="@string/you_have_booked"
+        tools:layout="@layout/fragment_booking_details">
+        <action
+            android:id="@+id/action_bookingDetailsFragment_to_bookingFragment"
+            app:destination="@id/booking_fragment"/>
+    </fragment>
+
+    <fragment
         android:id="@+id/profile_fragment"
         android:name="com.example.bookingapp.app.fragments.profile.ProfileFragment"
         android:label="@string/profile_fragment_label"
@@ -88,10 +98,4 @@
             android:id="@+id/action_navigation_sign_in_to_navigation_register"
             app:destination="@id/navigation_register" />
     </fragment>
-
-    <fragment
-        android:id="@+id/booking_details_fragment"
-        android:name="com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment"
-        android:label="@string/you_have_booked"
-        tools:layout="@layout/fragment_booking_details" />
 </navigation>

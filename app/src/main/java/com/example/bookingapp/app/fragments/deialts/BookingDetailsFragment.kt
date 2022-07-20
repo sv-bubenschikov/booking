@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.databinding.FragmentBookingDetailsBinding
@@ -27,7 +28,26 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.booking.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { booking ->
                 binding.bookingCompanyBlockText.text = booking.company.name
+                binding.bookingPlaceBlockText.text = booking.place.name
+                binding.bookingDatetimeBlockText.text = booking.bookingDate.toString()
+                binding.bookingNameBlockText.text = booking.bookingName
             }
+        }
+
+        binding.cancelBookingButton.setOnClickListener {
+            viewModel.onCancelBookingClicked().invokeOnCompletion {
+                findNavController().navigate(R.id.action_bookingDetailsFragment_to_bookingFragment)
+            }
+        }
+
+        binding.confirmBookingButton.setOnClickListener {
+            viewModel.onConfirmBookingClicked().invokeOnCompletion {
+                findNavController().navigate(R.id.action_bookingDetailsFragment_to_bookingFragment)
+            }
+        }
+
+        binding.returnToDateChoosingButton.setOnClickListener {
+            //TODO: Добавить переход на экран выбора даты
         }
 
         hostViewModel.setActionButtonVisible(false)
