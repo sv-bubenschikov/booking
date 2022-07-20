@@ -10,7 +10,8 @@ fun Place.toFB(): PlaceEntityForFB =
         type = this.type,
         floor = this.floor,
         numberParticipants = this.numberParticipants,
-        attributes = this.attributes
+        periods = this.periods,
+        companyId = this.companyId
     )
 
 fun PlaceEntityForFB.toDomain(): Place =
@@ -20,5 +21,6 @@ fun PlaceEntityForFB.toDomain(): Place =
         type = this.type,
         floor = this.floor,
         numberParticipants = this.numberParticipants,
-        attributes = this.attributes
+        periods = this.periods,
+        companyId = this.companyId
     )

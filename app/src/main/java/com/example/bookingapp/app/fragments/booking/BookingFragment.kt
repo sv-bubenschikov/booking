@@ -2,10 +2,8 @@ package com.example.bookingapp.app.fragments.booking
 
 import android.content.Context
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.util.Log
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -32,6 +30,12 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         context as AppCompatActivity
+
+        lifecycleScope.launch {
+            hostViewModel.actionButtonClicked.flowWithLifecycle(lifecycle).collect {
+                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
+            }
+        }
 
         lifecycleScope.launch {
             hostViewModel.updateCurrentUserRef().join()
@@ -63,18 +67,13 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         val binding = FragmentBookingBinding.bind(view)
         val adapter = BookingListAdapter { booking ->
             val arg = Bundle().apply {
-                putInt(BOOKING_ID, booking.id)
+                putString(BOOKING_ID, booking.id)
             }
             findNavController().navigate(R.id.actionBookingFragment_to_bookingDetailsFragment, arg)
         }
         binding.bookingList.adapter = adapter
 
         hostViewModel.setActionButtonVisible(true)
-        lifecycleScope.launch {
-            hostViewModel.actionButtonClicked.flowWithLifecycle(lifecycle).collect {
-                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
-            }
-        }
 
         lifecycleScope.launch {
             viewModel.bookingList.flowWithLifecycle(lifecycle).collect { bookingList ->

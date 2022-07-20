@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.databinding.ActivityMainBinding
@@ -25,9 +25,6 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.actionButton.setOnClickListener {
-            hostViewModel.onActionButtonClicked()
-        }
         lifecycleScope.launch {
             hostViewModel.actionButtonVisible.flowWithLifecycle(lifecycle).collect { isVisible ->
                 if (isVisible)
@@ -37,14 +34,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //issue #10 https://github.com/sv-bubenschikov/booking/projects/1#card-84219457
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
-        val navController = navHostFragment.navController
-
-        visibilityNavElements(navController)
-
-        setupActionBarWithNavController(navController)
+        binding.actionButton.setOnClickListener {
+            hostViewModel.onActionButtonClicked()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -68,5 +60,13 @@ class MainActivity : AppCompatActivity() {
                 else -> supportActionBar?.show()
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val navController = findNavController(R.id.fragment_container_view)
+        visibilityNavElements(navController)
+        setupActionBarWithNavController(navController)
     }
 }

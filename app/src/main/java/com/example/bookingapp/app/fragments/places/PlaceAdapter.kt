@@ -26,7 +26,7 @@ class PlaceAdapter(private val clickListener: () -> Unit) :
         with(holder.viewBinding) {
             placeType.text = item.type
             placeName.text = item.name
-            placeFloor.text = item.floor
+            placeFloor.text = item.floor.toString()
         }
 
         //issue #12 https://github.com/sv-bubenschikov/booking/projects/1#card-84218285

@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class GetBookingInfoByIdUseCase @Inject constructor(private val bookingRepository: BookingRepository) {
 
-    operator fun invoke(id: Int) =
+    operator fun invoke(id: String) =
         bookingRepository.getBookingInfoById(id)
 }

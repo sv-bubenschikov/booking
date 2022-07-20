@@ -1,9 +1,13 @@
 package com.example.bookingapp.app.fragments.authorization
 
-import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bookingapp.R
+import com.example.bookingapp.domain.usecases.booking.CreateBookingUseCase
+import com.example.bookingapp.domain.usecases.booking.DeleteBookingByIdUseCase
+import com.example.bookingapp.domain.usecases.company.CreateCompanyUseCase
+import com.example.bookingapp.domain.usecases.place.CreatePlaceUseCase
+import com.example.bookingapp.domain.usecases.place.DeletePlaceByIdUseCase
 import com.example.bookingapp.domain.usecases.user.SignInAsGuestUseCase
 import com.example.bookingapp.domain.usecases.user.SignInUseCase
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException

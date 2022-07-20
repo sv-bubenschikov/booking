@@ -18,6 +18,8 @@ interface UserRepository {
 
     suspend fun updateUserInfo(user: User): Void
 
+    suspend fun deleteUserInfoById(id: String): Void
+
     suspend fun signInAsGuest(): AuthResult
 
     fun signOut()
