@@ -47,7 +47,14 @@
         tools:layout="@layout/fragment_places">
         <action
             android:id="@+id/action_placesFragment_to_bookingPlaceFragment"
-            app:destination="@id/booking_place_fragment" />
+            app:destination="@id/booking_place_fragment">
+            <argument
+                android:name="company_id"
+                app:argType="integer" />
+            <argument
+                android:name="company_title"
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment

@@ -4,13 +4,15 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.fragments.booking_place.BookingPlaceFragment.Companion.PLACE_ID
 import com.example.bookingapp.databinding.FragmentPlacesBinding
-import com.example.bookingapp.domain.entities.Place
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PlacesFragment : Fragment(R.layout.fragment_places) {
@@ -46,5 +48,18 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
                 chipsFilter.addView(chip)
             }
         }
+
+        // TODO #27
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.places.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { places ->
+                placeListAdapter.submitList(places)
+            }
+        }
+    }
+
+    companion object {
+        const val COMPANY_ID = "company_id"
+        const val COMPANY_TITLE = "company_title"
     }
 }
