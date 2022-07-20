@@ -8,6 +8,7 @@ class PlaceListViewHolder(
     private val binding: CardPlaceBinding,
     private val onItemClicked: (Place) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
+
     private lateinit var data: Place
 
     init {
@@ -16,11 +17,10 @@ class PlaceListViewHolder(
         }
     }
 
-    fun bind(item: Place) = with(binding){
+    fun bind(item: Place) = with(binding) {
         data = item
         placeType.text = data.type
         placeName.text = data.name
         placeFloor.text = data.floor
     }
-
 }

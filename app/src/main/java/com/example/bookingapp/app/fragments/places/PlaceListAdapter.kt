@@ -9,7 +9,8 @@ import com.example.bookingapp.domain.entities.Place
 class PlaceListAdapter(
     private val onItemClicked: (Place) -> Unit
 ) : ListAdapter<Place, PlaceListViewHolder>(PlaceDiffCallback) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : PlaceListViewHolder {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceListViewHolder {
         val binding = CardPlaceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PlaceListViewHolder(binding, onItemClicked)
     }
