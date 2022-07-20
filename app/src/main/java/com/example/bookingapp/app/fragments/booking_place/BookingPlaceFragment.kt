@@ -20,4 +20,8 @@ class BookingPlaceFragment : Fragment(R.layout.fragment_booking_place) {
         val binding = FragmentCompaniesBinding.bind(view)
 
     }
+
+    companion object {
+        const val PLACE_ID = "place_id"
+    }
 }

@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:checkable="true"
-    android:clickable="true"
-    android:focusable="true"
-    android:layout_margin="5dp">
+    android:layout_marginBottom="?listPreferredItemSpacingVertical"
+    android:layout_marginHorizontal="?gridPreferredItemSpacingHorizontal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="140dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorOnPrimary"
-        android:padding="10dp">
+        android:paddingVertical="?listPreferredItemPaddingVertical"
+        android:paddingStart="?listPreferredItemPaddingStart"
+        android:paddingEnd="?listPreferredItemPaddingEnd">
 
         <TextView
             android:id="@+id/place_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="@string/place_type_stub"
+            android:textAppearance="?textAppearanceOverline"
             app:layout_constraintBottom_toTopOf="@id/place_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Переговорка" />
 
         <TextView
             android:id="@+id/place_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="@string/place_name_stub"
+            android:layout_marginTop="?verticalSpacing"
+            android:textAppearance="?textAppearanceHeadline5"
             app:layout_constraintBottom_toTopOf="@id/place_floor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/place_type" />
+            app:layout_constraintTop_toBottomOf="@id/place_type"
+            tools:text="Hawaii" />
 
         <TextView
             android:id="@+id/place_floor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/place_floor_stub"
+            android:layout_marginTop="?verticalSpacing"
+            android:textAppearance="?textAppearanceBody2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/place_name" />
+            app:layout_constraintTop_toBottomOf="@id/place_name"
+            tools:text="2 Этаж" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
