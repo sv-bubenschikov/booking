@@ -89,7 +89,7 @@ class RegisterViewModel @Inject constructor(
 
     private fun updateUserInfo() {
         viewModelScope.launch {
-            val user = User(getCurrentUserRefUseCase()!!.uid, username.value, email.value)
+            val user = User(username.value, email.value)
             updateUserInfoUseCase(user)
         }
     }

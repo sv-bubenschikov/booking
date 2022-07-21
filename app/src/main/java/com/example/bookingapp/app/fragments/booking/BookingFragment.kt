@@ -40,6 +40,12 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
             }
         }
 
+        lifecycleScope.launch {
+            hostViewModel.actionButtonClicked.flowWithLifecycle(lifecycle).collect {
+                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
+            }
+        }
+
         context.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.main_menu, menu)
@@ -62,18 +68,13 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         val binding = FragmentBookingBinding.bind(view)
         val adapter = BookingListAdapter { booking ->
             val arg = Bundle().apply {
-                putInt(BOOKING_ID, booking.id)
+                putString(BOOKING_ID, booking.id)
             }
             findNavController().navigate(R.id.actionBookingFragment_to_bookingDetailsFragment, arg)
         }
         binding.bookingList.adapter = adapter
 
         hostViewModel.setActionButtonVisible(true)
-        lifecycleScope.launch {
-            hostViewModel.actionButtonClicked.flowWithLifecycle(lifecycle).collect {
-                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
-            }
-        }
 
         lifecycleScope.launch {
             viewModel.bookingList.flowWithLifecycle(lifecycle).collect { bookingList ->

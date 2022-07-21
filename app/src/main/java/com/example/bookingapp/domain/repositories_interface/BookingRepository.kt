@@ -5,11 +5,11 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface BookingRepository {
 
-    fun getBookingsInfoByUserId(userId: Int): StateFlow<List<Booking>>
+    fun getBookingsInfoByUserId(userId: String): StateFlow<List<Booking>>
 
-    fun getBookingInfoById(id: Int): StateFlow<Booking>
+    fun getBookingInfoById(id: String): StateFlow<Booking>
 
-    fun createBooking(booking: Booking): Boolean
+    suspend fun createBooking(booking: Booking): Void
 
-    fun deleteBookingById(id: Int): Boolean
+    suspend fun deleteBookingById(id: String): Void
 }

@@ -26,7 +26,7 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.booking.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { booking ->
-                binding.bookingOrganisationBlockText.text = booking.company.name
+                binding.bookingOrganisationBlockText.text = booking.companyName
             }
         }
 

@@ -13,5 +13,5 @@ class BookingViewModel @Inject constructor(
 ) : ViewModel() {
 
     // TODO: #22
-    val bookingList: StateFlow<List<Booking>> = getBookingsInfoByUserIdUseCase(0)
+    val bookingList: StateFlow<List<Booking>> = getBookingsInfoByUserIdUseCase("")
 }
