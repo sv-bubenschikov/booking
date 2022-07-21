@@ -18,7 +18,6 @@ import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.BOOKING_ID
 import com.example.bookingapp.databinding.FragmentBookingBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

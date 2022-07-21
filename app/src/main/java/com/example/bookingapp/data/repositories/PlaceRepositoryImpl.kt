@@ -2,25 +2,29 @@ package com.example.bookingapp.data.repositories
 
 import com.example.bookingapp.domain.entities.Place
 import com.example.bookingapp.domain.repositories_interface.PlaceRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class PlaceRepositoryImpl @Inject constructor() : PlaceRepository {
-    private val places = listOf(
-        Place("Алиса", "Переговорка", 2, 6, "company id", emptyList()),
-        Place("Hawaii", "Переговорка", 3, 6, "company id", emptyList()),
-        Place("", "Бильярдный стол", 3, 2,"company id", emptyList()),
-        Place("", "Бильярдный стол", 2, 2,"company id", emptyList()),
-        Place("ChinaTown", "Переговорка", 3, 10, "company id", emptyList())
+    private val places = MutableStateFlow(
+        listOf(
+            Place("Алиса", "Переговорка", 2, 6, "company id", emptyList()),
+            Place("Hawaii", "Переговорка", 3, 6, "company id", emptyList()),
+            Place("", "Бильярдный стол", 3, 2,"company id", emptyList()),
+            Place("", "Бильярдный стол", 2, 2,"company id", emptyList()),
+            Place("ChinaTown", "Переговорка", 3, 10, "company id", emptyList())
+        )
     )
 
 
-    override fun getPlacesInfoByCompanyId(companyId: Int): List<Place> {
+    override fun getPlacesInfoByCompanyId(companyId: Int): StateFlow<List<Place>> {
         return places
     }
 
-    override fun getPlaceInfoById(id: Int): Place {
+    override fun getPlaceInfoById(id: Int): StateFlow<Place> {
         TODO("Not yet implemented")
     }
 

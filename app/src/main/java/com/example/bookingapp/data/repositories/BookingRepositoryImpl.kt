@@ -6,8 +6,6 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.tasks.await
 import org.joda.time.LocalDate
-import java.sql.Time
-import java.util.*
 import javax.inject.Inject
 
 class BookingRepositoryImpl @Inject constructor() : BookingRepository {

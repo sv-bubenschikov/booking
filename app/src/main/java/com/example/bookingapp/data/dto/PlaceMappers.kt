@@ -6,6 +6,7 @@ import com.example.bookingapp.domain.entities.Place
 fun Place.toFB(): PlaceEntityForFB =
     PlaceEntityForFB(
         id = this.id,
+        companyId = this.companyId,
         name = this.name,
         type = this.type,
         floor = this.floor,
@@ -17,6 +18,7 @@ fun Place.toFB(): PlaceEntityForFB =
 fun PlaceEntityForFB.toDomain(): Place =
     Place(
         id = this.id,
+        companyId = this.companyId,
         name = this.name,
         type = this.type,
         floor = this.floor,
