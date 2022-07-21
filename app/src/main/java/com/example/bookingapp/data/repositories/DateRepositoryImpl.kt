@@ -23,20 +23,20 @@ class DateRepositoryImpl @Inject constructor() : DateRepository {
     )
 
     private val fakePeriods = listOf(
-        Period(1, 1, 7200000, 9000000, false),
-        Period(2, 1, 32400000, 34200000, false),
-        Period(3, 1, 54000000, 55800000, false),
-        Period(4, 2, 32400000, 34200000, false),
-        Period(5, 2, 54000000, 55800000, false),
-        Period(6, 1, 9000000, 10800000, false),
-        Period(7, 9, 10800000, 12600000, false),
+        Period(7200000, 9000000),
+        Period(32400000, 34200000),
+        Period(54000000, 55800000),
+        Period(32400000, 34200000),
+        Period(54000000, 55800000),
+        Period(9000000, 10800000),
+        Period(10800000, 12600000),
     )
 
-    override fun getDaysInfoByPlaceId(placeId: Int): StateFlow<List<Day>> {
-        return MutableStateFlow(fakeDays.filter { day -> day.placeId == placeId })
-    }
-
-    override fun getPeriodsByDayId(dayId: Int): StateFlow<List<Period>> {
-        return MutableStateFlow(fakePeriods.filter { period -> period.dayId == dayId })
-    }
+//    override fun getDaysInfoByPlaceId(placeId: Int): StateFlow<List<Day>> {
+//        return MutableStateFlow(fakeDays.filter { day -> day.placeId == placeId })
+//    }
+//
+//    override fun getPeriodsByDayId(dayId: Int): StateFlow<List<Period>> {
+//        return MutableStateFlow(fakePeriods.filter { period -> period.dayId == dayId })
+//    }
 }

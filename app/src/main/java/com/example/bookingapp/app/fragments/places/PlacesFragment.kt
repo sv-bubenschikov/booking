@@ -26,7 +26,7 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
 
         val placeListAdapter = PlaceListAdapter { place ->
             val arg = Bundle().apply {
-                putInt(PLACE_ID, place.id)
+                putString(PLACE_ID, place.id)
             }
             findNavController(view).navigate(
                 R.id.action_placesFragment_to_bookingDateFragment,

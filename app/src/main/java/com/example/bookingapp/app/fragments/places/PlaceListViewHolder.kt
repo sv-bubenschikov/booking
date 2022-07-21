@@ -21,6 +21,6 @@ class PlaceListViewHolder(
         data = item
         placeType.text = data.type
         placeName.text = data.name
-        placeFloor.text = data.floor
+        placeFloor.text = "${data.floor} этаж"
     }
 }

@@ -28,7 +28,6 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
 
         // TODO #26
         binding.buttonNextFragment.setOnClickListener {
-            findNavController().navigate(R.id.action_companiesFragment_to_placesFragment)
             val arg = Bundle().apply {
                 putInt(COMPANY_ID, 1)
                 // Хардкодом прописал название компании, для проверки его отправки на следующий фрагмент

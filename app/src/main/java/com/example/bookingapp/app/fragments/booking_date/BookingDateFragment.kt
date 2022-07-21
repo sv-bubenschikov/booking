@@ -40,12 +40,12 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.periods.flowWithLifecycle(viewLifecycleOwner.lifecycle)
-                .collect { periodList ->
-                    setPeriods(periodList, binding)
-                }
-        }
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewModel.periods.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+//                .collect { periodList ->
+//                    setPeriods(periodList, binding)
+//                }
+//        }
     }
 
     private fun setPeriods(periods: List<PeriodForFragment>, binding: FragmentBookingDateBinding) {
