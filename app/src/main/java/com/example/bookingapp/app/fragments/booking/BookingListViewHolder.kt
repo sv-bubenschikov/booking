@@ -19,6 +19,6 @@ class BookingListViewHolder(
 
     fun bind(item: Booking) = with(binding) {
         data = item
-        companyTitle.text = data.company.name
+        companyTitle.text = data.companyName
     }
 }
