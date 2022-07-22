@@ -10,25 +10,28 @@ import javax.inject.Inject
 
 class DateRepositoryImpl @Inject constructor() : DateRepository {
 
+    private val today = DateTime.now().withTimeAtStartOfDay()
+
     private val fakeDays = listOf(
-        Day(1,  DateTime.now().millis),
-        Day(2,  DateTime.now().millis),
-        Day(3,  DateTime.now().millis),
-        Day(4,  DateTime.now().millis),
-        Day(5,  DateTime.now().millis),
-        Day(6,  DateTime.now().millis),
-        Day(7,  DateTime.now().millis),
-        Day(8,  DateTime.now().millis),
+        Day(0, today.millis),
+        Day(1, today.plusDays(1).millis),
+        Day(2, today.plusDays(2).millis),
+        Day(3, today.plusDays(3).millis),
+        Day(4, today.plusDays(4).millis),
+        Day(5, today.plusDays(5).millis),
+        Day(6, today.plusDays(6).millis),
+        Day(7, today.plusDays(7).millis),
+        Day(8, today.plusDays(8).millis),
     )
 
     private val fakePeriods = listOf(
         Period(7200000, 9000000),
-        Period( 32400000, 34200000),
-        Period( 54000000, 55800000),
-        Period( 32400000, 34200000),
-        Period( 54000000, 55800000),
-        Period( 9000000, 10800000),
-        Period( 10800000, 12600000),
+        Period(32400000, 34200000),
+        Period(54000000, 55800000),
+        Period(32400000, 34200000),
+        Period(54000000, 55800000),
+        Period(9000000, 10800000),
+        Period(10800000, 12600000),
     )
 
     override fun getDaysInfoByPlaceId(): StateFlow<List<Day>> {
