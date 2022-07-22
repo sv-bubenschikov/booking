@@ -9,11 +9,11 @@ import javax.inject.Inject
 class PlaceRepositoryImpl @Inject constructor() : PlaceRepository {
     private val places = MutableStateFlow(
         listOf(
-            Place("Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
-            Place("Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
-            Place("Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
-            Place("Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
-            Place("Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
+            Place("","Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
+            Place("","Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
+            Place("","Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
+            Place("","Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
+            Place("","Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
         )
     )
 

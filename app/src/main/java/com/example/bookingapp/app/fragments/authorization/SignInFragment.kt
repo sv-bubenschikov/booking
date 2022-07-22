@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -30,23 +31,23 @@ class SignInFragment : Fragment() {
         val loadingDialog = LoadingDialog(inflater, requireContext())
         val binding = FragmentSignInBinding.inflate(inflater, container, false)
 
+        binding.editEmail.doOnTextChanged { text, _, _, _ ->
+            viewModel.email.value = text.toString()
+        }
 
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        binding.editPassword.doOnTextChanged { text, _, _, _ ->
+            viewModel.password.value = text.toString()
+        }
 
-        lifecycleScope.launch {
-            viewModel.email.flowWithLifecycle(lifecycle).collect {
-                viewModel.editEmailHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
-                    binding.editEmailLayout.helperText = messageIdRes?.let { it -> getText(it) }
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.editEmailHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
+                binding.editEmailLayout.helperText = messageIdRes?.let { it -> getText(it) }
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.password.flowWithLifecycle(lifecycle).collect {
-                viewModel.editPasswordHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
-                    binding.editPasswordLayout.helperText = messageIdRes?.let { it -> getText(it) }
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.editPasswordHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
+                binding.editPasswordLayout.helperText = messageIdRes?.let { it -> getText(it) }
             }
         }
 

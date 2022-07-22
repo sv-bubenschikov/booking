@@ -74,7 +74,13 @@
         android:id="@+id/profile_fragment"
         android:name="com.example.bookingapp.app.fragments.profile.ProfileFragment"
         android:label="@string/profile_fragment_label"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/profile_fragment_to_sign_in"
+            app:destination="@id/navigation_sign_in"
+            app:popUpTo="@id/booking_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_register"

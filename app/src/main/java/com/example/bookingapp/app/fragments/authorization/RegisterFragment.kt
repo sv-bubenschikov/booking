@@ -16,6 +16,7 @@ import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.app.ui_elements.LoadingDialog
 import com.example.bookingapp.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -30,38 +31,44 @@ class RegisterFragment : Fragment() {
     ): View {
         val loadingDialog = LoadingDialog(inflater, requireContext())
         val binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
 
-        lifecycleScope.launch {
-            viewModel.email.flowWithLifecycle(lifecycle).collect {
-                viewModel.editEmailHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
-                    binding.editEmailLayout.helperText = messageIdRes?.let { it -> getText(it) }
-                }
+        binding.editEmail.doOnTextChanged { text, _, _, _ ->
+            viewModel.email.value = text.toString()
+        }
+
+        binding.editPassword.doOnTextChanged { text, _, _, _ ->
+            viewModel.password.value = text.toString()
+        }
+
+        binding.editUserName.doOnTextChanged { text, _, _, _ ->
+            viewModel.username.value = text.toString()
+        }
+
+        binding.editConfirmPassword.doOnTextChanged { text, _, _, _ ->
+            viewModel.confirmedPassword.value = text.toString()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.editEmailHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
+                binding.editEmailLayout.helperText = messageIdRes?.let { it -> getText(it) }
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.password.flowWithLifecycle(lifecycle).collect {
-                viewModel.editPasswordHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
-                    binding.editPasswordLayout.helperText = messageIdRes?.let { it -> getText(it) }
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.editPasswordHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
+                binding.editPasswordLayout.helperText = messageIdRes?.let { it -> getText(it) }
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.username.flowWithLifecycle(lifecycle).collect {
-                viewModel.editUserNameHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
-                    binding.editUserNameLayout.helperText = messageIdRes?.let { it -> getText(it) }
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.editUserNameHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
+                binding.editUserNameLayout.helperText = messageIdRes?.let { it -> getText(it) }
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.confirmedPassword.flowWithLifecycle(lifecycle).collect {
-                viewModel.editConfirmedPasswordHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
-                    binding.editConfirmPasswordLayout.helperText = messageIdRes?.let { it -> getText(it) }
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.editConfirmedPasswordHelper.flowWithLifecycle(lifecycle).collect { messageIdRes ->
+                binding.editConfirmPasswordLayout.helperText = messageIdRes?.let { it -> getText(it) }
             }
         }
 

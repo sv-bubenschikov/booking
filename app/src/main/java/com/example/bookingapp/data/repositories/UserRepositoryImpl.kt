@@ -6,13 +6,35 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor() : UserRepository {
-        override fun getUserInfoById(id: Int): User {
-        TODO("Not yet implemented")
+class UserRepositoryImpl @Inject constructor(private val database: DatabaseReference
+) : UserRepository {
+
+    override fun getUserInfoById(id: String): Flow<User> {
+        return callbackFlow {
+            val ref = database.child("Users").child(id)
+            val listener = ref.addValueEventListener(object: ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    cancel("Unable to get user by id", error.toException())
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    launch {
+                        snapshot.getValue(User::class.java)?.let { send(it) }
+                    }
+                }
+            })
+
+            awaitClose{ ref.removeEventListener(listener) }
+        }
     }
 
     override suspend fun registerUser(email: String, password: String): AuthResult {
@@ -23,14 +45,10 @@ class UserRepositoryImpl @Inject constructor() : UserRepository {
     }
 
     override suspend fun updateUserInfo(user: User): Void {
-        val userMap = HashMap<String, Any>()
-        userMap["id"] = user.id
-        userMap["name"] = user.name
-        userMap["email"] = user.email
-        return FirebaseDatabase.getInstance().reference
+        return database
             .child("Users")
             .child(user.id)
-            .setValue(userMap)
+            .setValue(user)
             .await()
     }
 
@@ -45,7 +63,7 @@ class UserRepositoryImpl @Inject constructor() : UserRepository {
             .await()
     }
 
-    override fun signOut() {
+    override fun logout() {
         FirebaseAuth.getInstance().signOut()
     }
 

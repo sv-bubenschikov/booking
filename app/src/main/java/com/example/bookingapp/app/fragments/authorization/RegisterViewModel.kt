@@ -23,14 +23,20 @@ class RegisterViewModel @Inject constructor(
     private val getCurrentUserRefUseCase: GetCurrentUserRefUseCase
 ) : ViewModel() {
 
-    val username = MutableStateFlow("")
+    private val _editEmailHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
+    private val _editUserNameHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
+    private val _editConfirmedPasswordHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
+    private val _editPasswordHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
+
     val email = MutableStateFlow("")
     val password = MutableStateFlow("")
+    val username = MutableStateFlow("")
     val confirmedPassword = MutableStateFlow("")
-    val editEmailHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
-    val editUserNameHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
-    val editConfirmedPasswordHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
-    val editPasswordHelper = MutableStateFlow<Int?>(R.string.empty_input_text)
+
+    val editEmailHelper: StateFlow<Int?> = _editEmailHelper
+    val editUserNameHelper: StateFlow<Int?> = _editUserNameHelper
+    val editConfirmedPasswordHelper: StateFlow<Int?> = _editConfirmedPasswordHelper
+    val editPasswordHelper: StateFlow<Int?> = _editPasswordHelper
 
     init {
         viewModelScope.launch {
@@ -68,13 +74,13 @@ class RegisterViewModel @Inject constructor(
                     updateUserInfo()
                 }
                 catch (ex: FirebaseAuthWeakPasswordException) {
-                    editPasswordHelper.value = R.string.weak_password
+                    _editPasswordHelper.value = R.string.weak_password
                 }
                 catch (ex: FirebaseAuthInvalidCredentialsException) {
-                    editEmailHelper.value = R.string.invalid_email
+                    _editEmailHelper.value = R.string.invalid_email
                 }
                 catch (ex: FirebaseAuthUserCollisionException) {
-                    editEmailHelper.value = R.string.email_already_exists
+                    _editEmailHelper.value = R.string.email_already_exists
                 }
             }
         }
@@ -89,46 +95,47 @@ class RegisterViewModel @Inject constructor(
 
     private fun updateUserInfo() {
         viewModelScope.launch {
-            val user = User(username.value, email.value)
-            updateUserInfoUseCase(user)
+            getCurrentUserRefUseCase()?.let {
+                updateUserInfoUseCase(User(it.uid, email.value, username.value))
+            }
         }
     }
 
     private fun validateEmail(email: String) {
         if(email.trim().isEmpty()) {
-            editEmailHelper.value = R.string.empty_input_text
+            _editEmailHelper.value = R.string.empty_input_text
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()) {
-            editEmailHelper.value = R.string.invalid_email
+            _editEmailHelper.value = R.string.invalid_email
         } else
-            editEmailHelper.value = null
+            _editEmailHelper.value = null
     }
 
     private fun validatePassword(password: String) {
         if(password.isEmpty()) {
-            editPasswordHelper.value = R.string.empty_input_text
+            _editPasswordHelper.value = R.string.empty_input_text
         }
         else if(password.length < 8) {
-            editPasswordHelper.value = R.string.password_invalid_len
+            _editPasswordHelper.value = R.string.password_invalid_len
         }
 
         else if(!password.matches(".*[A-ZА-Я].*".toRegex())) {
-            editPasswordHelper.value = R.string.password_invalid_upper_letters
+            _editPasswordHelper.value = R.string.password_invalid_upper_letters
         }
 
         else if(!password.matches(".*[a-zа-я].*".toRegex())) {
-            editPasswordHelper.value = R.string.password_invalid_lower_letters
+            _editPasswordHelper.value = R.string.password_invalid_lower_letters
         }
 
         else if(!password.matches(".*[1-9].*".toRegex())) {
-            editPasswordHelper.value = R.string.password_invalid_numbers
+            _editPasswordHelper.value = R.string.password_invalid_numbers
         }
         else
-            editPasswordHelper.value = null
+            _editPasswordHelper.value = null
     }
 
     private fun validateUserName(userName: String) {
-        editUserNameHelper.value = if(userName.isNotEmpty()) {
+        _editUserNameHelper.value = if(userName.isNotEmpty()) {
             null
         } else {
             R.string.empty_input_text
@@ -136,7 +143,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun finalValidateConfirmedPassword(confirmedPassword: String) {
-        editConfirmedPasswordHelper.value =
+        _editConfirmedPasswordHelper.value =
         if(password.value != confirmedPassword)
             R.string.confirmed_password_does_not_match
         else
@@ -144,7 +151,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun validateConfirmedPassword(confirmedPassword: String) {
-        editConfirmedPasswordHelper.value =
+        _editConfirmedPasswordHelper.value =
             if(confirmedPassword.isEmpty())
                 R.string.empty_input_text
             else {

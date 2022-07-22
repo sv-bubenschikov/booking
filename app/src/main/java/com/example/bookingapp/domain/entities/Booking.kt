@@ -1,6 +1,7 @@
 package com.example.bookingapp.domain.entities
 
 data class Booking(
+    val id: String = "",
     val startTime: Long = 0L,
     val endTime: Long = 0L,
     val companyName: String = "",
@@ -9,6 +10,3 @@ data class Booking(
     val bookingDate: Long = 0L,
     val members: List<String> = emptyList(),
 )
-{
-    var id = ""
-}

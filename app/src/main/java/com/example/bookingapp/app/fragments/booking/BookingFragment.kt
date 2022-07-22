@@ -76,7 +76,7 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
 
         hostViewModel.setActionButtonVisible(true)
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.bookingList.flowWithLifecycle(lifecycle).collect { bookingList ->
                 adapter.submitList(bookingList)
             }

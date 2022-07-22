@@ -15,6 +15,7 @@ class BookingRepositoryImpl @Inject constructor() : BookingRepository {
     override fun getBookingsInfoByUserId(userId: String) = MutableStateFlow(
         listOf(
             Booking(
+                "",
                 66666666,
                 66666666,
                 "Тензор",
@@ -28,6 +29,7 @@ class BookingRepositoryImpl @Inject constructor() : BookingRepository {
 
     override fun getBookingInfoById(id: String) = MutableStateFlow(
         Booking(
+            "",
             66666666,
             66666666,
             "Тензор",
