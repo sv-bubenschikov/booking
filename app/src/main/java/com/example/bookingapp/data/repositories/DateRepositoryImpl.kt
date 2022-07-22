@@ -1,8 +1,15 @@
 package com.example.bookingapp.data.repositories
 
+import com.example.bookingapp.domain.entities.Booking
 import com.example.bookingapp.domain.entities.Day
 import com.example.bookingapp.domain.entities.Period
 import com.example.bookingapp.domain.repositories_interface.DateRepository
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.joda.time.DateTime
@@ -11,6 +18,8 @@ import javax.inject.Inject
 class DateRepositoryImpl @Inject constructor() : DateRepository {
 
     private val today = DateTime.now().withTimeAtStartOfDay()
+    var periods: List<Period> = emptyList()
+    var bookings: List<Booking> = emptyList()
 
     private val fakeDays = listOf(
         Day(0, today.millis),
@@ -24,7 +33,7 @@ class DateRepositoryImpl @Inject constructor() : DateRepository {
         Day(8, today.plusDays(8).millis),
     )
 
-    private val fakePeriods = listOf(
+    private var fakePeriods = listOf(
         Period(7200000, 9000000),
         Period(32400000, 34200000),
         Period(54000000, 55800000),
@@ -35,10 +44,46 @@ class DateRepositoryImpl @Inject constructor() : DateRepository {
     )
 
     override fun getDaysInfoByPlaceId(): StateFlow<List<Day>> {
+        setupDB()
         return MutableStateFlow(fakeDays)
     }
 
     override fun getPeriodsByDayId(dayId: Int): StateFlow<List<Period>> {
-        return MutableStateFlow(fakePeriods)
+       // val res: ArrayList<Period> = periods
+        for (period in bookings.map { booking -> Period(booking.startTime, booking.endTime) }) {
+           // if (periods.contains(period)) res.remove(period)
+        }
+        return MutableStateFlow(fakePeriods)//MutableStateFlow(res)
+    }
+
+    private fun setupDB() {
+        val database = Firebase.database
+
+        val pRef = database.getReference("Places")
+        //val bRef = database.getReference("Bookings")
+
+        pRef.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val place = snapshot.children.first()
+                periods = place.child("periods").getValue<List<Period>>() ?: emptyList()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+/*
+        bRef.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val b = snapshot.child("GeneratedBookingId").getValue<Booking>()
+                //bookings = snapshot.getValue<List<Booking>>() ?: emptyList()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })*/
     }
 }
