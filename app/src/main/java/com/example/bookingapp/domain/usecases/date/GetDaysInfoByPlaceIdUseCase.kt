@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class GetDaysInfoByPlaceIdUseCase @Inject constructor(private val dateRepository: DateRepository) {
-    operator fun invoke(placeId: Int): StateFlow<List<Day>> {
-        return dateRepository.getDaysInfoByPlaceId(placeId)
+    operator fun invoke(): StateFlow<List<Day>> {
+        return dateRepository.getDaysInfoByPlaceId()
     }
 }

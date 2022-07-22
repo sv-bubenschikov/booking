@@ -30,17 +30,15 @@ class BookingDateViewModel @Inject constructor(
     }.map { periods ->
         periods.map { period ->
             PeriodForFragment(
-                id = period.id,
                 timeStart = DateTime(period.timeStart).withZone(DateTimeZone.forID("Asia/Yekaterinburg")),
                 timeEnd = DateTime(period.timeEnd).withZone(DateTimeZone.forID("Asia/Yekaterinburg")),
-                statusBooking = period.statusBooking
             )
         }
     }
         .flowOn(Dispatchers.Default)
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    val days: StateFlow<List<Day>> = getDaysInfoByPlaceId(stateHandle[PLACE_ID]!!)
+    val days: StateFlow<List<Day>> = getDaysInfoByPlaceId()
 
     init {
         viewModelScope.launch {
