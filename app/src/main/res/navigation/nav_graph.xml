@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/booking_fragment">
+
+    <fragment
+        android:id="@+id/booking_fragment"
+        android:name="com.example.bookingapp.app.fragments.booking.BookingFragment"
+        android:label="@string/booking_fragment_label"
+        tools:layout="@layout/fragment_booking">
+        <action
+            android:id="@+id/action_bookingFragment_to_companiesFragment"
+            app:destination="@id/companies_fragment" />
+        <action
+            android:id="@+id/action_bookingFragment_to_profileFragment"
+            app:destination="@+id/profile_fragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_sign_in"
+            app:destination="@id/navigation_sign_in"
+            app:popUpTo="@id/booking_fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/actionBookingFragment_to_bookingDetailsFragment"
+            app:destination="@id/booking_details_fragment">
+            <argument
+                android:name="booking_id"
+                app:argType="integer" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/companies_fragment"
+        android:name="com.example.bookingapp.app.fragments.companies.CompaniesFragment"
+        android:label="@string/companies_fragment_label"
+        tools:layout="@layout/fragment_companies">
+        <action
+            android:id="@+id/action_companiesFragment_to_placesFragment"
+            app:destination="@+id/places_fragment" />
+        <action
+            android:id="@+id/action_companies_fragment_to_profile_fragment"
+            app:destination="@id/profile_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/places_fragment"
+        android:name="com.example.bookingapp.app.fragments.places.PlacesFragment"
+        android:label="@string/places_fragment_label"
+        tools:layout="@layout/fragment_places">
+        <action
+            android:id="@+id/action_placesFragment_to_bookingPlaceFragment"
+            app:destination="@id/booking_place_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/booking_place_fragment"
+        android:name="com.example.bookingapp.app.fragments.booking_place.BookingPlaceFragment"
+        android:label="@string/booking_place_fragment_label"
+        tools:layout="@layout/fragment_booking_place">
+        <action android:id="@+id/action_bookingPlacesFragment_to_bookingConfirmationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profile_fragment"
+        android:name="com.example.bookingapp.app.fragments.profile.ProfileFragment"
+        android:label="@string/profile_fragment_label"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_register"
+        android:name="com.example.bookingapp.app.fragments.authorization.RegisterFragment"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_navigation_register_to_navigation_home"
+            app:destination="@id/booking_fragment"
+            app:popUpTo="@id/navigation_sign_in"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_sign_in"
+        android:name="com.example.bookingapp.app.fragments.authorization.SignInFragment"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_navigation_sign_in_to_navigation_home"
+            app:destination="@id/booking_fragment"
+            app:popUpTo="@id/navigation_sign_in"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_sign_in_to_navigation_register"
+            app:destination="@id/navigation_register" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/booking_details_fragment"
+        android:name="com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment"
+        android:label="@string/you_have_booked"
+        tools:layout="@layout/fragment_booking_details" />
+</navigation>

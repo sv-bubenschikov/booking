@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="?listPreferredItemSpacingVertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="?listPreferredItemPaddingVertical"
+        android:paddingStart="?listPreferredItemPaddingStart"
+        android:paddingEnd="?listPreferredItemPaddingEnd">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?verticalSpacing"
+            android:gravity="end"
+            android:textAppearance="?textAppearanceOverline"
+            tools:text="10:00-16:00 29.05.2021 ВС" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?verticalSpacing"
+            android:textAppearance="?textAppearanceHeadline6"
+            tools:text="Летняя практика Android. Обсуждение макета приложения" />
+
+        <TextView
+            android:id="@+id/company_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?verticalSpacing"
+            android:textAppearance="?textAppearanceBody1"
+            tools:text="Тензор" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?verticalSpacing"
+            android:textAppearance="?textAppearanceBody2"
+            tools:text="Переговорная Hawaii" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

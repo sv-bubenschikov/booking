@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/pro_v/AndroidStudioProjects/booking-main/app/src/main/res/layout/booking_item.xml" value="0.2754782700075322" />
+        <entry key="..\:/Users/pro_v/AndroidStudioProjects/booking-main/app/src/main/res/layout/companies_item.xml" value="0.2509057971014493" />
+        <entry key="..\:/Users/pro_v/AndroidStudioProjects/booking-main/app/src/main/res/layout/fragment_booking.xml" value="0.2509057971014493" />
+        <entry key="..\:/Users/pro_v/AndroidStudioProjects/booking-main/app/src/main/res/layout/fragment_booking_details.xml" value="0.2509057971014493" />
+        <entry key="..\:/Users/pro_v/AndroidStudioProjects/booking-main/app/src/main/res/layout/fragment_companies.xml" value="0.2509057971014493" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+</project>
