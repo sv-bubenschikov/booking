@@ -5,6 +5,7 @@ data class Booking(
     val startTime: Long = 0L,
     val endTime: Long = 0L,
     val companyName: String = "",
+    val companyId: String = "",
     val placeName: String = "",
     val theme: String = "",
     val bookingDate: Long = 0L,
