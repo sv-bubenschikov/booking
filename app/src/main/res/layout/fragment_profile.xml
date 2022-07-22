@@ -55,7 +55,8 @@
             android:hint="@string/user_name_hint"
             android:id="@+id/edit_user_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:text="@string/guest_user_name"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

@@ -35,6 +35,7 @@ class ProfileFragment : Fragment() {
                 it.flowWithLifecycle(lifecycle).collect { user ->
                     binding.editEmail.setText(user.email)
                     binding.editUserName.setText(user.name)
+                    binding.layoutUserName.text = user.name
                 }
             }
         }
