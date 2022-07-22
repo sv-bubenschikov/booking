@@ -24,11 +24,12 @@ class BookingDateViewModel @Inject constructor(
     stateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private val place = "Hawaii"//TODO Передача Booking между фрагментами
     private val selectedDay = MutableSharedFlow<Int>()
 
     val periods = selectedDay.flatMapLatest { dayId ->
-        val allPeriods = getPeriodsByDayId(dayId)
-        val bookingPeriods = getBookingPeriodsByDate(days.value[dayId].date)
+        val allPeriods = getPeriodsByDayId(dayId, place)
+        val bookingPeriods = getBookingPeriodsByDate(days.value[dayId].date, place)
 
         allPeriods.map {
             it.filter { p ->

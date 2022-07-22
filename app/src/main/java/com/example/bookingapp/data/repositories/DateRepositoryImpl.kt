@@ -3,6 +3,7 @@ package com.example.bookingapp.data.repositories
 import com.example.bookingapp.domain.entities.Booking
 import com.example.bookingapp.domain.entities.Day
 import com.example.bookingapp.domain.entities.Period
+import com.example.bookingapp.domain.entities.Place
 import com.example.bookingapp.domain.repositories_interface.DateRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -37,13 +38,18 @@ class DateRepositoryImpl @Inject constructor(
         return MutableStateFlow(days)
     }
 
-    override fun getPeriodsByDayId(dayId: Int) = callbackFlow {
-        val periods = database.child("Places").child("GeneratedPlaceId").child("periods")
+    override fun getPeriodsByDayId(dayId: Int, placeName: String) = callbackFlow {
+        val places = database.child("Places")
 
-        val listener = periods.addValueEventListener(object : ValueEventListener {
+        val listener = places.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 launch {
-                    send(snapshot.children.mapNotNull { it.getValue(Period::class.java) })
+                    send(snapshot.children.mapNotNull {
+                        it.getValue(Place::class.java)
+                    }.first { place ->
+                        place.name == placeName
+                    }.periods
+                    )
                 }
             }
 
@@ -51,10 +57,10 @@ class DateRepositoryImpl @Inject constructor(
                 cancel("Unable to update periods list", error.toException())
             }
         })
-        awaitClose { periods.removeEventListener(listener) }
+        awaitClose { places.removeEventListener(listener) }
     }
 
-    override fun getBookingPeriodsByDate(date: Long) = callbackFlow {
+    override fun getBookingPeriodsByDate(date: Long, place: String) = callbackFlow {
         val bookings = database.child("Bookings")
 
         val listener = bookings.addValueEventListener(object : ValueEventListener {
@@ -62,8 +68,11 @@ class DateRepositoryImpl @Inject constructor(
                 launch {
                     send(snapshot.children.mapNotNull {
                         it.getValue(Booking::class.java)
-                    }.filter { booking -> booking.bookingDate == date }
-                        .map { b -> Period(b.startTime, b.endTime) })
+                    }.filter { booking ->
+                        (booking.bookingDate == date) and (booking.place == place)
+                    }.map { b ->
+                        Period(b.startTime, b.endTime)
+                    })
                 }
             }
 

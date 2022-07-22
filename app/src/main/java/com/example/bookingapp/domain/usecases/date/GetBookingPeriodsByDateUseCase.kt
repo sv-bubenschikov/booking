@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetBookingPeriodsByDateUseCase @Inject constructor(private val dateRepository: DateRepository) {
-    operator fun invoke(date: Long): Flow<List<Period>> {
-        return dateRepository.getBookingPeriodsByDate(date)
+    operator fun invoke(date: Long, place: String): Flow<List<Period>> {
+        return dateRepository.getBookingPeriodsByDate(date, place)
     }
 }
