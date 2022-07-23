@@ -33,9 +33,9 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
             viewModel.booking.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { booking ->
                 binding.bookingOrganisationBlockText.text = booking.companyName
                 binding.bookingPlaceBlockText.text = booking.placeName
-                val dateTime = DateTime(booking.bookingDate).toLocalDate().toString()
-                val startTime = DateTime(booking.startTime).toLocalTime().toString()
-                val endTime = DateTime(booking.endTime).toLocalTime().toString()
+                val dateTime = DateTime(booking.bookingDate).toLocalDate().toString("dd-MM-yyyy")
+                val startTime = DateTime(booking.startTime).toLocalTime().toString("HH:mm")
+                val endTime = DateTime(booking.endTime).toLocalTime().toString("HH:mm")
                 binding.bookingDatetimeBlockText.text = "$dateTime; $startTime - $endTime"
             }
         }
