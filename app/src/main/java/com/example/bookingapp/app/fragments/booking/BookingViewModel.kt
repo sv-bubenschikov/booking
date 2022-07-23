@@ -13,6 +13,6 @@ class BookingViewModel @Inject constructor(
     getBookingsByUserIdUseCase: GetBookingsByUserIdUseCase
 ) : ViewModel() {
 
-    val bookingList =
-        getBookingsByUserIdUseCase()?.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    val bookingList = getBookingsByUserIdUseCase()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 }

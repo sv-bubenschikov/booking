@@ -19,14 +19,19 @@ class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val signInAsGuestUseCase: SignInAsGuestUseCase,
 ) : ViewModel() {
+
     val email = MutableStateFlow("")
     val password = MutableStateFlow("")
 
     private val _editEmailHelper = MutableStateFlow<Int?>(null)
     private val _editPasswordHelper = MutableStateFlow<Int?>(null)
+    private val _dialogVisible = MutableStateFlow(false)
+    private val _userSignedIn = MutableStateFlow(false)
 
     val editEmailHelper: StateFlow<Int?> = _editEmailHelper
     val editPasswordHelper: StateFlow<Int?> = _editPasswordHelper
+    val dialogVisible: StateFlow<Boolean> = _dialogVisible
+    val userSignedIn: StateFlow<Boolean> = _userSignedIn
 
     init {
         viewModelScope.launch {
@@ -42,14 +47,16 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun onUserSignInClicked(): Job {
-        return viewModelScope.launch {
+    fun onUserSignInClicked() {
+        _dialogVisible.value = true
+        viewModelScope.launch {
             validateEmail(email.value)
             validatePassword(password.value)
 
             if (isValidForm()) {
                 try {
                     signInUseCase(email.value, password.value)
+                    _userSignedIn.value = true
                 } catch (ex: FirebaseAuthInvalidUserException) {
                     _editEmailHelper.value = R.string.email_does_not_exist
                 }
@@ -57,16 +64,20 @@ class SignInViewModel @Inject constructor(
                     _editPasswordHelper.value = R.string.incorrect_credentials
                 }
             }
+            _dialogVisible.value = false
         }
     }
 
-    fun onUserSignInAsGuestClicked(): Job {
-        return viewModelScope.launch {
+    fun onUserSignInAsGuestClicked() {
+        _dialogVisible.value = true
+        viewModelScope.launch {
             signInAsGuestUseCase()
+            _userSignedIn.value = true
+            _dialogVisible.value = false
         }
     }
 
-    fun isValidForm(): Boolean {
+    private fun isValidForm(): Boolean {
         return editEmailHelper.value == null && editPasswordHelper.value == null
     }
 

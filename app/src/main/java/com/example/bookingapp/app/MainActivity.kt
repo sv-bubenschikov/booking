@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_sign_in,
-                R.id.navigation_register -> { supportActionBar?.hide(); hostViewModel.setActionButtonVisible(false) } // почему actionButton не скрывается? даже по id view.Gone не работает
+                R.id.navigation_register -> { supportActionBar?.hide() }
                 else -> supportActionBar?.show()
             }
         }

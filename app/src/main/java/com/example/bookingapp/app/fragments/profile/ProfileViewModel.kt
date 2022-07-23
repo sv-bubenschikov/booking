@@ -7,19 +7,22 @@ import com.example.bookingapp.domain.usecases.user.GetUserInfoByIdUseCase
 import com.example.bookingapp.domain.usecases.user.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase,
-    private val getUserInfoByIdUseCase: GetUserInfoByIdUseCase,
+    getUserInfoByIdUseCase: GetUserInfoByIdUseCase,
 ) : ViewModel() {
 
     val user = getUserInfoByIdUseCase()
-        ?.stateIn(viewModelScope, SharingStarted.Eagerly, User())
+        .stateIn(viewModelScope, SharingStarted.Eagerly, User())
 
     fun logout() {
-        logoutUseCase()
+        viewModelScope.launch {
+            logoutUseCase()
+        }
     }
 }
 

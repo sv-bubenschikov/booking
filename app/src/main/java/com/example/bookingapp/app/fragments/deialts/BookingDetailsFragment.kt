@@ -1,5 +1,6 @@
 package com.example.bookingapp.app.fragments.deialts
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -20,27 +21,29 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
     private val hostViewModel: HostViewModel by activityViewModels()
     private val viewModel: BookingDetailsViewModel by viewModels()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        hostViewModel.setActionButtonVisible(false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentBookingDetailsBinding.bind(view)
 
-        val bookingId = arguments?.getString(BOOKING_ID)
-        viewModel.setBooking(bookingId!!)
-
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.booking.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { booking ->
                 binding.bookingOrganisationBlockText.text = booking.companyName
                 binding.bookingPlaceBlockText.text = booking.placeName
-                val dateTime = DateTime(booking.bookingDate).toLocalDate().toString("dd-MM-yyyy")
-                val startTime = DateTime(booking.startTime).toLocalTime().toString("HH:mm")
-                val endTime = DateTime(booking.endTime).toLocalTime().toString("HH:mm")
-                binding.bookingDatetimeBlockText.text = "$dateTime; $startTime - $endTime"
             }
         }
 
-        hostViewModel.setActionButtonVisible(false)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.bookingTime.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { time ->
+                binding.bookingDatetimeBlockText.text = time
+            }
+        }
     }
 
     companion object {

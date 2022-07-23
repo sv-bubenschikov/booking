@@ -1,17 +1,18 @@
 package com.example.bookingapp.data.repositories
 
-import com.example.bookingapp.domain.entities.*
+import com.example.bookingapp.domain.entities.Booking
 import com.example.bookingapp.domain.repositories_interface.BookingRepository
 import com.google.firebase.database.*
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class BookingRepositoryImpl @Inject constructor(private val database: DatabaseReference) : BookingRepository {
+class BookingRepositoryImpl @Inject constructor(
+    private val database: DatabaseReference
+) : BookingRepository {
 
     override fun getBookingsByUserId(userId: String) = callbackFlow {
         val bookings = database.child("Bookings")
@@ -47,16 +48,16 @@ class BookingRepositoryImpl @Inject constructor(private val database: DatabaseRe
         awaitClose { booking.removeEventListener(listener) }
     }
 
-    override suspend fun createBooking(booking: Booking): Void {
-        return FirebaseDatabase.getInstance().reference
+    override suspend fun createBooking(booking: Booking) {
+        FirebaseDatabase.getInstance().reference
             .child("Bookings")
             .push()
             .setValue(booking)
             .await()
     }
 
-    override suspend fun deleteBookingById(id: String): Void {
-        return FirebaseDatabase.getInstance().reference
+    override suspend fun deleteBookingById(id: String) {
+        FirebaseDatabase.getInstance().reference
             .child("Bookings")
             .child(id)
             .removeValue()

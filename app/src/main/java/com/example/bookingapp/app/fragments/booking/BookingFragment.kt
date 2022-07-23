@@ -46,6 +46,8 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
             }
         }
 
+        hostViewModel.setActionButtonVisible(true)
+
         context.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.main_menu, menu)
@@ -74,14 +76,13 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         }
         binding.bookingList.adapter = adapter
 
-        hostViewModel.setActionButtonVisible(true)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.bookingList?.let {
-                it.flowWithLifecycle(lifecycle).collect { bookingList ->
+            viewModel.bookingList
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { bookingList ->
                     adapter.submitList(bookingList)
                 }
-            }
         }
     }
 }
