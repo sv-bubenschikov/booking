@@ -6,14 +6,14 @@ import com.example.bookingapp.domain.entities.Booking
 
 class BookingListViewHolder(
     private val binding: BookingItemBinding,
-    private val onItemClicked: (Booking) -> Unit
+    private val onItemClicked: (String) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var data: Booking
 
     init {
         itemView.setOnClickListener {
-            onItemClicked(data)
+            onItemClicked(data.id)
         }
     }
 

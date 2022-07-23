@@ -12,6 +12,7 @@ import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.databinding.FragmentBookingDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 
 @AndroidEntryPoint
 class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
@@ -24,9 +25,18 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
 
         val binding = FragmentBookingDetailsBinding.bind(view)
 
+        val bookingId = arguments?.getString(BOOKING_ID)
+        viewModel.setBooking(bookingId!!)
+
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.booking.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { booking ->
                 binding.bookingOrganisationBlockText.text = booking.companyName
+                binding.bookingPlaceBlockText.text = booking.placeName
+                val dateTime = DateTime(booking.bookingDate).toLocalDate().toString()
+                val startTime = DateTime(booking.startTime).toLocalTime().toString()
+                val endTime = DateTime(booking.endTime).toLocalTime().toString()
+                binding.bookingDatetimeBlockText.text = "$dateTime; $startTime - $endTime"
             }
         }
 

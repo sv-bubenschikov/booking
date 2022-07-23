@@ -66,9 +66,9 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentBookingBinding.bind(view)
-        val adapter = BookingListAdapter { booking ->
+        val adapter = BookingListAdapter { bookingId ->
             val arg = Bundle().apply {
-                putString(BOOKING_ID, booking.id)
+                putString(BOOKING_ID, bookingId)
             }
             findNavController().navigate(R.id.actionBookingFragment_to_bookingDetailsFragment, arg)
         }
@@ -77,8 +77,10 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         hostViewModel.setActionButtonVisible(true)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.bookingList.flowWithLifecycle(lifecycle).collect { bookingList ->
-                adapter.submitList(bookingList)
+            viewModel.bookingList?.let {
+                it.flowWithLifecycle(lifecycle).collect { bookingList ->
+                    adapter.submitList(bookingList)
+                }
             }
         }
     }
