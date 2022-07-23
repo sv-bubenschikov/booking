@@ -9,6 +9,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class LoadingDialog(private val inflater: LayoutInflater, val context: Context) {
     private lateinit var isDialog: AlertDialog
+
+    init {
+        val dialogView = inflater.inflate(R.layout.loading_progress_bar, null)
+        val builder = MaterialAlertDialogBuilder(context)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+        isDialog = builder.create()
+    }
     fun startLoading() {
         val dialogView = inflater.inflate(R.layout.loading_progress_bar, null)
         val builder = MaterialAlertDialogBuilder(context)
