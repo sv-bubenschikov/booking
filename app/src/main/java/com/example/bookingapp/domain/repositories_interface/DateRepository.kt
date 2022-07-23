@@ -9,7 +9,7 @@ interface DateRepository {
 
     fun getDaysInfoByPlaceId(): StateFlow<List<Day>>
 
-    fun getPeriodsByDayId(dayId: Int, placeName: String): Flow<List<Period>>
+    fun getPeriodsByDayId(dayId: Int, placeId: String): Flow<List<Period>>
 
-    fun getBookingPeriodsByDate(date: Long, place: String): Flow<List<Period>>
+    fun getBookingPeriodsByDate(date: Long, placeId: String): Flow<List<Period>>
 }

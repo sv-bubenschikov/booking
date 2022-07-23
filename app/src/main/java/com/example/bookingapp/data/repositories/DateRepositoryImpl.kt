@@ -38,18 +38,13 @@ class DateRepositoryImpl @Inject constructor(
         return MutableStateFlow(days)
     }
 
-    override fun getPeriodsByDayId(dayId: Int, placeName: String) = callbackFlow {
-        val places = database.child("Places")
+    override fun getPeriodsByDayId(dayId: Int, placeId: String) = callbackFlow {
+        val periods = database.child("Places").child(placeId).child("periods")
 
-        val listener = places.addValueEventListener(object : ValueEventListener {
+        val listener = periods.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 launch {
-                    send(snapshot.children.mapNotNull {
-                        it.getValue(Place::class.java)
-                    }.first { place ->
-                        place.name == placeName
-                    }.periods
-                    )
+                    send(snapshot.children.mapNotNull { it.getValue(Period::class.java) })
                 }
             }
 
@@ -57,10 +52,10 @@ class DateRepositoryImpl @Inject constructor(
                 cancel("Unable to update periods list", error.toException())
             }
         })
-        awaitClose { places.removeEventListener(listener) }
+        awaitClose { periods.removeEventListener(listener) }
     }
 
-    override fun getBookingPeriodsByDate(date: Long, place: String) = callbackFlow {
+    override fun getBookingPeriodsByDate(date: Long, placeId: String) = callbackFlow {
         val bookings = database.child("Bookings")
 
         val listener = bookings.addValueEventListener(object : ValueEventListener {
@@ -69,7 +64,7 @@ class DateRepositoryImpl @Inject constructor(
                     send(snapshot.children.mapNotNull {
                         it.getValue(Booking::class.java)
                     }.filter { booking ->
-                        (booking.bookingDate == date) and (booking.place == place)
+                        (booking.bookingDate == date) and (booking.placeId == placeId)
                     }.map { b ->
                         Period(b.startTime, b.endTime)
                     })
@@ -77,7 +72,7 @@ class DateRepositoryImpl @Inject constructor(
             }
 
             override fun onCancelled(error: DatabaseError) {
-                cancel("Unable to update day list", error.toException())
+                cancel("Unable to update booking periods list", error.toException())
             }
         })
         awaitClose { bookings.removeEventListener(listener) }
