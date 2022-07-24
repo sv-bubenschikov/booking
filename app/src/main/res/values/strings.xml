@@ -39,6 +39,7 @@
     <string name="incorrect_credentials">Введен неверный логин или пароль</string>
     <string name="weak_password">Пароль недостаточно надежный</string>
     <string name="email_already_exists">Эта почта уже используется</string>
+    <string name="booking_name">Тема встречи:</string>
     <string name="select">Выбрать</string>
     <string name="evening">Вечер</string>
     <string name="day">День</string>
