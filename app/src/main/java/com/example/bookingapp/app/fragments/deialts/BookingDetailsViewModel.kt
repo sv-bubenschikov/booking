@@ -10,10 +10,7 @@ import com.example.bookingapp.domain.usecases.booking.DeleteBookingByIdUseCase
 import com.example.bookingapp.domain.usecases.booking.GetBookingInfoByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import org.joda.time.DateTime
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,6 +22,10 @@ class BookingDetailsViewModel @Inject constructor(
     private val createBookingUseCase: CreateBookingUseCase,
     stateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    private val _bookingDecision = MutableSharedFlow<BookingDecision>()
+
+    val bookingDecision: Flow<BookingDecision> = _bookingDecision
 
     val booking = getBookingInfoByIdUseCase(stateHandle[BOOKING_ID]!!)
         .stateIn(viewModelScope, SharingStarted.Eagerly, Booking())
@@ -41,12 +42,14 @@ class BookingDetailsViewModel @Inject constructor(
     fun onCancelBookingClicked() {
         viewModelScope.launch {
             deleteBookingByIdUseCase(booking.value.id)
+            _bookingDecision.emit(BookingDecision.CANCEL)
         }
     }
 
     fun onConfirmBookingClicked() {
         viewModelScope.launch {
             createBookingUseCase(booking.value)
+            _bookingDecision.emit(BookingDecision.CONFIRM)
         }
     }
 }

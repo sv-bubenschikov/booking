@@ -14,7 +14,6 @@ import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.databinding.FragmentBookingDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.joda.time.DateTime
 
 @AndroidEntryPoint
 class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
@@ -34,34 +33,46 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
         val binding = FragmentBookingDetailsBinding.bind(view)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.booking.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { booking ->
-                binding.bookingCompanyBlockText.text = booking.companyName
-                binding.bookingPlaceBlockText.text = booking.placeName
-                binding.bookingDatetimeBlockText.text = booking.bookingDate.toString()
-                binding.bookingNameBlockText.text = booking.theme
-            }
+            viewModel.booking
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { booking ->
+                    binding.bookingCompanyBlockText.text = booking.companyName
+                    binding.bookingPlaceBlockText.text = booking.placeName
+                    binding.bookingNameBlockText.text = booking.theme
+                }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.bookingTime
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { time ->
+                    binding.bookingDatetimeBlockText.text = time
+                }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.bookingDecision
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { decision ->
+                    val destination = when (decision) {
+                        BookingDecision.CONFIRM -> R.id.action_bookingDetailsFragment_to_bookingFragment
+                        BookingDecision.CANCEL -> R.id.action_bookingDetailsFragment_to_bookingFragment
+                        BookingDecision.EDIT -> TODO("Добавить переход на экран выбора даты")
+                    }
+                    findNavController().navigate(destination)
+                }
         }
 
         binding.cancelBookingButton.setOnClickListener {
-            viewModel.onCancelBookingClicked().invokeOnCompletion {
-                findNavController().navigate(R.id.action_bookingDetailsFragment_to_bookingFragment)
-            }
+            viewModel.onCancelBookingClicked()
         }
 
         binding.confirmBookingButton.setOnClickListener {
-            viewModel.onConfirmBookingClicked().invokeOnCompletion {
-                findNavController().navigate(R.id.action_bookingDetailsFragment_to_bookingFragment)
-            }
+            viewModel.onConfirmBookingClicked()
         }
 
         binding.returnToDateChoosingButton.setOnClickListener {
             //TODO: Добавить переход на экран выбора даты
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.bookingTime.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { time ->
-                binding.bookingDatetimeBlockText.text = time
-            }
         }
     }
 

@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/you_have_booked_text"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/you_have_booked"
         android:textAppearance="?textAppearanceHeadline4"
@@ -18,86 +18,95 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="?verticalSpacing"
-            android:orientation="vertical"
-            android:paddingVertical="?listPreferredItemPaddingVertical"
-            android:paddingStart="?listPreferredItemPaddingStart"
-            android:paddingEnd="?listPreferredItemPaddingEnd"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/you_have_booked_text"
-            >
+    <TextView
+        android:id="@+id/booking_company_block_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?verticalSpacing"
+        android:text="@string/company"
+        android:textAppearance="?textAppearanceHeadline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/you_have_booked_text" />
 
-            <TextView
-                android:id="@+id/booking_company_block_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:text="@string/company"
-                android:textAppearance="?textAppearanceHeadline5" />
+    <TextView
+        android:id="@+id/booking_company_block_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?textAppearanceBody1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booking_company_block_title"
+        tools:text="Тензор" />
 
-            <TextView
-                android:id="@+id/booking_company_block_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?textAppearanceBody1"
-                tools:text="Тензор" />
+    <TextView
+        android:id="@+id/booking_place_block_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?verticalSpacing"
+        android:text="@string/place"
+        android:textAppearance="?textAppearanceHeadline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booking_company_block_text" />
 
-            <TextView
-                android:id="@+id/booking_place_block_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:text="@string/place"
-                android:textAppearance="?textAppearanceHeadline5" />
+    <TextView
+        android:id="@+id/booking_place_block_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?textAppearanceBody1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booking_place_block_title"
+        tools:text="Переговорная Гавайи (3 этаж)" />
 
-            <TextView
-                android:id="@+id/booking_place_block_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?textAppearanceBody1"
-                tools:text="Переговорная Гавайи (3 этаж)" />
+    <TextView
+        android:id="@+id/booking_datetime_block_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?verticalSpacing"
+        android:text="@string/data_and_time"
+        android:textAppearance="?textAppearanceHeadline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booking_place_block_text" />
 
-            <TextView
-                android:id="@+id/booking_datetime_block_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:text="@string/data_and_time"
-                android:textAppearance="?textAppearanceHeadline5" />
+    <TextView
+        android:id="@+id/booking_datetime_block_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?textAppearanceBody1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booking_datetime_block_title"
+        tools:text="26.09 - ЧТ; 11:00-13:00" />
 
-            <TextView
-                android:id="@+id/booking_datetime_block_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?textAppearanceBody1"
-                tools:text="26.09 - ЧТ; 11:00-13:00" />
+    <TextView
+        android:id="@+id/booking_name_block_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?verticalSpacing"
+        android:text="@string/booking_name"
+        android:textAppearance="?textAppearanceHeadline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booking_datetime_block_text" />
 
-            <TextView
-                android:id="@+id/booking_name_block_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:text="@string/booking_name"
-                android:textAppearance="?textAppearanceHeadline5" />
-
-            <TextView
-                android:id="@+id/booking_name_block_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?textAppearanceBody1"
-                tools:text="Обсуждение таинственной пропажи минералки из кулера" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/booking_name_block_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?textAppearanceBody1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booking_name_block_title"
+        tools:text="Обсуждение таинственной пропажи минералки из кулера" />
 
     <Button
         android:id="@+id/cancel_booking_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/cancel_booking"
-        android:textAppearance="?textAppearanceBody2"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
