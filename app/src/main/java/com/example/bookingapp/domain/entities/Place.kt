@@ -2,7 +2,7 @@ package com.example.bookingapp.domain.entities
 
 data class Place(
     val id: String ="",
-    val companyName: String = "",
+    val company: String = "",
     val features: List<String> = emptyList(),
     val name: String = "",
     val type: String = "",

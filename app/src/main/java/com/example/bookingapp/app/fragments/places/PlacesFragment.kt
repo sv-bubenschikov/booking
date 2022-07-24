@@ -34,24 +34,24 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
             )
         }
 
-        with(binding) {
-            recyclePlaces.adapter = placeListAdapter
-
-            // Пока что добавил заглушку, чтобы можно было проверить верстку
-            val attributes = listOf("1 этаж", "2 этаж", "3 этаж", "Переговорка", "4 этаж", "5 этаж")
-            for (attr in attributes) {
-                val chip =
-                    layoutInflater.inflate(R.layout.chip_filter_layout, chipsFilter, false) as Chip
-                chip.text = attr
-                chipsFilter.addView(chip)
+        // TODO #27
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.placesAndFeatures.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { (places, features) ->
+                placeListAdapter.submitList(places)
+                setFilters(binding, features)
             }
         }
 
-        // TODO #27
+        binding.recyclePlaces.adapter = placeListAdapter
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.places.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { places ->
-                placeListAdapter.submitList(places)
+    private fun setFilters(binding: FragmentPlacesBinding, filters: List<String>){
+        with(binding){
+            for (filter in filters) {
+                val chip =
+                    layoutInflater.inflate(R.layout.chip_filter_layout, chipsFilter, false) as Chip
+                chip.text = filter
+                chipsFilter.addView(chip)
             }
         }
     }
