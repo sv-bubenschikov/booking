@@ -48,8 +48,7 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
     private fun setFilters(binding: FragmentPlacesBinding, filters: List<String>){
         with(binding){
             for (filter in filters) {
-                val chip =
-                    layoutInflater.inflate(R.layout.chip_filter_layout, chipsFilter, false) as Chip
+                val chip = Chip(context)
                 chip.text = filter
                 chipsFilter.addView(chip)
             }

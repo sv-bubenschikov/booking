@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="?listPreferredItemSpacingVertical"
-    android:layout_marginHorizontal="?gridPreferredItemSpacingHorizontal">
+    android:layout_marginHorizontal="?gridPreferredItemSpacingHorizontal"
+    android:layout_marginBottom="?listPreferredItemSpacingVertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,11 +43,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="?verticalSpacing"
             android:textAppearance="?textAppearanceBody2"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/place_features"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/place_name"
             tools:text="2 Этаж" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/place_features"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:isScrollContainer="true"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/place_floor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

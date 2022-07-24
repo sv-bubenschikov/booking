@@ -3,6 +3,7 @@ package com.example.bookingapp.app.fragments.places
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookingapp.databinding.CardPlaceBinding
 import com.example.bookingapp.domain.entities.Place
+import com.google.android.material.chip.Chip
 
 class PlaceListViewHolder(
     private val binding: CardPlaceBinding,
@@ -21,5 +22,10 @@ class PlaceListViewHolder(
         data = item
         placeType.text = data.type
         placeName.text = data.name
+        for (feature in item.features){
+            val chip = Chip(placeFeatures.context)
+            chip.text = feature
+            placeFeatures.addView(chip)
+        }
     }
 }
