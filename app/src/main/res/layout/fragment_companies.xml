@@ -5,6 +5,8 @@
     android:id="@+id/company_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingHorizontal="?screenPaddingHorizontal"
+    android:paddingTop="?listPreferredItemSpacingVertical"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     tools:context=".app.fragments.companies.CompaniesFragment"
     tools:listitem="@layout/companies_item" />
