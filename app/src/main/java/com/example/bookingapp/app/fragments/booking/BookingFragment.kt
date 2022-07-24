@@ -20,7 +20,6 @@ import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.BOOKING_ID
 import com.example.bookingapp.databinding.FragmentBookingBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -61,24 +60,27 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentBookingBinding.bind(view)
-        val adapter = BookingListAdapter { booking ->
+        val adapter = BookingListAdapter { bookingId ->
             val arg = Bundle().apply {
-                putInt(BOOKING_ID, booking.id)
+                putString(BOOKING_ID, bookingId)
             }
             findNavController().navigate(R.id.actionBookingFragment_to_bookingDetailsFragment, arg)
         }
         binding.bookingList.adapter = adapter
 
         hostViewModel.setActionButtonVisible(true)
-        lifecycleScope.launch {
-            hostViewModel.actionButtonClicked.flowWithLifecycle(lifecycle).collect {
-                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
-            }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.bookingList
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { bookingList ->
+                    adapter.submitList(bookingList)
+                }
         }
 
-        lifecycleScope.launch {
-            viewModel.bookingList.flowWithLifecycle(lifecycle).collect { bookingList ->
-                adapter.submitList(bookingList)
+        viewLifecycleOwner.lifecycleScope.launch {
+            hostViewModel.actionButtonClicked.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
+                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
             }
         }
     }

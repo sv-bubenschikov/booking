@@ -7,18 +7,26 @@ import com.example.bookingapp.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
-class LoadingDialog(private val inflater: LayoutInflater, val context: Context) {
-    private lateinit var isDialog: AlertDialog
+class LoadingDialog(
+    private val inflater: LayoutInflater,
+    val context: Context
+) {
+
+    private var dialog: AlertDialog? = null
+
     fun startLoading() {
+        dismiss()
         val dialogView = inflater.inflate(R.layout.loading_progress_bar, null)
         val builder = MaterialAlertDialogBuilder(context)
         builder.setView(dialogView)
         builder.setCancelable(false)
-        isDialog = builder.create()
-        isDialog.show()
+        dialog = builder.create().apply {
+            show()
+        }
     }
 
     fun dismiss() {
-        isDialog.dismiss()
+        dialog?.dismiss()
+        dialog = null
     }
 }

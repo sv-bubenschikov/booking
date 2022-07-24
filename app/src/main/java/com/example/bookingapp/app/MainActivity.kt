@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.bookingapp.R
@@ -36,14 +37,13 @@ class MainActivity : AppCompatActivity() {
                     binding.actionButton.hide()
             }
         }
+    }
 
-        //issue #10 https://github.com/sv-bubenschikov/booking/projects/1#card-84219457
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
-        val navController = navHostFragment.navController
+    override fun onStart() {
+        super.onStart()
 
+        val navController = findNavController(R.id.fragment_container_view)
         visibilityNavElements(navController)
-
         setupActionBarWithNavController(navController)
     }
 
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_sign_in,
-                R.id.navigation_register -> { supportActionBar?.hide(); hostViewModel.setActionButtonVisible(false) } // почему actionButton не скрывается? даже по id view.Gone не работает
+                R.id.navigation_register -> { supportActionBar?.hide() }
                 else -> supportActionBar?.show()
             }
         }

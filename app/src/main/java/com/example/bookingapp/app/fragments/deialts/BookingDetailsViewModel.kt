@@ -9,8 +9,12 @@ import com.example.bookingapp.domain.usecases.booking.CreateBookingUseCase
 import com.example.bookingapp.domain.usecases.booking.DeleteBookingByIdUseCase
 import com.example.bookingapp.domain.usecases.booking.GetBookingInfoByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import org.joda.time.DateTime
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,16 +26,26 @@ class BookingDetailsViewModel @Inject constructor(
     stateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val booking: StateFlow<Booking> = getBookingInfoByIdUseCase(stateHandle[BOOKING_ID]!!)
+    val booking = getBookingInfoByIdUseCase(stateHandle[BOOKING_ID]!!)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, Booking())
 
-    fun onCancelBookingClicked(): Job {
-        return viewModelScope.launch {
+    val bookingTime = booking.map { booking ->
+        val dateTime = DateTime(booking.bookingDate).toLocalDate().toString("dd-MM-yyyy")
+        val startTime = DateTime(booking.startTime).toLocalTime().toString("HH:mm")
+        val endTime = DateTime(booking.endTime).toLocalTime().toString("HH:mm")
+        "$dateTime; $startTime - $endTime"
+    }
+        .flowOn(Dispatchers.Default)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, "")
+
+    fun onCancelBookingClicked() {
+        viewModelScope.launch {
             deleteBookingByIdUseCase(booking.value.id)
         }
     }
 
-    fun onConfirmBookingClicked(): Job {
-        return viewModelScope.launch {
+    fun onConfirmBookingClicked() {
+        viewModelScope.launch {
             createBookingUseCase(booking.value)
         }
     }

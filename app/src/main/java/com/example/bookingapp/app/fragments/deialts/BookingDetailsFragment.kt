@@ -1,5 +1,6 @@
 package com.example.bookingapp.app.fragments.deialts
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -13,12 +14,19 @@ import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.databinding.FragmentBookingDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 
 @AndroidEntryPoint
 class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
 
     private val hostViewModel: HostViewModel by activityViewModels()
     private val viewModel: BookingDetailsViewModel by viewModels()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        hostViewModel.setActionButtonVisible(false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,10 +35,10 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.booking.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { booking ->
-                binding.bookingCompanyBlockText.text = booking.company.name
-                binding.bookingPlaceBlockText.text = booking.place.name
+                binding.bookingCompanyBlockText.text = booking.companyName
+                binding.bookingPlaceBlockText.text = booking.placeName
                 binding.bookingDatetimeBlockText.text = booking.bookingDate.toString()
-                binding.bookingNameBlockText.text = booking.bookingName
+                binding.bookingNameBlockText.text = booking.theme
             }
         }
 
@@ -50,7 +58,11 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
             //TODO: Добавить переход на экран выбора даты
         }
 
-        hostViewModel.setActionButtonVisible(false)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.bookingTime.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { time ->
+                binding.bookingDatetimeBlockText.text = time
+            }
+        }
     }
 
     companion object {

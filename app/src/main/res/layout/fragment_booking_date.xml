@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".app.fragments.booking_date.BookingDateFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="8"
+        tools:listitem="@layout/card_date" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="?verticalSpacing"
+        android:paddingHorizontal="?screenPaddingHorizontal"
+        app:layout_constraintBottom_toTopOf="@id/btn_select"
+        app:layout_constraintTop_toBottomOf="@id/rec_filter">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/morning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?verticalSpacing"
+                android:text="@string/morning"
+                android:textAppearance="?textAppearanceHeadline5" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/group_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?verticalSpacing" />
+
+            <TextView
+                android:id="@+id/day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?verticalSpacing"
+                android:text="@string/day"
+                android:textAppearance="?textAppearanceHeadline5" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/group_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?verticalSpacing" />
+
+            <TextView
+                android:id="@+id/evening"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?verticalSpacing"
+                android:text="@string/evening"
+                android:textAppearance="?textAppearanceHeadline5" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/group_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?verticalSpacing" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="?screenPaddingHorizontal"
+        android:layout_marginBottom="?screenPaddingVertical"
+        android:text="@string/select"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

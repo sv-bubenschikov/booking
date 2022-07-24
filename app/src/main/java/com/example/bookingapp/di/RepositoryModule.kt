@@ -1,13 +1,7 @@
 package com.example.bookingapp.di
 
-import com.example.bookingapp.data.repositories.BookingRepositoryImpl
-import com.example.bookingapp.data.repositories.CompanyRepositoryImpl
-import com.example.bookingapp.data.repositories.PlaceRepositoryImpl
-import com.example.bookingapp.data.repositories.UserRepositoryImpl
-import com.example.bookingapp.domain.repositories_interface.BookingRepository
-import com.example.bookingapp.domain.repositories_interface.CompanyRepository
-import com.example.bookingapp.domain.repositories_interface.PlaceRepository
-import com.example.bookingapp.domain.repositories_interface.UserRepository
+import com.example.bookingapp.data.repositories.*
+import com.example.bookingapp.domain.repositories_interface.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -31,4 +25,8 @@ abstract class RepositoryModule {
     @Binds
     abstract fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl):
             UserRepository
+
+    @Binds
+    abstract fun provideDateRepository(dateRepositoryImpl: DateRepositoryImpl):
+            DateRepository
 }

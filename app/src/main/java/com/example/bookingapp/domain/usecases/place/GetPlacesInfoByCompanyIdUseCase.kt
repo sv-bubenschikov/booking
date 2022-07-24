@@ -5,7 +5,6 @@ import com.example.bookingapp.domain.repositories_interface.PlaceRepository
 import javax.inject.Inject
 
 class GetPlacesInfoByCompanyIdUseCase @Inject constructor(private val placeRepository: PlaceRepository) {
-    operator fun invoke(companyId: Int): List<Place> {
-        return placeRepository.getPlacesInfoByCompanyId(companyId)
-    }
+    operator fun invoke(companyId: String) =
+        placeRepository.getPlacesInfoByCompanyId(companyId)
 }
