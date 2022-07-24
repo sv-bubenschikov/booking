@@ -31,6 +31,7 @@ class BookingDateViewModel @Inject constructor(
         val allPeriods = getPeriodsByDayId(dayId, placeId)
         val bookingPeriods = getBookingPeriodsByDate(days.value[dayId].date, placeId)
 
+        // TODO: заменить на flatmap
         allPeriods.map {
             it.filter { p ->
                 !bookingPeriods.first().contains(p)
@@ -48,6 +49,7 @@ class BookingDateViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val days: StateFlow<List<Day>> = getDaysInfoByPlaceId()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     init {
         viewModelScope.launch {
