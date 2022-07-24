@@ -7,5 +7,5 @@ interface CompanyRepository {
 
     fun getCompanies(): Flow<List<Company>>
 
-    fun getCompanyInfoById(id: Int): Company
+    fun getCompanyInfoById(id: String): Company
 }

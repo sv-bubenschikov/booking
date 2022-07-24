@@ -32,7 +32,7 @@ class CompanyRepositoryImpl @Inject constructor(
         awaitClose { companies.removeEventListener(listener) }
     }
 
-    override fun getCompanyInfoById(id: Int): Company {
+    override fun getCompanyInfoById(id: String): Company {
         TODO("Not yet implemented")
     }
 }
