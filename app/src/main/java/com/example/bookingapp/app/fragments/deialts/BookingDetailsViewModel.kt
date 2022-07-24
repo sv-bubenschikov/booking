@@ -52,4 +52,10 @@ class BookingDetailsViewModel @Inject constructor(
             _bookingDecision.emit(BookingDecision.CONFIRM)
         }
     }
+
+    fun onEditBookingClicked() {
+        viewModelScope.launch {
+            _bookingDecision.emit(BookingDecision.EDIT)
+        }
+    }
 }

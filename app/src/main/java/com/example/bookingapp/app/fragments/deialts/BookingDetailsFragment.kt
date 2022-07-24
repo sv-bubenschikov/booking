@@ -57,7 +57,7 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                     val destination = when (decision) {
                         BookingDecision.CONFIRM -> R.id.action_bookingDetailsFragment_to_bookingFragment
                         BookingDecision.CANCEL -> R.id.action_bookingDetailsFragment_to_bookingFragment
-                        BookingDecision.EDIT -> TODO("Добавить переход на экран выбора даты")
+                        BookingDecision.EDIT -> R.id.action_bookingDetailsFragment_to_bookingDateFragment
                     }
                     findNavController().navigate(destination)
                 }
@@ -72,7 +72,7 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
         }
 
         binding.returnToDateChoosingButton.setOnClickListener {
-            //TODO: Добавить переход на экран выбора даты
+            viewModel.onEditBookingClicked()
         }
     }
 
