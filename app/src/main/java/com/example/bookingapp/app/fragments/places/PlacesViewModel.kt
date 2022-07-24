@@ -3,8 +3,10 @@ package com.example.bookingapp.app.fragments.places
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.bookingapp.app.fragments.places.PlacesFragment.Companion.BOOKING
+import com.example.bookingapp.databinding.FragmentPlacesBinding
 import com.example.bookingapp.domain.entities.BookingBuilder
 import com.example.bookingapp.domain.usecases.place.GetPlacesAndFeaturesByCompanyNameUseCase
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,4 +18,30 @@ class PlacesViewModel @Inject constructor(
 
     var booking: BookingBuilder = stateHandle[BOOKING]!!
     val placesAndFeatures = getPlacesAndFeaturesByCompanyNameUseCase(booking.companyName)
+
+    fun setFilters(
+        binding: FragmentPlacesBinding,
+        filters: List<String>,
+        listAdapter: PlaceListAdapter
+    ) {
+        with(binding) {
+            for (filter in filters) {
+                val chip = Chip(chipsFilter.context)
+                chip.text = filter
+
+                // Не уверен, что правильно реализовал фильтрацию, возможно можно подругому сделать
+                chip.setOnClickListener {
+                    if (chip.isSelected) {
+                        chip.isSelected = false
+                        listAdapter.removeFilter(chip.text.toString())
+                    } else {
+                        chip.isSelected = true
+                        listAdapter.addFilter(chip.text.toString())
+                    }
+                    listAdapter.filterPlaces()
+                }
+                chipsFilter.addView(chip)
+            }
+        }
+    }
 }

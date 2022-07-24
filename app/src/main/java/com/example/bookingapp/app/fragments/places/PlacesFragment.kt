@@ -11,7 +11,6 @@ import androidx.navigation.Navigation.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.databinding.FragmentPlacesBinding
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -45,38 +44,11 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
             viewModel.placesAndFeatures.flowWithLifecycle(viewLifecycleOwner.lifecycle)
                 .collect { (places, features) ->
                     placeListAdapter.submitList(places.toMutableList())
-                    setFilters(binding, features, placeListAdapter)
+                    viewModel.setFilters(binding, features, placeListAdapter)
                 }
         }
-
-
+        
         binding.recyclePlaces.adapter = placeListAdapter
-    }
-
-    private fun setFilters(
-        binding: FragmentPlacesBinding,
-        filters: List<String>,
-        listAdapter: PlaceListAdapter
-    ) {
-        with(binding) {
-            for (filter in filters) {
-                val chip = Chip(context)
-                chip.text = filter
-
-                // Не уверен, что правильно реализовал фильтрацию, возможно можно подругому сделать
-                chip.setOnClickListener {
-                    if (chip.isSelected) {
-                        chip.isSelected = false
-                        listAdapter.removeFilter(chip.text.toString())
-                    } else {
-                        chip.isSelected = true
-                        listAdapter.addFilter(chip.text.toString())
-                    }
-                    listAdapter.filterPlaces()
-                }
-                chipsFilter.addView(chip)
-            }
-        }
     }
 
     companion object {
