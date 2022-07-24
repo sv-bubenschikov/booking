@@ -1,17 +1,18 @@
 package com.example.bookingapp.app.fragments.booking
 
 import androidx.lifecycle.ViewModel
-import com.example.bookingapp.domain.entities.Booking
-import com.example.bookingapp.domain.usecases.booking.GetBookingsInfoByUserIdUseCase
+import androidx.lifecycle.viewModelScope
+import com.example.bookingapp.domain.usecases.booking.GetBookingsByUserIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class BookingViewModel @Inject constructor(
-    getBookingsInfoByUserIdUseCase: GetBookingsInfoByUserIdUseCase
+    getBookingsByUserIdUseCase: GetBookingsByUserIdUseCase
 ) : ViewModel() {
 
-    // TODO: #22
-    val bookingList: StateFlow<List<Booking>> = getBookingsInfoByUserIdUseCase("")
+    val bookingList = getBookingsByUserIdUseCase()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 }

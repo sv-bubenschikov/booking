@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface PlaceRepository {
 
-    fun getPlacesInfoByCompanyId(companyId: Int): StateFlow<List<Place>>
+    fun getPlacesInfoByCompanyId(companyId: String): StateFlow<List<Place>>
 
-    fun getPlaceInfoById(id: Int): StateFlow<Place>
+    fun getPlaceInfoById(id: String): StateFlow<Place>
 }

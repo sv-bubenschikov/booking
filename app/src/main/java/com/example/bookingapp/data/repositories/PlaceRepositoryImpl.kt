@@ -9,19 +9,19 @@ import javax.inject.Inject
 class PlaceRepositoryImpl @Inject constructor() : PlaceRepository {
     private val places = MutableStateFlow(
         listOf(
-            Place("Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
-            Place("Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
-            Place("Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
-            Place("Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
-            Place("Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
+            Place("","Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
+            Place("","Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
+            Place("","Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
+            Place("","Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
+            Place("","Тензор", listOf("4 места", "3 этаж"), "Алиса", "Переговорка", emptyList()),
         )
     )
 
-    override fun getPlacesInfoByCompanyId(companyId: Int): StateFlow<List<Place>> {
+    override fun getPlacesInfoByCompanyId(companyId: String): StateFlow<List<Place>> {
         return places
     }
 
-    override fun getPlaceInfoById(id: Int): StateFlow<Place> {
+    override fun getPlaceInfoById(id: String): StateFlow<Place> {
         TODO("Not yet implemented")
     }
 }

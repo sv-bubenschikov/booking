@@ -40,12 +40,6 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
             }
         }
 
-        lifecycleScope.launch {
-            hostViewModel.actionButtonClicked.flowWithLifecycle(lifecycle).collect {
-                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
-            }
-        }
-
         context.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.main_menu, menu)
@@ -66,9 +60,9 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentBookingBinding.bind(view)
-        val adapter = BookingListAdapter { booking ->
+        val adapter = BookingListAdapter { bookingId ->
             val arg = Bundle().apply {
-                putString(BOOKING_ID, booking.id)
+                putString(BOOKING_ID, bookingId)
             }
             findNavController().navigate(R.id.actionBookingFragment_to_bookingDetailsFragment, arg)
         }
@@ -76,9 +70,17 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
 
         hostViewModel.setActionButtonVisible(true)
 
-        lifecycleScope.launch {
-            viewModel.bookingList.flowWithLifecycle(lifecycle).collect { bookingList ->
-                adapter.submitList(bookingList)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.bookingList
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { bookingList ->
+                    adapter.submitList(bookingList)
+                }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            hostViewModel.actionButtonClicked.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
+                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
             }
         }
     }

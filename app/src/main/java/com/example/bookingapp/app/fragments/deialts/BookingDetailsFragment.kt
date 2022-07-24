@@ -1,5 +1,6 @@
 package com.example.bookingapp.app.fragments.deialts
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -12,12 +13,19 @@ import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.databinding.FragmentBookingDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 
 @AndroidEntryPoint
 class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
 
     private val hostViewModel: HostViewModel by activityViewModels()
     private val viewModel: BookingDetailsViewModel by viewModels()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        hostViewModel.setActionButtonVisible(false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,11 +34,16 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.booking.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { booking ->
-                binding.bookingOrganisationBlockText.text = booking.company
+                binding.bookingOrganisationBlockText.text = booking.companyName
+                binding.bookingPlaceBlockText.text = booking.placeName
             }
         }
 
-        hostViewModel.setActionButtonVisible(false)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.bookingTime.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { time ->
+                binding.bookingDatetimeBlockText.text = time
+            }
+        }
     }
 
     companion object {

@@ -39,10 +39,6 @@ class HostViewModel @Inject constructor(
         }
     }
 
-    fun getCurrentUserRef(): FirebaseUser? {
-        return getCurrentUserRefUseCase()
-    }
-
     fun onActionButtonClicked() {
         viewModelScope.launch {
             _actionButtonClicked.emit(Unit)

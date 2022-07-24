@@ -1,20 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-        <import type="android.view.View" />
-        <variable
-            name="viewModel"
-            type="com.example.bookingapp.app.fragments.authorization.SignInViewModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="app.fragments.authorization.SignInFragment"
-        android:background="?colorPrimary">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="app.fragments.authorization.SignInFragment"
+    android:background="?colorPrimary">
 
     <TextView
         android:layout_marginTop="60dp"
@@ -42,7 +33,6 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:text="@={viewModel.email}"
             android:inputType="textEmailAddress"
             android:hint="@string/login_hint"
             android:id="@+id/edit_email"
@@ -77,8 +67,7 @@
             android:lines="1"
             android:autofillHints="password"
             android:hint="@string/password_hint"
-            android:inputType="textPassword"
-            android:text="@={viewModel.password}" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -93,17 +82,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_password_layout" />
 
-        <Button
-            android:id="@+id/sign_in_as_guest"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="?verticalSpacing"
-            android:layout_marginHorizontal="?screenPaddingHorizontal"
-            style="@style/ButtonStyle"
-            android:text="@string/guest_sign_in_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_btn" />
+    <Button
+        android:id="@+id/sign_in_as_guest"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="?verticalSpacing"
+        android:layout_marginHorizontal="?screenPaddingHorizontal"
+        style="@style/ButtonStyle"
+        android:text="@string/guest_sign_in_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_btn" />
 
     <Button
         android:id="@+id/register_btn"
@@ -117,6 +106,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>
