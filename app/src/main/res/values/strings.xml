@@ -6,6 +6,7 @@
     <string name="booking_date_fragment_label">Место</string>
     <string name="profile_fragment_label">Профиль</string>
     <string name="menu_profile_title">Профиль</string>
+    <string name="menu_search_title">Поиск</string>
     <string name="you_have_booked">Вы забронировали:</string>
     <string name="cancel_booking">Отменить встречу</string>
     <string name="confirm_booking_return">Отменить</string>

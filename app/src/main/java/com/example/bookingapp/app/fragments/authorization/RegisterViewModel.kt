@@ -38,11 +38,6 @@ class RegisterViewModel @Inject constructor(
     val showDialog: StateFlow<Boolean> = _showDialog
     val isUserRegistered: StateFlow<Boolean> = _isUserRegistered
 
-    val email: StateFlow<String> = _email
-    val password: StateFlow<String> = _password
-    val username: StateFlow<String> = _username
-    val confirmedPassword: StateFlow<String> = _confirmedPassword
-
     val editEmailHelper: StateFlow<Int?> = _editEmailHelper
     val editUserNameHelper: StateFlow<Int?> = _editUserNameHelper
     val editConfirmedPasswordHelper: StateFlow<Int?> = _editConfirmedPasswordHelper
@@ -83,11 +78,11 @@ class RegisterViewModel @Inject constructor(
     fun onUserRegisterClicked() {
         _showDialog.value = true
         viewModelScope.launch {
-            finalValidateConfirmedPassword(confirmedPassword.value)
+            finalValidateConfirmedPassword(_confirmedPassword.value)
 
             if (isValidForm()) {
                 try {
-                    registerUserUseCase(email.value, password.value)
+                    registerUserUseCase(_email.value, _password.value)
                     updateUserInfo()
                     _isUserRegistered.value = true
                 } catch (ex: FirebaseAuthWeakPasswordException) {
@@ -102,7 +97,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun isValidForm(): Boolean {
+    private fun isValidForm(): Boolean {
         return editEmailHelper.value == null &&
                 editPasswordHelper.value == null &&
                 editConfirmedPasswordHelper.value == null &&
@@ -112,7 +107,7 @@ class RegisterViewModel @Inject constructor(
     private fun updateUserInfo() {
         viewModelScope.launch {
             getCurrentUserRefUseCase()?.let {
-                updateUserInfoUseCase(User(it.uid, email.value, username.value))
+                updateUserInfoUseCase(User(it.uid, _email.value, _username.value))
             }
         }
     }
@@ -151,7 +146,7 @@ class RegisterViewModel @Inject constructor(
 
     private fun finalValidateConfirmedPassword(confirmedPassword: String) {
         _editConfirmedPasswordHelper.value =
-            if (password.value != confirmedPassword)
+            if (_password.value != confirmedPassword)
                 R.string.confirmed_password_does_not_match
             else
                 null
