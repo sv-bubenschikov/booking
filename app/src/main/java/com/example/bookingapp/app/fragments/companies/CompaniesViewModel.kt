@@ -1,7 +1,6 @@
 package com.example.bookingapp.app.fragments.companies
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.example.bookingapp.domain.entities.Company
 import com.example.bookingapp.domain.usecases.GetCompaniesInfoUseCase
@@ -15,39 +14,21 @@ class CompaniesViewModel @Inject constructor(
     getCompaniesInfoUseCase: GetCompaniesInfoUseCase
 ) : ViewModel() {
 
-    init {
-        viewModelScope.launch {
-            _companyListFromFB.collect {
-                val filterText = searchText.value
-                if(filterText.isEmpty()) {
-                    _companyList.emit(it)
-                }
-                else {
-                    val filteredList = it.filter { company ->
-                        company.name.lowercase().contains(filterText.lowercase())
-                    }
+    private val _searchQuery = MutableStateFlow("")
 
-                    _companyList.emit(filteredList)
-                }
-            }
-        }
-
-        viewModelScope.launch {
-            searchText.collect {
-                val filteredList = _companyListFromFB.value.filter { company ->
-                    company.name.lowercase().contains(searchText.value.lowercase())
-                }
-
-                _companyList.emit(filteredList)
-            }
-        }
-    }
-
-    private val _companyListFromFB = getCompaniesInfoUseCase()
+    private val _companyList = getCompaniesInfoUseCase()
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    private val _companyList = MutableStateFlow(_companyListFromFB.value)
+    val searchQuery: StateFlow<String> = _searchQuery
 
-    val companyList: StateFlow<List<Company>> = _companyList
-    val searchText = MutableStateFlow("")
+    val companyList: StateFlow<List<Company>> = _companyList.combine(_searchQuery) { list, query ->
+        if (query.isEmpty())
+            list
+        else
+            list.filter { company -> company.name.contains(query, true) }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
+    fun onNewSearchQuery(query: String) {
+        _searchQuery.value = query.trim()
+    }
 }
