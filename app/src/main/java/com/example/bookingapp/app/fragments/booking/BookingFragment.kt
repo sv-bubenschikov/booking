@@ -40,14 +40,6 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
             }
         }
 
-        lifecycleScope.launch {
-            hostViewModel.actionButtonClicked.flowWithLifecycle(lifecycle).collect {
-                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
-            }
-        }
-
-        hostViewModel.setActionButtonVisible(true)
-
         context.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.main_menu, menu)
@@ -76,6 +68,7 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         }
         binding.bookingList.adapter = adapter
 
+        hostViewModel.setActionButtonVisible(true)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.bookingList
@@ -83,6 +76,12 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
                 .collect { bookingList ->
                     adapter.submitList(bookingList)
                 }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            hostViewModel.actionButtonClicked.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
+                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
+            }
         }
     }
 }
