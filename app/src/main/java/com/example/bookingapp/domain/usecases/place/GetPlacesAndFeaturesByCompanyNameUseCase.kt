@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetPlacesAndFeaturesByCompanyNameUseCase @Inject constructor(private val placeRepository: PlaceRepository) {
     operator fun invoke(companyId: String) : Flow<Pair<List<Place>, List<String>>> {
         return placeRepository.getPlacesInfoByCompanyName(companyId).map { places ->
-            places to places.flatMap { place -> place.features }
+            places to places.flatMap { place -> place.features }.toSet().toList()
         }
     }
 }
