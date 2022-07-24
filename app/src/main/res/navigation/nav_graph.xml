@@ -27,6 +27,9 @@
             <argument
                 android:name="booking_id"
                 app:argType="integer" />
+            <argument
+                android:name="is_from_date_fragment"
+                app:argType="boolean" />
         </action>
     </fragment>
 
@@ -67,7 +70,11 @@
         tools:layout="@layout/fragment_booking_date">
         <action
             android:id="@+id/action_bookingDateFragment_to_bookingDetailsFragment"
-            app:destination="@id/booking_details_fragment" />
+            app:destination="@id/booking_details_fragment">
+            <argument
+                android:name="is_from_date_fragment"
+                app:argType="boolean" />
+        </action>
     </fragment>
 
     <fragment

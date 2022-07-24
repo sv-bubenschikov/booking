@@ -63,20 +63,28 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 }
         }
 
-        binding.cancelBookingButton.setOnClickListener {
-            viewModel.onCancelBookingClicked()
-        }
+        if (viewModel.isFromDateFragment) {
+            binding.confirmBookingButton.setOnClickListener {
+                viewModel.onConfirmBookingClicked()
+            }
 
-        binding.confirmBookingButton.setOnClickListener {
-            viewModel.onConfirmBookingClicked()
-        }
+            binding.returnToDateChoosingButton.setOnClickListener {
+                viewModel.onEditBookingClicked()
+            }
 
-        binding.returnToDateChoosingButton.setOnClickListener {
-            viewModel.onEditBookingClicked()
+            binding.cancelBookingButton.visibility = View.GONE
+        }
+        else {
+            binding.cancelBookingButton.setOnClickListener {
+                viewModel.onCancelBookingClicked()
+            }
+            binding.confirmBookingButton.visibility = View.GONE
+            binding.returnToDateChoosingButton.visibility = View.GONE
         }
     }
 
     companion object {
         const val BOOKING_ID = "booking_id"
+        const val IS_FROM_DATE_FRAGMENT = "is_from_date_fragment"
     }
 }

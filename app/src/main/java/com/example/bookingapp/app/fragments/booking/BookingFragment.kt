@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.BOOKING_ID
+import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.IS_FROM_DATE_FRAGMENT
 import com.example.bookingapp.databinding.FragmentBookingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -63,6 +64,7 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         val adapter = BookingListAdapter { bookingId ->
             val arg = Bundle().apply {
                 putString(BOOKING_ID, bookingId)
+                putBoolean(IS_FROM_DATE_FRAGMENT, false)
             }
             findNavController().navigate(R.id.actionBookingFragment_to_bookingDetailsFragment, arg)
         }

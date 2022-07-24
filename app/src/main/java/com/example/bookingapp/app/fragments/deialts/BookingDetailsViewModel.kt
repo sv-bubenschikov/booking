@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.BOOKING_ID
+import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.IS_FROM_DATE_FRAGMENT
 import com.example.bookingapp.domain.entities.Booking
 import com.example.bookingapp.domain.usecases.booking.CreateBookingUseCase
 import com.example.bookingapp.domain.usecases.booking.DeleteBookingByIdUseCase
@@ -29,6 +30,8 @@ class BookingDetailsViewModel @Inject constructor(
 
     val booking = getBookingInfoByIdUseCase(stateHandle[BOOKING_ID]!!)
         .stateIn(viewModelScope, SharingStarted.Eagerly, Booking())
+
+    val isFromDateFragment: Boolean = stateHandle[IS_FROM_DATE_FRAGMENT]!!
 
     val bookingTime = booking.map { booking ->
         val dateTime = DateTime(booking.bookingDate).toLocalDate().toString("dd-MM-yyyy")
