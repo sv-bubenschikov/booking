@@ -19,12 +19,11 @@ class PlaceRepositoryImpl @Inject constructor(
 
     override fun getPlacesInfoByCompanyName(companyName: String) = callbackFlow {
         val places = database.child("Places")
-        // TODO #42
         val listener = places.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 launch {
                     send(snapshot.children.mapNotNull {
-                        it.getValue(Place::class.java)
+                        it.getValue(Place::class.java).also { place -> place?.id = it.key!! }
                     }.filter { place -> place.company == companyName})
                 }
             }

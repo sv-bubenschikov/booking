@@ -27,7 +27,7 @@ class BookingDateViewModel @Inject constructor(
 ) : ViewModel() {
 
     val booking: BookingBuilder = stateHandle[BOOKING]!!
-    private val placeId = "GeneratedPlaceId"//TODO Передача Booking между фрагментами
+    private val placeId = booking.placeId
     private val selectedDay = MutableSharedFlow<Int>()
 
     val periods = selectedDay.flatMapLatest { dayId ->

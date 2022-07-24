@@ -33,6 +33,7 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         with(binding) {
             btnSelect.setOnClickListener {
                 val arg = Bundle().apply {
+                    // TODO #43
                     putParcelable(BOOKING, viewModel.booking)
                 }
                 findNavController().navigate(
