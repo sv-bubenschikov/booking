@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -35,6 +36,12 @@ class MainActivity : AppCompatActivity() {
                     binding.actionButton.show()
                 else
                     binding.actionButton.hide()
+            }
+        }
+
+        lifecycleScope.launch {
+            hostViewModel.toolbarTitle.flowWithLifecycle(lifecycle).collect { title ->
+                supportActionBar?.title= title
             }
         }
     }
@@ -64,7 +71,9 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_sign_in,
-                R.id.navigation_register -> { supportActionBar?.hide() }
+                R.id.navigation_register -> {
+                    supportActionBar?.hide()
+                }
                 else -> supportActionBar?.show()
             }
         }

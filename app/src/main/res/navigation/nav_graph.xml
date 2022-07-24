@@ -23,11 +23,7 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/actionBookingFragment_to_bookingDetailsFragment"
-            app:destination="@id/booking_details_fragment">
-            <argument
-                android:name="booking_id"
-                app:argType="integer" />
-        </action>
+            app:destination="@id/booking_details_fragment" />
     </fragment>
 
     <fragment
@@ -47,17 +43,7 @@
         tools:layout="@layout/fragment_places">
         <action
             android:id="@+id/action_placesFragment_to_bookingDateFragment"
-            app:destination="@id/booking_date_fragment">
-            <argument
-                android:name="company_id"
-                app:argType="integer" />
-            <argument
-                android:name="company_title"
-                app:argType="string" />
-            <argument
-                android:name="place_id"
-                app:argType="integer" />
-        </action>
+            app:destination="@id/booking_date_fragment" />
     </fragment>
 
     <fragment
@@ -77,14 +63,14 @@
         tools:layout="@layout/fragment_booking_details">
         <action
             android:id="@+id/action_bookingDetailsFragment_to_bookingFragment"
-            app:destination="@id/booking_fragment"/>
+            app:destination="@id/booking_fragment" />
     </fragment>
 
     <fragment
         android:id="@+id/profile_fragment"
         android:name="com.example.bookingapp.app.fragments.profile.ProfileFragment"
         android:label="@string/profile_fragment_label"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/profile_fragment_to_sign_in"
             app:destination="@id/navigation_sign_in"
@@ -95,7 +81,7 @@
     <fragment
         android:id="@+id/navigation_register"
         android:name="com.example.bookingapp.app.fragments.authorization.RegisterFragment"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_navigation_register_to_navigation_home"
             app:destination="@id/booking_fragment"
@@ -106,7 +92,7 @@
     <fragment
         android:id="@+id/navigation_sign_in"
         android:name="com.example.bookingapp.app.fragments.authorization.SignInFragment"
-        tools:layout="@layout/fragment_sign_in" >
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_navigation_sign_in_to_navigation_home"
             app:destination="@id/booking_fragment"

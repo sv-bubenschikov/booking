@@ -15,8 +15,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.HostViewModel
-import com.example.bookingapp.app.fragments.places.PlacesFragment.Companion.COMPANY_ID
+import com.example.bookingapp.app.fragments.places.PlacesFragment.Companion.BOOKING
 import com.example.bookingapp.databinding.FragmentCompaniesBinding
+import com.example.bookingapp.domain.entities.BookingBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -67,7 +68,8 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
 
         val adapter = CompaniesListAdapter { company ->
             val arg = Bundle().apply {
-                putString(COMPANY_ID, company.name)
+                val booking = BookingBuilder(companyName = company.name)
+                putParcelable(BOOKING, booking)
             }
             findNavController().navigate(R.id.action_companiesFragment_to_placesFragment, arg)
         }

@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bookingapp.app.entities.PeriodForFragment
+import com.example.bookingapp.app.fragments.booking_date.BookingDateFragment.Companion.BOOKING
+import com.example.bookingapp.domain.entities.BookingBuilder
 import com.example.bookingapp.domain.entities.Day
 import com.example.bookingapp.domain.usecases.date.GetBookingPeriodsByDateUseCase
 import com.example.bookingapp.domain.usecases.date.GetDaysInfoByPlaceIdUseCase
@@ -24,6 +26,7 @@ class BookingDateViewModel @Inject constructor(
     stateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    val booking: BookingBuilder = stateHandle[BOOKING]!!
     private val placeId = "GeneratedPlaceId"//TODO Передача Booking между фрагментами
     private val selectedDay = MutableSharedFlow<Int>()
 

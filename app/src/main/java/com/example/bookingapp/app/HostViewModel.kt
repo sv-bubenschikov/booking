@@ -18,15 +18,17 @@ import javax.inject.Inject
 class HostViewModel @Inject constructor(
     private val getCurrentUserRefUseCase: GetCurrentUserRefUseCase,
     private val updateCurrentUserRefUseCase: UpdateCurrentUserRefUseCase,
-): ViewModel() {
+) : ViewModel() {
 
     private val _currentUserRef = MutableStateFlow<FirebaseUser?>(null)
     private val _actionButtonVisible = MutableStateFlow(true)
     private val _actionButtonClicked = MutableSharedFlow<Unit>()
+    private val _toolbarTitle = MutableSharedFlow<String>()
 
     val currentUserRef: StateFlow<FirebaseUser?> = _currentUserRef
     val actionButtonVisible: StateFlow<Boolean> = _actionButtonVisible
     val actionButtonClicked: Flow<Unit> = _actionButtonClicked
+    val toolbarTitle: Flow<String> = _toolbarTitle
 
     fun setActionButtonVisible(isVisible: Boolean) {
         _actionButtonVisible.value = isVisible
@@ -43,5 +45,11 @@ class HostViewModel @Inject constructor(
         viewModelScope.launch {
             _actionButtonClicked.emit(Unit)
         }
+    }
+
+    fun setToolbarTitle(title: String) {
+       viewModelScope.launch {
+           _toolbarTitle.emit(title)
+       }
     }
 }

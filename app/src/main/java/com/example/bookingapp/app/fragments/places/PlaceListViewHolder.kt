@@ -19,10 +19,10 @@ class PlaceListViewHolder(
     }
 
     fun bind(item: Place) = with(binding) {
-        // TODO issue #48
         data = item
         placeType.text = data.type
         placeName.text = data.name
+        placeFeatures.removeAllViews()
         for (feature in item.features){
             val chip = Chip(placeFeatures.context)
             chip.text = feature
