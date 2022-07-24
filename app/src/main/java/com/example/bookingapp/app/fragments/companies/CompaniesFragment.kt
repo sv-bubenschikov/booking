@@ -37,7 +37,6 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
                 menuInflater.inflate(R.menu.search_menu, menu)
 
                 val searchView = menu.findItem(R.id.menu_search).actionView as SearchView
-                searchView.setIconifiedByDefault(false)
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String): Boolean {
                         viewModel.onNewSearchQuery(query)
