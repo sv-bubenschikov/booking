@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.actionButton.setOnClickListener {
             hostViewModel.onActionButtonClicked()
         }
+
         lifecycleScope.launch {
             hostViewModel.actionButtonVisible.flowWithLifecycle(lifecycle).collect { isVisible ->
                 if (isVisible)

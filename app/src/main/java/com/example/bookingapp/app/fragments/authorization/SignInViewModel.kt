@@ -3,10 +3,13 @@ package com.example.bookingapp.app.fragments.authorization
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bookingapp.R
+import com.example.bookingapp.domain.entities.Period
+import com.example.bookingapp.domain.entities.Place
 import com.example.bookingapp.domain.usecases.user.SignInAsGuestUseCase
 import com.example.bookingapp.domain.usecases.user.SignInUseCase
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow

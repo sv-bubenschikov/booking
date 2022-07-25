@@ -19,11 +19,14 @@ import com.example.bookingapp.R
 import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.BOOKING_ID
 import com.example.bookingapp.databinding.FragmentBookingBinding
+import com.example.bookingapp.domain.usecases.user.CheckIfUserExistsUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class BookingFragment : Fragment(R.layout.fragment_booking) {
+class BookingFragment @Inject constructor(private val checkIfUserExistsUseCase: CheckIfUserExistsUseCase) :
+    Fragment() {
 
     private val hostViewModel: HostViewModel by activityViewModels()
     private val viewModel: BookingViewModel by viewModels()
@@ -32,11 +35,9 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         super.onAttach(context)
         context as AppCompatActivity
 
-        lifecycleScope.launch {
-            hostViewModel.updateCurrentUserRef().join()
-            hostViewModel.currentUserRef.flowWithLifecycle(lifecycle).collect { user ->
-                if (user == null)
-                    findNavController().navigate(R.id.action_navigation_home_to_navigation_sign_in)
+        viewLifecycleOwner.lifecycleScope.launch {
+            if(!checkIfUserExistsUseCase()) {
+                findNavController().navigate(R.id.action_navigation_home_to_navigation_sign_in)
             }
         }
 
