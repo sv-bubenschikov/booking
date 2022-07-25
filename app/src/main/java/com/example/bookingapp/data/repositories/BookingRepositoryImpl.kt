@@ -49,10 +49,12 @@ class BookingRepositoryImpl @Inject constructor(
     }
 
     override suspend fun createBooking(booking: Booking) {
-        FirebaseDatabase.getInstance().reference
+        val pushRef = FirebaseDatabase.getInstance().reference
             .child("Bookings")
             .push()
-            .setValue(booking)
+
+        booking.id = pushRef.key!!
+        pushRef.setValue(booking)
             .await()
     }
 

@@ -1,7 +1,7 @@
 package com.example.bookingapp.domain.entities
 
 data class Booking(
-    val id: String = "",
+    var id: String = "",
     val startTime: Long = 0L,
     val endTime: Long = 0L,
     val companyName: String = "",
