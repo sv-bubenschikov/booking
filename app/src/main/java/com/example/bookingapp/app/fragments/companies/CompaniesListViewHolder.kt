@@ -8,7 +8,7 @@ import com.example.bookingapp.domain.entities.Company
 class CompaniesListViewHolder(
     private val binding: CompaniesItemBinding,
     private val onItemClicked: (Company) -> Unit
-): RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var data: Company
 
@@ -21,8 +21,10 @@ class CompaniesListViewHolder(
     fun bind(item: Company) = with(binding) {
         data = item
         companyName.text = data.name
-        val glideRun = Glide.with(itemView.context)
-            .load(data.logoUrl)
+        val glide = Glide.with(itemView.context)
+        glide.clear(companyLogo)
+        glide.load(data.logoUrl)
             .into(companyLogo)
+        Unit
     }
 }
