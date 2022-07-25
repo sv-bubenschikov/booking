@@ -51,7 +51,6 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                     val destination = when (decision) {
                         BookingDecision.CONFIRM -> R.id.action_bookingDetailsFragment_to_bookingFragment
                         BookingDecision.CANCEL -> R.id.action_bookingDetailsFragment_to_bookingFragment
-                        BookingDecision.EDIT -> R.id.action_bookingDetailsFragment_to_bookingDateFragment
                     }
                     findNavController().navigate(destination)
                 }
@@ -62,10 +61,6 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 viewModel.onConfirmBookingClicked()
             }
 
-            binding.returnToDateChoosingButton.setOnClickListener {
-                viewModel.onEditBookingClicked()
-            }
-
             binding.cancelBookingButton.visibility = View.GONE
         }
         else {
@@ -73,7 +68,6 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 viewModel.onCancelBookingClicked()
             }
             binding.confirmBookingButton.visibility = View.GONE
-            binding.returnToDateChoosingButton.visibility = View.GONE
         }
     }
 
@@ -85,7 +79,7 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
     }
 
     companion object {
+        const val BOOKING = "booking"
         const val BOOKING_ID = "booking_id"
-        const val IS_FROM_DATE_FRAGMENT = "is_from_date_fragment"
     }
 }

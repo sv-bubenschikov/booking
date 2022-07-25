@@ -3,17 +3,18 @@ package com.example.bookingapp.app.fragments.deialts
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.BOOKING
 import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.BOOKING_ID
-import com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment.Companion.IS_FROM_DATE_FRAGMENT
 import com.example.bookingapp.domain.entities.Booking
+import com.example.bookingapp.domain.entities.BookingBuilder
 import com.example.bookingapp.domain.usecases.booking.CreateBookingUseCase
 import com.example.bookingapp.domain.usecases.booking.DeleteBookingByIdUseCase
 import com.example.bookingapp.domain.usecases.booking.GetBookingInfoByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import org.joda.time.DateTime
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,13 +26,21 @@ class BookingDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _bookingDecision = MutableSharedFlow<BookingDecision>()
+    private val bookingId: String? = stateHandle[BOOKING_ID]
 
     val bookingDecision: Flow<BookingDecision> = _bookingDecision
 
-    val booking = getBookingInfoByIdUseCase(stateHandle[BOOKING_ID]!!)
+    val booking = if (bookingId == null) {
+        flow {
+            val builder: BookingBuilder = stateHandle[BOOKING]!!
+            emit(builder.build())
+        }
+    } else {
+        getBookingInfoByIdUseCase(bookingId)
+    }
         .stateIn(viewModelScope, SharingStarted.Eagerly, Booking())
 
-    val isFromDateFragment: Boolean = stateHandle[IS_FROM_DATE_FRAGMENT]!!
+    val isFromDateFragment = bookingId == null
 
     val bookingTime = booking.map { booking ->
         val dateTime = DateTime(booking.bookingDate).toLocalDate().toString("dd-MM-yyyy")
@@ -53,12 +62,6 @@ class BookingDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             createBookingUseCase(booking.value)
             _bookingDecision.emit(BookingDecision.CONFIRM)
-        }
-    }
-
-    fun onEditBookingClicked() {
-        viewModelScope.launch {
-            _bookingDecision.emit(BookingDecision.EDIT)
         }
     }
 }

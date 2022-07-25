@@ -14,4 +14,7 @@ data class BookingBuilder(
     var startTime: Long = 0L,
     var endTime: Long = 0L,
     var members: List<String> = emptyList(),
-): Parcelable
+): Parcelable {
+
+    fun build(): Booking = TODO("Реализовать мапинг")
+}
