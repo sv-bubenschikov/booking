@@ -15,8 +15,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.HostViewModel
-import com.example.bookingapp.app.fragments.places.PlacesFragment.Companion.COMPANY_ID
+import com.example.bookingapp.app.fragments.places.PlacesFragment.Companion.BOOKING
 import com.example.bookingapp.databinding.FragmentCompaniesBinding
+import com.example.bookingapp.domain.entities.BookingBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -29,8 +30,6 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         context as AppCompatActivity
-
-        hostViewModel.setActionButtonVisible(false)
 
         context.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -67,7 +66,7 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
 
         val adapter = CompaniesListAdapter { company ->
             val arg = Bundle().apply {
-                putString(COMPANY_ID, company.name)
+                putParcelable(BOOKING, BookingBuilder(companyName = company.name))
             }
             findNavController().navigate(R.id.action_companiesFragment_to_placesFragment, arg)
         }
@@ -83,5 +82,12 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        hostViewModel.setActionButtonVisible(false)
+        hostViewModel.setToolbarTitle(getString(R.string.companies_fragment_label))
     }
 }
