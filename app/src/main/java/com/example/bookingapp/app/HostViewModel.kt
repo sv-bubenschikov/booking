@@ -23,12 +23,12 @@ class HostViewModel @Inject constructor(
     private val _currentUserRef = MutableStateFlow<FirebaseUser?>(null)
     private val _actionButtonVisible = MutableStateFlow(true)
     private val _actionButtonClicked = MutableSharedFlow<Unit>()
-    private val _toolbarTitle = MutableSharedFlow<String>()
+    private val _toolbarTitle = MutableStateFlow("")
 
     val currentUserRef: StateFlow<FirebaseUser?> = _currentUserRef
     val actionButtonVisible: StateFlow<Boolean> = _actionButtonVisible
     val actionButtonClicked: Flow<Unit> = _actionButtonClicked
-    val toolbarTitle: Flow<String> = _toolbarTitle
+    val toolbarTitle: StateFlow<String> = _toolbarTitle
 
     fun setActionButtonVisible(isVisible: Boolean) {
         _actionButtonVisible.value = isVisible
@@ -48,8 +48,6 @@ class HostViewModel @Inject constructor(
     }
 
     fun setToolbarTitle(title: String) {
-       viewModelScope.launch {
-           _toolbarTitle.emit(title)
-       }
+       _toolbarTitle.value = title
     }
 }

@@ -11,7 +11,9 @@ import androidx.navigation.Navigation.findNavController
 import com.example.bookingapp.R
 import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.databinding.FragmentPlacesBinding
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -27,9 +29,11 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
 
         val placeListAdapter = PlaceListAdapter { place ->
             val arg = Bundle().apply {
-                val booking = viewModel.booking
-                booking.placeId = place.id
-                booking.placeName = place.name
+                val booking = viewModel.booking.copy(
+                    placeId = place.id,
+                    placeName = place.name,
+                    placeType = place.type
+                )
                 putParcelable(BOOKING, booking)
             }
             findNavController(view).navigate(
@@ -37,18 +41,53 @@ class PlacesFragment : Fragment(R.layout.fragment_places) {
                 arg
             )
         }
-
-        hostViewModel.setToolbarTitle(viewModel.booking.companyName)
+        binding.recyclePlaces.adapter = placeListAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.placesAndFeatures.flowWithLifecycle(viewLifecycleOwner.lifecycle)
-                .collect { (places, features) ->
+            viewModel.places.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { places ->
                     placeListAdapter.submitList(places.toMutableList())
-                    viewModel.setFilters(binding, features, placeListAdapter)
                 }
         }
-        
-        binding.recyclePlaces.adapter = placeListAdapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.features.combine(viewModel.selectedFeatures) { features, selected ->
+                features to selected
+            }
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { (features, selected) ->
+                    setFilters(binding, features, selected, viewModel::onFeatureClicked)
+                }
+        }
+    }
+
+    private fun setFilters(
+        binding: FragmentPlacesBinding,
+        filters: List<String>,
+        selectedFilters: List<String>,
+        onChipClicked: (feature: String, isSelected: Boolean) -> Unit
+    ) {
+        with(binding) {
+            chipsFilter.removeAllViews()
+            for (filter in filters) {
+                val chip = Chip(chipsFilter.context)
+                chip.text = filter
+                chip.isSelected = filter in selectedFilters
+
+                // Не уверен, что правильно реализовал фильтрацию, возможно можно подругому сделать
+                chip.setOnClickListener {
+                    onChipClicked(chip.text.toString(), !chip.isSelected)
+                }
+                chipsFilter.addView(chip)
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        hostViewModel.setActionButtonVisible(false)
+        hostViewModel.setToolbarTitle(viewModel.booking.companyName)
     }
 
     companion object {

@@ -31,8 +31,6 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
         super.onAttach(context)
         context as AppCompatActivity
 
-        hostViewModel.setActionButtonVisible(false)
-
         context.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.search_menu, menu)
@@ -68,8 +66,7 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
 
         val adapter = CompaniesListAdapter { company ->
             val arg = Bundle().apply {
-                val booking = BookingBuilder(companyName = company.name)
-                putParcelable(BOOKING, booking)
+                putParcelable(BOOKING, BookingBuilder(companyName = company.name))
             }
             findNavController().navigate(R.id.action_companiesFragment_to_placesFragment, arg)
         }
@@ -85,5 +82,12 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        hostViewModel.setActionButtonVisible(false)
+        hostViewModel.setToolbarTitle(getString(R.string.companies_fragment_label))
     }
 }

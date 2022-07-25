@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             hostViewModel.toolbarTitle.flowWithLifecycle(lifecycle).collect { title ->
-                supportActionBar?.title= title
+                supportActionBar?.title = title
             }
         }
     }

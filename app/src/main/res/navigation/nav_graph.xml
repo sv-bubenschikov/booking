@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/booking_fragment"
         android:name="com.example.bookingapp.app.fragments.booking.BookingFragment"
-        android:label="@string/booking_fragment_label"
         tools:layout="@layout/fragment_booking">
         <action
             android:id="@+id/action_bookingFragment_to_companiesFragment"
@@ -29,7 +28,6 @@
     <fragment
         android:id="@+id/companies_fragment"
         android:name="com.example.bookingapp.app.fragments.companies.CompaniesFragment"
-        android:label="@string/companies_fragment_label"
         tools:layout="@layout/fragment_companies">
         <action
             android:id="@+id/action_companiesFragment_to_placesFragment"
@@ -39,7 +37,6 @@
     <fragment
         android:id="@+id/places_fragment"
         android:name="com.example.bookingapp.app.fragments.places.PlacesFragment"
-        android:label="@string/places_fragment_label"
         tools:layout="@layout/fragment_places">
         <action
             android:id="@+id/action_placesFragment_to_bookingDateFragment"
@@ -49,7 +46,6 @@
     <fragment
         android:id="@+id/booking_date_fragment"
         android:name="com.example.bookingapp.app.fragments.booking_date.BookingDateFragment"
-        android:label="@string/booking_date_fragment_label"
         tools:layout="@layout/fragment_booking_date">
         <action
             android:id="@+id/action_bookingDateFragment_to_bookingDetailsFragment"
@@ -59,7 +55,6 @@
     <fragment
         android:id="@+id/booking_details_fragment"
         android:name="com.example.bookingapp.app.fragments.deialts.BookingDetailsFragment"
-        android:label="@string/you_have_booked"
         tools:layout="@layout/fragment_booking_details">
         <action
             android:id="@+id/action_bookingDetailsFragment_to_bookingFragment"
@@ -69,7 +64,6 @@
     <fragment
         android:id="@+id/profile_fragment"
         android:name="com.example.bookingapp.app.fragments.profile.ProfileFragment"
-        android:label="@string/profile_fragment_label"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/profile_fragment_to_sign_in"

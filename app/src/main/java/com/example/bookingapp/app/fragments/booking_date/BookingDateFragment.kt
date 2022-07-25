@@ -57,8 +57,6 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
                     setPeriods(periodList, binding)
                 }
         }
-
-        hostViewModel.setToolbarTitle(viewModel.booking.placeName)
     }
 
     private fun setPeriods(periods: List<PeriodForFragment>, binding: FragmentBookingDateBinding) {
@@ -83,6 +81,15 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
                     groupEvening.addView(chip)
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        hostViewModel.setActionButtonVisible(false)
+        hostViewModel.setToolbarTitle(
+            viewModel.booking.placeName.takeIf { it.isNotEmpty() } ?: viewModel.booking.placeType
+        )
     }
 
     companion object {

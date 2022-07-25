@@ -8,6 +8,7 @@ data class BookingBuilder(
     var companyName: String = "",
     var placeId: String = "",
     var placeName: String = "",
+    var placeType: String = "",
     var theme: String = "",
     var bookingDate: Long = 0L,
     var startTime: Long = 0L,
