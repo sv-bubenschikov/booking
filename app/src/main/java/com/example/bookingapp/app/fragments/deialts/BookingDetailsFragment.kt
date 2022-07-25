@@ -21,12 +21,6 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
     private val hostViewModel: HostViewModel by activityViewModels()
     private val viewModel: BookingDetailsViewModel by viewModels()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        hostViewModel.setActionButtonVisible(false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -81,6 +75,13 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
             binding.confirmBookingButton.visibility = View.GONE
             binding.returnToDateChoosingButton.visibility = View.GONE
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        hostViewModel.setActionButtonVisible(false)
+        // TODO: #47
     }
 
     companion object {

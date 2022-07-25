@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="?listPreferredItemSpacingVertical"
-    android:layout_marginHorizontal="?gridPreferredItemSpacingHorizontal">
+    android:layout_marginHorizontal="?gridPreferredItemSpacingHorizontal"
+    android:layout_marginBottom="?listPreferredItemSpacingVertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/place_type"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?textAppearanceOverline"
             app:layout_constraintBottom_toTopOf="@id/place_name"
@@ -27,27 +27,24 @@
 
         <TextView
             android:id="@+id/place_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="?verticalSpacing"
             android:textAppearance="?textAppearanceHeadline5"
-            app:layout_constraintBottom_toTopOf="@id/place_floor"
+            app:layout_constraintBottom_toTopOf="@id/place_features"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/place_type"
             tools:text="Hawaii" />
 
-        <TextView
-            android:id="@+id/place_floor"
-            android:layout_width="wrap_content"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/place_features"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="?verticalSpacing"
-            android:textAppearance="?textAppearanceBody2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/place_name"
-            tools:text="2 Этаж" />
+            app:layout_constraintTop_toBottomOf="@id/place_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

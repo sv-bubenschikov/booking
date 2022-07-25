@@ -1,10 +1,10 @@
 package com.example.bookingapp.app.fragments.profile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -28,16 +28,15 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentProfileBinding.inflate(inflater, container, false)
-        hostViewModel.setActionButtonVisible(false)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.user?.let {
-                it.flowWithLifecycle(lifecycle).collect { user ->
+            viewModel.user
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { user ->
                     binding.editEmail.setText(user.email)
                     binding.editUserName.setText(user.name)
                     binding.layoutUserName.text = user.name
                 }
-            }
         }
 
         binding.logoutBtn.setOnClickListener {
@@ -46,5 +45,12 @@ class ProfileFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        hostViewModel.setActionButtonVisible(false)
+        hostViewModel.setToolbarTitle(getString(R.string.profile_fragment_label))
     }
 }

@@ -70,8 +70,6 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         }
         binding.bookingList.adapter = adapter
 
-        hostViewModel.setActionButtonVisible(true)
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.bookingList
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -85,5 +83,12 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
                 findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        hostViewModel.setActionButtonVisible(true)
+        hostViewModel.setToolbarTitle(getString(R.string.booking_fragment_label))
     }
 }
