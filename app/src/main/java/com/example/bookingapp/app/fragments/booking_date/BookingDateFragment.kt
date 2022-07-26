@@ -13,8 +13,8 @@ import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.app.entities.PeriodForFragment
 import com.example.bookingapp.databinding.FragmentBookingDateBinding
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -53,35 +53,23 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.periods.flowWithLifecycle(viewLifecycleOwner.lifecycle)
-                .collect { periodList ->
-                    setPeriods(periodList, binding)
+            viewModel.periods.combine(viewModel.selectedPeriod) { periods, selected ->
+                periods to selected
+            }
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { (periods, selected) ->
+                    setPeriod(binding, periods, selected, viewModel::onPeriodClicked)
                 }
         }
     }
 
-    private fun setPeriods(periods: List<PeriodForFragment>, binding: FragmentBookingDateBinding) {
+    private fun setPeriod(
+        binding: FragmentBookingDateBinding,
+        periods: List<PeriodForFragment>,
+        selected: PeriodForFragment?,
+        onChipClicked: (PeriodForFragment) -> Unit
+    ) {
         with(binding) {
-            var selectedChip: Chip? = null
-
-            fun setCheckChip(group: ChipGroup, chip: Chip, period: PeriodForFragment) {
-                groupMorning.clearCheck()
-                groupDay.clearCheck()
-                groupEvening.clearCheck()
-
-                selectedChip?.isSelected = false
-                if (chip == selectedChip) {
-                    viewModel.onPeriodSelected(null)
-                    selectedChip = null
-                } else {
-                    viewModel.onPeriodSelected(period)
-                    chip.isSelected = true
-                    selectedChip = chip
-                }
-
-                group.check(chip.id)
-            }
-
             groupMorning.removeAllViews()
             groupDay.removeAllViews()
             groupEvening.removeAllViews()
@@ -90,20 +78,25 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
                 val chip = Chip(requireContext())
                 chip.text = period.toString()
 
+                chip.isSelected =
+                    if (selected != null)
+                        selected == period
+                    else false
+
+                chip.setOnClickListener {
+                    onChipClicked(period)
+                }
+
                 val timeStart = period.timeStart
                     .hourOfDay()
                     .get()
 
-                if (timeStart < 12) {//если меньше 12 -> утреннее время
+                if (timeStart < 12) //если меньше 12 -> утреннее время
                     groupMorning.addView(chip)
-                    chip.setOnClickListener { setCheckChip(groupMorning, chip, period) }
-                } else if (timeStart < 17) {//если меньше 17 -> дневное время
+                else if (timeStart < 17)//если меньше 17 -> дневное время
                     groupDay.addView(chip)
-                    chip.setOnClickListener { setCheckChip(groupDay, chip, period) }
-                } else {//-> вечернее время
+                else //-> вечернее время
                     groupEvening.addView(chip)
-                    chip.setOnClickListener { setCheckChip(groupEvening, chip, period) }
-                }
             }
         }
     }
