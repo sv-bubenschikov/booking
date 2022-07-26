@@ -10,6 +10,7 @@ import com.example.bookingapp.domain.entities.BookingBuilder
 import com.example.bookingapp.domain.usecases.booking.CreateBookingUseCase
 import com.example.bookingapp.domain.usecases.booking.DeleteBookingByIdUseCase
 import com.example.bookingapp.domain.usecases.booking.GetBookingInfoByIdUseCase
+import com.example.bookingapp.domain.usecases.user.GetCurrentUserRefUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -22,6 +23,7 @@ class BookingDetailsViewModel @Inject constructor(
     getBookingInfoByIdUseCase: GetBookingInfoByIdUseCase,
     private val deleteBookingByIdUseCase: DeleteBookingByIdUseCase,
     private val createBookingUseCase: CreateBookingUseCase,
+    private val userRefUseCase: GetCurrentUserRefUseCase,
     stateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -62,7 +64,10 @@ class BookingDetailsViewModel @Inject constructor(
 
     fun onConfirmBookingClicked() {
         viewModelScope.launch {
-            createBookingUseCase(booking.value.copy(theme = _bookingTheme.value))
+            createBookingUseCase(booking.value.copy(
+                theme = _bookingTheme.value,
+                members = listOf(userRefUseCase()!!.uid)
+            ))
             _bookingDecision.emit(BookingDecision.CONFIRM)
         }
     }
