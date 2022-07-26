@@ -41,7 +41,8 @@
                 android:id="@+id/group_morning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="?verticalSpacing" />
+                android:layout_marginTop="?verticalSpacing"
+                app:singleSelection="true" />
 
             <TextView
                 android:id="@+id/day"
@@ -55,7 +56,8 @@
                 android:id="@+id/group_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="?verticalSpacing" />
+                android:layout_marginTop="?verticalSpacing"
+                app:singleSelection="true" />
 
             <TextView
                 android:id="@+id/evening"
@@ -69,7 +71,8 @@
                 android:id="@+id/group_evening"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="?verticalSpacing" />
+                android:layout_marginTop="?verticalSpacing"
+                app:singleSelection="true" />
         </LinearLayout>
     </ScrollView>
 

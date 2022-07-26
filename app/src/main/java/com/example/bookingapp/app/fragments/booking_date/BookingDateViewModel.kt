@@ -7,9 +7,11 @@ import com.example.bookingapp.app.entities.PeriodForFragment
 import com.example.bookingapp.app.fragments.booking_date.BookingDateFragment.Companion.BOOKING
 import com.example.bookingapp.domain.entities.BookingBuilder
 import com.example.bookingapp.domain.entities.Day
+import com.example.bookingapp.domain.entities.Period
 import com.example.bookingapp.domain.usecases.date.GetBookingPeriodsByDateUseCase
 import com.example.bookingapp.domain.usecases.date.GetDaysInfoByPlaceIdUseCase
 import com.example.bookingapp.domain.usecases.date.GetPeriodsByDayIdUseCase
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -29,6 +31,11 @@ class BookingDateViewModel @Inject constructor(
     val booking: BookingBuilder = stateHandle[BOOKING]!!
     private val placeId = booking.placeId
     private val selectedDay = MutableSharedFlow<Int>()
+    private val selectedPeriod: MutableStateFlow<PeriodForFragment?> = MutableStateFlow(null)
+
+    fun onPeriodSelected(period: PeriodForFragment?) {
+        selectedPeriod.value = period
+    }
 
     val periods = selectedDay.flatMapLatest { dayId ->
         val allPeriods = getPeriodsByDayId(dayId, placeId)

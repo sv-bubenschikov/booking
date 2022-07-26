@@ -13,6 +13,7 @@ import com.example.bookingapp.app.HostViewModel
 import com.example.bookingapp.app.entities.PeriodForFragment
 import com.example.bookingapp.databinding.FragmentBookingDateBinding
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -61,6 +62,26 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
 
     private fun setPeriods(periods: List<PeriodForFragment>, binding: FragmentBookingDateBinding) {
         with(binding) {
+            var selectedChip: Chip? = null
+
+            fun setCheckChip(group: ChipGroup, chip: Chip, period: PeriodForFragment) {
+                groupMorning.clearCheck()
+                groupDay.clearCheck()
+                groupEvening.clearCheck()
+
+                selectedChip?.isSelected = false
+                if (chip == selectedChip) {
+                    viewModel.onPeriodSelected(null)
+                    selectedChip = null
+                } else {
+                    viewModel.onPeriodSelected(period)
+                    chip.isSelected = true
+                    selectedChip = chip
+                }
+
+                group.check(chip.id)
+            }
+
             groupMorning.removeAllViews()
             groupDay.removeAllViews()
             groupEvening.removeAllViews()
@@ -73,12 +94,16 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
                     .hourOfDay()
                     .get()
 
-                if (timeStart < 12)//если меньше 12 -> утреннее время
+                if (timeStart < 12) {//если меньше 12 -> утреннее время
                     groupMorning.addView(chip)
-                else if (timeStart < 17)//если меньше 17 -> дневное время
+                    chip.setOnClickListener { setCheckChip(groupMorning, chip, period) }
+                } else if (timeStart < 17) {//если меньше 17 -> дневное время
                     groupDay.addView(chip)
-                else//-> вечернее время
+                    chip.setOnClickListener { setCheckChip(groupDay, chip, period) }
+                } else {//-> вечернее время
                     groupEvening.addView(chip)
+                    chip.setOnClickListener { setCheckChip(groupEvening, chip, period) }
+                }
             }
         }
     }
