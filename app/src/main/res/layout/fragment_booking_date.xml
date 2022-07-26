@@ -80,6 +80,7 @@
         android:layout_marginHorizontal="?screenPaddingHorizontal"
         android:layout_marginBottom="?screenPaddingVertical"
         android:text="@string/select"
+        android:backgroundTint="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
