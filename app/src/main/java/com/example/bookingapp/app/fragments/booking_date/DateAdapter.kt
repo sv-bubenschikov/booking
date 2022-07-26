@@ -7,7 +7,7 @@ import com.example.bookingapp.databinding.CardDateBinding
 import com.example.bookingapp.domain.entities.Day
 
 class DateAdapter(
-    private val clickListener: (Int) -> Unit
+    private val clickListener: (Day) -> Unit
 ) : ListAdapter<Day, DateViewHolder>(DayDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateViewHolder {
