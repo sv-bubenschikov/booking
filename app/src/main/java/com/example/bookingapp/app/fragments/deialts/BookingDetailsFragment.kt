@@ -3,6 +3,7 @@ package com.example.bookingapp.app.fragments.deialts
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -32,7 +33,6 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 .collect { booking ->
                     binding.bookingCompanyBlockText.text = booking.companyName
                     binding.bookingPlaceBlockText.text = booking.placeName
-                    binding.bookingNameBlockText.text = booking.theme
                 }
         }
 
@@ -51,22 +51,42 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                     val destination = when (decision) {
                         BookingDecision.CONFIRM -> R.id.action_bookingDetailsFragment_to_bookingFragment
                         BookingDecision.CANCEL -> R.id.action_bookingDetailsFragment_to_bookingFragment
-                        BookingDecision.EDIT -> TODO("Добавить переход на экран выбора даты")
                     }
                     findNavController().navigate(destination)
                 }
         }
 
-        binding.cancelBookingButton.setOnClickListener {
-            viewModel.onCancelBookingClicked()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.bookingTheme
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { bookingTheme ->
+                    // Я знаю, что это можно было уменшить до трёх строчек, но так более читаемо
+                    if (bookingTheme != "") {
+                        binding.confirmBookingButton.isEnabled = true
+                        binding.confirmBookingButton.isClickable = true
+                    } else {
+                        binding.confirmBookingButton.isEnabled = false
+                        binding.confirmBookingButton.isClickable = false
+                    }
+                }
         }
 
-        binding.confirmBookingButton.setOnClickListener {
-            viewModel.onConfirmBookingClicked()
+        if (viewModel.isFromDateFragment) {
+            binding.confirmBookingButton.setOnClickListener {
+                viewModel.onConfirmBookingClicked()
+            }
+
+            binding.cancelBookingButton.visibility = View.GONE
+        }
+        else {
+            binding.cancelBookingButton.setOnClickListener {
+                viewModel.onCancelBookingClicked()
+            }
+            binding.confirmBookingButton.visibility = View.GONE
         }
 
-        binding.returnToDateChoosingButton.setOnClickListener {
-            //TODO: Добавить переход на экран выбора даты
+        binding.bookingThemeBlockInputText.doOnTextChanged { text, _, _, _ ->
+            viewModel.onBookingThemeInputChanged(text.toString())
         }
     }
 
@@ -78,6 +98,7 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
     }
 
     companion object {
+        const val BOOKING = "booking"
         const val BOOKING_ID = "booking_id"
     }
 }

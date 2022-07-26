@@ -77,9 +77,10 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            hostViewModel.actionButtonClicked.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
-                findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
-            }
+            hostViewModel.actionButtonClicked.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect {
+                    findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
+                }
         }
     }
 
