@@ -9,10 +9,10 @@
     tools:context=".app.fragments.booking.BookingFragment">
 
     <TextView
-        android:id="@+id/you_have_booked_text"
+        android:id="@+id/booking_details_fragment_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/you_have_booked"
+        android:text="@string/booking_details_fragment_title"
         android:textAppearance="?textAppearanceHeadline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
         android:textAppearance="?textAppearanceHeadline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/you_have_booked_text" />
+        app:layout_constraintTop_toBottomOf="@id/booking_details_fragment_title" />
 
     <TextView
         android:id="@+id/booking_company_block_text"
