@@ -7,14 +7,14 @@ import org.joda.time.DateTime
 
 class DateViewHolder(
     private val binding: CardDateBinding,
-    private val clickListener: (Int) -> Unit
+    private val clickListener: (Day) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var day: Day
 
     init {
         itemView.setOnClickListener {
-            clickListener(day.id)
+            clickListener(day)
         }
     }
 
