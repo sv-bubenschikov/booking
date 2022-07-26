@@ -26,9 +26,11 @@ class BookingDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _bookingDecision = MutableSharedFlow<BookingDecision>()
+    private val _bookingTheme = MutableStateFlow("")
     private val bookingId: String? = stateHandle[BOOKING_ID]
 
     val bookingDecision: Flow<BookingDecision> = _bookingDecision
+    val bookingTheme: Flow<String> = _bookingTheme
 
     val booking = if (bookingId == null) {
         flow {
@@ -60,8 +62,12 @@ class BookingDetailsViewModel @Inject constructor(
 
     fun onConfirmBookingClicked() {
         viewModelScope.launch {
-            createBookingUseCase(booking.value)
+            createBookingUseCase(booking.value.copy(theme = _bookingTheme.value))
             _bookingDecision.emit(BookingDecision.CONFIRM)
         }
+    }
+
+    fun onBookingThemeInputChanged(bookingTheme: String) {
+        _bookingTheme.value = bookingTheme
     }
 }

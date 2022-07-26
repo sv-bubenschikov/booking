@@ -3,6 +3,7 @@ package com.example.bookingapp.app.fragments.deialts
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -32,7 +33,6 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 .collect { booking ->
                     binding.bookingCompanyBlockText.text = booking.companyName
                     binding.bookingPlaceBlockText.text = booking.placeName
-                    binding.bookingNameBlockText.text = booking.theme
                 }
         }
 
@@ -56,6 +56,21 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.bookingTheme
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { bookingTheme ->
+                    // Я знаю, что это можно было уменшить до трёх строчек, но так более читаемо
+                    if (bookingTheme != "") {
+                        binding.confirmBookingButton.isEnabled = true
+                        binding.confirmBookingButton.isClickable = true
+                    } else {
+                        binding.confirmBookingButton.isEnabled = false
+                        binding.confirmBookingButton.isClickable = false
+                    }
+                }
+        }
+
         if (viewModel.isFromDateFragment) {
             binding.confirmBookingButton.setOnClickListener {
                 viewModel.onConfirmBookingClicked()
@@ -68,6 +83,10 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 viewModel.onCancelBookingClicked()
             }
             binding.confirmBookingButton.visibility = View.GONE
+        }
+
+        binding.bookingThemeBlockInputText.doOnTextChanged { text, _, _, _ ->
+            viewModel.onBookingThemeInputChanged(text.toString())
         }
     }
 
