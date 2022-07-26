@@ -2,6 +2,7 @@ package com.example.bookingapp.app.fragments.booking_date
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -14,6 +15,7 @@ import com.example.bookingapp.app.entities.PeriodForFragment
 import com.example.bookingapp.databinding.FragmentBookingDateBinding
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -26,23 +28,33 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentBookingDateBinding.bind(view)
 
-        val dateAdapter = DateAdapter { dayId ->
-            viewModel.onDayClicked(dayId)
+        val dateAdapter = DateAdapter { day ->
+            viewModel.onDayClicked(day)
         }
 
         with(binding) {
             btnSelect.setOnClickListener {
+                viewModel.onCompleteClicked()
+            }
+            recFilter.adapter = dateAdapter
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.complete.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { draft ->
                 val arg = Bundle().apply {
-                    // TODO #43
-                    putParcelable(BOOKING, viewModel.booking)
+                    putParcelable(BOOKING, draft)
                 }
                 findNavController().navigate(
                     R.id.action_bookingDateFragment_to_bookingDetailsFragment,
                     arg
                 )
             }
+        }
 
-            recFilter.adapter = dateAdapter
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.errorMessage.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { messageId ->
+                Toast.makeText(requireContext(), messageId, Toast.LENGTH_SHORT).show()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -52,14 +64,22 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.periods.flowWithLifecycle(viewLifecycleOwner.lifecycle)
-                .collect { periodList ->
-                    setPeriods(periodList, binding)
+            viewModel.periods.combine(viewModel.selectedPeriod) { periods, selected ->
+                periods to selected
+            }
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { (periods, selected) ->
+                    setPeriod(binding, periods, selected, viewModel::onPeriodClicked)
                 }
         }
     }
 
-    private fun setPeriods(periods: List<PeriodForFragment>, binding: FragmentBookingDateBinding) {
+    private fun setPeriod(
+        binding: FragmentBookingDateBinding,
+        periods: List<PeriodForFragment>,
+        selected: PeriodForFragment?,
+        onChipClicked: (PeriodForFragment) -> Unit
+    ) {
         with(binding) {
             groupMorning.removeAllViews()
             groupDay.removeAllViews()
@@ -69,15 +89,24 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
                 val chip = Chip(requireContext())
                 chip.text = period.toString()
 
+                chip.isSelected =
+                    if (selected != null)
+                        selected == period
+                    else false
+
+                chip.setOnClickListener {
+                    onChipClicked(period)
+                }
+
                 val timeStart = period.timeStart
                     .hourOfDay()
                     .get()
 
-                if (timeStart < 12)//если меньше 12 -> утреннее время
+                if (timeStart < 12) //если меньше 12 -> утреннее время
                     groupMorning.addView(chip)
                 else if (timeStart < 17)//если меньше 17 -> дневное время
                     groupDay.addView(chip)
-                else//-> вечернее время
+                else //-> вечернее время
                     groupEvening.addView(chip)
             }
         }

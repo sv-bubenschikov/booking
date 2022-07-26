@@ -3,6 +3,7 @@ package com.example.bookingapp.app.fragments.booking_date
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bookingapp.R
 import com.example.bookingapp.app.entities.PeriodForFragment
 import com.example.bookingapp.app.fragments.booking_date.BookingDateFragment.Companion.BOOKING
 import com.example.bookingapp.domain.entities.BookingBuilder
@@ -28,11 +29,20 @@ class BookingDateViewModel @Inject constructor(
 
     val booking: BookingBuilder = stateHandle[BOOKING]!!
     private val placeId = booking.placeId
-    private val selectedDay = MutableSharedFlow<Int>()
 
-    val periods = selectedDay.flatMapLatest { dayId ->
-        val allPeriods = getPeriodsByDayId(dayId, placeId)
-        val bookingPeriods = getBookingPeriodsByDate(days.value[dayId].date, placeId)
+    private val selectedDay = MutableStateFlow(Day(0, DateTime.now().withTimeAtStartOfDay().millis))
+
+    private val _selectedPeriod = MutableStateFlow<PeriodForFragment?>(null)
+    private val _complete = MutableSharedFlow<BookingBuilder>()
+    private val _errorMessage = MutableSharedFlow<Int>()
+
+    val selectedPeriod: StateFlow<PeriodForFragment?> = _selectedPeriod
+    val complete: Flow<BookingBuilder> = _complete
+    val errorMessage: Flow<Int> = _errorMessage
+
+    val periods: StateFlow<List<PeriodForFragment>> = selectedDay.flatMapLatest { day ->
+        val allPeriods = getPeriodsByDayId(day.id, placeId)
+        val bookingPeriods = getBookingPeriodsByDate(days.first()[day.id].date, placeId)
 
         // TODO: заменить на flatmap
         allPeriods.map {
@@ -58,14 +68,39 @@ class BookingDateViewModel @Inject constructor(
         viewModelScope.launch {
             days.collect { dayList ->
                 if (dayList.isNotEmpty())
-                    onDayClicked(dayList.first().id)
+                    onDayClicked(dayList.first())
             }
         }
     }
 
-    fun onDayClicked(dayId: Int) {
+    fun onDayClicked(day: Day) {
         viewModelScope.launch {
-            selectedDay.emit(dayId)
+            selectedDay.emit(day)
+        }
+    }
+
+    fun onPeriodClicked(period: PeriodForFragment) {
+        viewModelScope.launch {
+            _selectedPeriod.value = if (_selectedPeriod.value == period)
+                null
+            else
+                period
+        }
+    }
+
+    fun onCompleteClicked() {
+        viewModelScope.launch {
+            val period = selectedPeriod.value
+            if (period == null)
+                _errorMessage.emit(R.string.period_required)
+            else
+                _complete.emit(
+                    booking.copy(
+                        startTime = period.timeStart.millis,
+                        endTime = period.timeEnd.millis,
+                        bookingDate = selectedDay.value.date
+                    )
+                )
         }
     }
 }
