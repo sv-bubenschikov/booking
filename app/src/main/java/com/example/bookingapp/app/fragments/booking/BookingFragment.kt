@@ -2,10 +2,7 @@ package com.example.bookingapp.app.fragments.booking
 
 import android.content.Context
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -31,14 +28,6 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         context as AppCompatActivity
-
-        lifecycleScope.launch {
-            hostViewModel.updateCurrentUserRef().join()
-            hostViewModel.currentUserRef.flowWithLifecycle(lifecycle).collect { user ->
-                if (user == null)
-                    findNavController().navigate(R.id.action_navigation_home_to_navigation_sign_in)
-            }
-        }
 
         context.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -80,6 +69,15 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
             hostViewModel.actionButtonClicked.flowWithLifecycle(viewLifecycleOwner.lifecycle)
                 .collect {
                     findNavController().navigate(R.id.action_bookingFragment_to_companiesFragment)
+                }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.updateCurrentUser()
+            viewModel.currentUserExists.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect {
+                    if (!it)
+                        findNavController().navigate(R.id.action_navigation_home_to_navigation_sign_in)
                 }
         }
     }
