@@ -73,10 +73,9 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.updateCurrentUser()
-            viewModel.currentUserExists.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            viewModel.currentUserRef.flowWithLifecycle(viewLifecycleOwner.lifecycle)
                 .collect {
-                    if (!it)
+                    if (it == null)
                         findNavController().navigate(R.id.action_navigation_home_to_navigation_sign_in)
                 }
         }

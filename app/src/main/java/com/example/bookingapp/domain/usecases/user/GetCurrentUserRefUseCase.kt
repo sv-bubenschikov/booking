@@ -6,7 +6,6 @@ import javax.inject.Inject
 class GetCurrentUserRefUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-
-    suspend operator fun invoke() =
+    operator fun invoke() =
         userRepository.getCurrentUserRef()
 }

@@ -13,15 +13,17 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registerUserUseCase: RegisterUserUseCase,
-    private val updateUserInfoUseCase: UpdateUserInfoUseCase,
-    private val getCurrentUserRefUseCase: GetCurrentUserRefUseCase
+    private val getCurrentUserRefUseCase: GetCurrentUserRefUseCase,
+    private val updateUserInfoUseCase: UpdateUserInfoUseCase
 ) : ViewModel() {
 
     private val _email = MutableStateFlow("")
@@ -42,6 +44,8 @@ class RegisterViewModel @Inject constructor(
     val editUserNameHelper: StateFlow<Int?> = _editUserNameHelper
     val editConfirmedPasswordHelper: StateFlow<Int?> = _editConfirmedPasswordHelper
     val editPasswordHelper: StateFlow<Int?> = _editPasswordHelper
+
+    private val userRef = getCurrentUserRefUseCase().stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     fun onEmailChanged(email: String) {
         if (email == _email.value) return
@@ -106,7 +110,7 @@ class RegisterViewModel @Inject constructor(
 
     private fun updateUserInfo() {
         viewModelScope.launch {
-            getCurrentUserRefUseCase()?.let {
+            userRef.value?.let {
                 updateUserInfoUseCase(User(it.uid, _email.value, _username.value))
             }
         }
