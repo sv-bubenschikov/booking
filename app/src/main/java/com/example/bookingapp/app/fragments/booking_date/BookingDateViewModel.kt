@@ -2,6 +2,7 @@ package com.example.bookingapp.app.fragments.booking_date
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.example.bookingapp.R
 import com.example.bookingapp.app.entities.PeriodForFragment
@@ -35,6 +36,7 @@ class BookingDateViewModel @Inject constructor(
     private val _selectedPeriod = MutableStateFlow<PeriodForFragment?>(null)
     private val _complete = MutableSharedFlow<BookingBuilder>()
     private val _errorMessage = MutableSharedFlow<Int>()
+
 
     val selectedPeriod: StateFlow<PeriodForFragment?> = _selectedPeriod
     val complete: Flow<BookingBuilder> = _complete
@@ -75,6 +77,8 @@ class BookingDateViewModel @Inject constructor(
 
     fun onDayClicked(day: Day) {
         viewModelScope.launch {
+            day.isSelected = true
+            selectedDay.value.isSelected = false
             selectedDay.emit(day)
         }
     }

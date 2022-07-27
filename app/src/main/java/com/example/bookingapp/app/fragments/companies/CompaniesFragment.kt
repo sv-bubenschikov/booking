@@ -90,12 +90,4 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
         hostViewModel.setActionButtonVisible(false)
         hostViewModel.setToolbarTitle(getString(R.string.companies_fragment_label))
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }
