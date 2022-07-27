@@ -57,7 +57,7 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        /*viewLifecycleOwner.lifecycleScope.launch {
             viewModel.bookingTheme
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle)
                 .collect { bookingTheme ->
@@ -70,7 +70,7 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                         binding.confirmBookingButton.isClickable = false
                     }
                 }
-        }
+        }*/
 
         if (viewModel.isFromDateFragment) {
             binding.confirmBookingButton.setOnClickListener {

@@ -32,7 +32,6 @@ class BookingDetailsViewModel @Inject constructor(
     private val bookingId: String? = stateHandle[BOOKING_ID]
 
     val bookingDecision: Flow<BookingDecision> = _bookingDecision
-    val bookingTheme: Flow<String> = _bookingTheme
 
     val booking = if (bookingId == null) {
         flow {
