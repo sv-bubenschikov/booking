@@ -4,7 +4,9 @@
         android:drawable="@drawable/day_clicked"
         android:state_selected="true">
     </item>
+
     <item
         android:drawable="@drawable/day_shape">
     </item>
+
 </selector>

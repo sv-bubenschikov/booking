@@ -9,7 +9,7 @@
     android:paddingStart="?listPreferredItemPaddingStart"
     android:paddingEnd="?listPreferredItemPaddingEnd"
     android:background="@drawable/day_selector"
-    android:layout_margin="2dp">
+    android:layout_margin="1dp">
 
     <TextView
         android:id="@+id/date"
