@@ -34,6 +34,11 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                     binding.bookingCompanyBlockText.text = booking.companyName
                     binding.bookingPlaceBlockText.text = booking.placeName
                     binding.bookingThemeBlockText.text = booking.theme
+                    if (!viewModel.isFromDateFragment && booking.theme == "") {
+                        binding.bookingThemeBlockTitle.visibility = View.GONE
+                    } else {
+                        binding.bookingThemeBlockTitle.visibility = View.VISIBLE
+                    }
                 }
         }
 

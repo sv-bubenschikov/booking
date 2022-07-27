@@ -133,8 +133,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="?horizontalSpacing"
-        android:clickable="false"
-        android:enabled="false"
         android:text="@string/confirm_booking_confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
