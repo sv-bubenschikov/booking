@@ -33,6 +33,7 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 .collect { booking ->
                     binding.bookingCompanyBlockText.text = booking.companyName
                     binding.bookingPlaceBlockText.text = booking.placeName
+                    binding.bookingThemeBlockText.text = booking.theme
                 }
         }
 
@@ -75,14 +76,15 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
             binding.confirmBookingButton.setOnClickListener {
                 viewModel.onConfirmBookingClicked()
             }
-
             binding.cancelBookingButton.visibility = View.GONE
+            binding.bookingThemeBlockText.visibility = View.GONE
         }
         else {
             binding.cancelBookingButton.setOnClickListener {
                 viewModel.onCancelBookingClicked()
             }
             binding.confirmBookingButton.visibility = View.GONE
+            binding.bookingThemeBlockInputLayout.visibility = View.GONE
         }
 
         binding.bookingThemeBlockInputText.doOnTextChanged { text, _, _, _ ->
