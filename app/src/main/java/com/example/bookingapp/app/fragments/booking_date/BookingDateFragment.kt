@@ -52,14 +52,21 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.errorMessage.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { messageId ->
-                Toast.makeText(requireContext(), messageId, Toast.LENGTH_SHORT).show()
-            }
+            viewModel.errorMessage.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { messageId ->
+                    Toast.makeText(requireContext(), messageId, Toast.LENGTH_SHORT).show()
+                }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.days.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { dayList ->
                 dateAdapter.submitList(dayList)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.selectedDay.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
+                dateAdapter.notifyDataSetChanged()
             }
         }
 

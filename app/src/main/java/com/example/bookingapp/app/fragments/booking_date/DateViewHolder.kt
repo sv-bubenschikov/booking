@@ -15,11 +15,13 @@ class DateViewHolder(
     init {
         itemView.setOnClickListener {
             clickListener(day)
+            binding.card.isChecked = day.isSelected
         }
     }
 
     fun bind(item: Day) = with(binding) {
         day = item
+        binding.card.isChecked = day.isSelected
         date.text = DateTime(day.date).dayOfMonth().asText
         dayWeek.text = when (DateTime(day.date).dayOfWeek().asText) {
             "Monday" -> "Пн"

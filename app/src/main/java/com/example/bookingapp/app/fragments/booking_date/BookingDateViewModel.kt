@@ -30,17 +30,19 @@ class BookingDateViewModel @Inject constructor(
     val booking: BookingBuilder = stateHandle[BOOKING]!!
     private val placeId = booking.placeId
 
-    private val selectedDay = MutableStateFlow(Day(0, DateTime.now().withTimeAtStartOfDay().millis))
+    private val _selectedDay =
+        MutableStateFlow(Day(0, DateTime.now().withTimeAtStartOfDay().millis))
 
     private val _selectedPeriod = MutableStateFlow<PeriodForFragment?>(null)
     private val _complete = MutableSharedFlow<BookingBuilder>()
     private val _errorMessage = MutableSharedFlow<Int>()
 
+    val selectedDay: StateFlow<Day> = _selectedDay
     val selectedPeriod: StateFlow<PeriodForFragment?> = _selectedPeriod
     val complete: Flow<BookingBuilder> = _complete
     val errorMessage: Flow<Int> = _errorMessage
 
-    val periods: StateFlow<List<PeriodForFragment>> = selectedDay.flatMapLatest { day ->
+    val periods: StateFlow<List<PeriodForFragment>> = _selectedDay.flatMapLatest { day ->
         val allPeriods = getPeriodsByDayId(day.id, placeId)
         val bookingPeriods = getBookingPeriodsByDate(days.first()[day.id].date, placeId)
 
@@ -58,7 +60,6 @@ class BookingDateViewModel @Inject constructor(
             )
         }
     }
-        .flowOn(Dispatchers.Default)
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val days: StateFlow<List<Day>> = getDaysInfoByPlaceId()
@@ -75,8 +76,14 @@ class BookingDateViewModel @Inject constructor(
 
     fun onDayClicked(day: Day) {
         viewModelScope.launch {
-            selectedDay.emit(day)
+            days.value.firstOrNull {
+                it.isSelected
+            }?.isSelected = false
+            day.isSelected = true
+            _selectedPeriod.value = null
+            _selectedDay.emit(day)
         }
+
     }
 
     fun onPeriodClicked(period: PeriodForFragment) {
@@ -98,7 +105,7 @@ class BookingDateViewModel @Inject constructor(
                     booking.copy(
                         startTime = period.timeStart.millis,
                         endTime = period.timeEnd.millis,
-                        bookingDate = selectedDay.value.date
+                        bookingDate = _selectedDay.value.date
                     )
                 )
         }
