@@ -62,21 +62,6 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 }
         }
 
-        /*viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.bookingTheme
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
-                .collect { bookingTheme ->
-                    // Я знаю, что это можно было уменшить до трёх строчек, но так более читаемо
-                    if (bookingTheme != "") {
-                        binding.confirmBookingButton.isEnabled = true
-                        binding.confirmBookingButton.isClickable = true
-                    } else {
-                        binding.confirmBookingButton.isEnabled = false
-                        binding.confirmBookingButton.isClickable = false
-                    }
-                }
-        }*/
-
         if (viewModel.isFromDateFragment) {
             binding.confirmBookingButton.setOnClickListener {
                 viewModel.onConfirmBookingClicked()
