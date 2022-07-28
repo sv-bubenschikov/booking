@@ -12,7 +12,6 @@ import com.example.bookingapp.domain.usecases.date.GetBookingPeriodsByDateUseCas
 import com.example.bookingapp.domain.usecases.date.GetDaysInfoByPlaceIdUseCase
 import com.example.bookingapp.domain.usecases.date.GetPeriodsByDayIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -36,6 +35,7 @@ class BookingDateViewModel @Inject constructor(
     private val _complete = MutableSharedFlow<BookingBuilder>()
     private val _errorMessage = MutableSharedFlow<Int>()
 
+
     val selectedPeriod: StateFlow<PeriodForFragment?> = _selectedPeriod
     val complete: Flow<BookingBuilder> = _complete
     val errorMessage: Flow<Int> = _errorMessage
@@ -58,7 +58,6 @@ class BookingDateViewModel @Inject constructor(
             )
         }
     }
-        .flowOn(Dispatchers.Default)
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val days: StateFlow<List<Day>> = getDaysInfoByPlaceId()
@@ -75,6 +74,8 @@ class BookingDateViewModel @Inject constructor(
 
     fun onDayClicked(day: Day) {
         viewModelScope.launch {
+            day.isSelected = true
+            selectedDay.value.isSelected = false
             selectedDay.emit(day)
         }
     }
