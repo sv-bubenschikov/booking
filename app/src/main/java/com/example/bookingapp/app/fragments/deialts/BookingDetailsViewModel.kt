@@ -34,7 +34,6 @@ class BookingDetailsViewModel @Inject constructor(
     val userRef = userRefUseCase().stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     val bookingDecision: Flow<BookingDecision> = _bookingDecision
-    val bookingTheme: Flow<String> = _bookingTheme
 
     val booking = if (bookingId == null) {
         flow {

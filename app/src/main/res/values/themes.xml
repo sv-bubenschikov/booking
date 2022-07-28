@@ -25,6 +25,7 @@
         <item name="gridPreferredItemSpacingHorizontal">8dp</item>
         <item name="verticalSpacing">8dp</item>
         <item name="horizontalSpacing">20dp</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense</item>
     </style>
 
     <style name="ButtonStyle">
