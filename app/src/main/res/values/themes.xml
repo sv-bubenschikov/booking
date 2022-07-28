@@ -25,6 +25,7 @@
         <item name="gridPreferredItemSpacingHorizontal">8dp</item>
         <item name="verticalSpacing">8dp</item>
         <item name="horizontalSpacing">20dp</item>
+        <item name="marginDate">1dp</item>
     </style>
 
     <style name="ButtonStyle">
