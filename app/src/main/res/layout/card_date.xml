@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingVertical="?listPreferredItemPaddingVertical"
-    android:paddingStart="?listPreferredItemPaddingStart"
-    android:paddingEnd="?listPreferredItemPaddingEnd">
+    android:layout_margin="?marginDate"
+    android:checkable="true"
+    app:checkedIcon="@null">
 
-    <TextView
-        android:id="@+id/date"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?textAppearanceHeadline5"
-        tools:text="8" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingVertical="?listPreferredItemPaddingVertical"
+        android:paddingStart="?listPreferredItemPaddingStart"
+        android:paddingEnd="?listPreferredItemPaddingEnd">
 
-    <TextView
-        android:id="@+id/day_week"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?textAppearanceHeadline6"
-        tools:text="ЧТ" />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?textAppearanceHeadline5"
+            tools:text="8" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/day_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?textAppearanceHeadline6"
+            tools:text="ЧТ" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

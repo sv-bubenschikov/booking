@@ -12,7 +12,6 @@ import com.example.bookingapp.domain.usecases.date.GetBookingPeriodsByDateUseCas
 import com.example.bookingapp.domain.usecases.date.GetDaysInfoByPlaceIdUseCase
 import com.example.bookingapp.domain.usecases.date.GetPeriodsByDayIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -30,17 +29,19 @@ class BookingDateViewModel @Inject constructor(
     val booking: BookingBuilder = stateHandle[BOOKING]!!
     private val placeId = booking.placeId
 
-    private val selectedDay = MutableStateFlow(Day(0, DateTime.now().withTimeAtStartOfDay().millis))
-
+    private val _selectedDay =
+        MutableStateFlow(Day(0, DateTime.now().withTimeAtStartOfDay().millis))
+    private val _days = MutableStateFlow(emptyList<Day>())
     private val _selectedPeriod = MutableStateFlow<PeriodForFragment?>(null)
     private val _complete = MutableSharedFlow<BookingBuilder>()
     private val _errorMessage = MutableSharedFlow<Int>()
 
+    val days: StateFlow<List<Day>> = _days
     val selectedPeriod: StateFlow<PeriodForFragment?> = _selectedPeriod
     val complete: Flow<BookingBuilder> = _complete
     val errorMessage: Flow<Int> = _errorMessage
 
-    val periods: StateFlow<List<PeriodForFragment>> = selectedDay.flatMapLatest { day ->
+    val periods: StateFlow<List<PeriodForFragment>> = _selectedDay.flatMapLatest { day ->
         val allPeriods = getPeriodsByDayId(day.id, placeId)
         val bookingPeriods = getBookingPeriodsByDate(days.first()[day.id].date, placeId)
 
@@ -60,22 +61,35 @@ class BookingDateViewModel @Inject constructor(
     }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    val days: StateFlow<List<Day>> = getDaysInfoByPlaceId()
-        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     init {
         viewModelScope.launch {
-            days.collect { dayList ->
-                if (dayList.isNotEmpty())
-                    onDayClicked(dayList.first())
+            getDaysInfoByPlaceId().collect { dayList ->
+                _days.value = dayList
+                onDayClicked(dayList.first())
             }
         }
     }
 
-    fun onDayClicked(day: Day) {
+    fun onDayClicked(checkedDay: Day) {
         viewModelScope.launch {
-            selectedDay.emit(day)
+            _days.value = days.value.run {
+                map { day ->
+                    if (day.isSelected && day != checkedDay) {
+                        // убираем отметку с прошлого выбора
+                        _selectedPeriod.value = null
+                        day.copy(isSelected = false)
+                    } else if (day == checkedDay)
+                    // отмечаем новый элемент выбраным
+                        day.copy(isSelected = true).also {
+                            _selectedDay.emit(it)
+                        }
+                    else
+                        day
+                }
+            }
         }
+
     }
 
     fun onPeriodClicked(period: PeriodForFragment) {
@@ -97,7 +111,7 @@ class BookingDateViewModel @Inject constructor(
                     booking.copy(
                         startTime = period.timeStart.millis,
                         endTime = period.timeEnd.millis,
-                        bookingDate = selectedDay.value.date
+                        bookingDate = _selectedDay.value.date
                     )
                 )
         }
