@@ -58,7 +58,6 @@ class BookingDateViewModel @Inject constructor(
             )
         }
     }
-        .flowOn(Dispatchers.Default)
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val days: StateFlow<List<Day>> = getDaysInfoByPlaceId()
