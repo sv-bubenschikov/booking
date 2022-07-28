@@ -19,7 +19,7 @@ interface UserRepository {
 
     suspend fun logout()
 
-    suspend fun updateCurrentUserRef()
+    fun getCurrentUserRef(): Flow<FirebaseUser?>
 
-    suspend fun getCurrentUserRef(): FirebaseUser?
+    fun getCurrentUser() : FirebaseUser?
 }

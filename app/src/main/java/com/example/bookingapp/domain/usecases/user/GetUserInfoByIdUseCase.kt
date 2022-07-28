@@ -9,10 +9,10 @@ import javax.inject.Inject
 
 class GetUserInfoByIdUseCase @Inject constructor(
     private val userRepository: UserRepository,
-    private val getCurrentUserRefUseCase: GetCurrentUserRefUseCase
+    private val getCurrentUserUseCase: GetCurrentUserUseCase
 ) {
     operator fun invoke() = flow {
-        emit(getCurrentUserRefUseCase())
+        emit(getCurrentUserUseCase())
     }.flatMapLatest { user ->
         user?.run { userRepository.getUserInfoById(uid) }
             ?: flowOf(User())

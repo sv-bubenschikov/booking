@@ -33,6 +33,12 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 .collect { booking ->
                     binding.bookingCompanyBlockText.text = booking.companyName
                     binding.bookingPlaceBlockText.text = booking.placeName
+                    binding.bookingThemeBlockText.text = booking.theme
+                    if (!viewModel.isFromDateFragment && booking.theme == "") {
+                        binding.bookingThemeBlockTitle.visibility = View.GONE
+                    } else {
+                        binding.bookingThemeBlockTitle.visibility = View.VISIBLE
+                    }
                 }
         }
 
@@ -56,33 +62,19 @@ class BookingDetailsFragment : Fragment(R.layout.fragment_booking_details) {
                 }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.bookingTheme
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
-                .collect { bookingTheme ->
-                    // Я знаю, что это можно было уменшить до трёх строчек, но так более читаемо
-                    if (bookingTheme != "") {
-                        binding.confirmBookingButton.isEnabled = true
-                        binding.confirmBookingButton.isClickable = true
-                    } else {
-                        binding.confirmBookingButton.isEnabled = false
-                        binding.confirmBookingButton.isClickable = false
-                    }
-                }
-        }
-
         if (viewModel.isFromDateFragment) {
             binding.confirmBookingButton.setOnClickListener {
                 viewModel.onConfirmBookingClicked()
             }
-
             binding.cancelBookingButton.visibility = View.GONE
+            binding.bookingThemeBlockText.visibility = View.GONE
         }
         else {
             binding.cancelBookingButton.setOnClickListener {
                 viewModel.onCancelBookingClicked()
             }
             binding.confirmBookingButton.visibility = View.GONE
+            binding.bookingThemeBlockInputLayout.visibility = View.GONE
         }
 
         binding.bookingThemeBlockInputText.doOnTextChanged { text, _, _, _ ->
