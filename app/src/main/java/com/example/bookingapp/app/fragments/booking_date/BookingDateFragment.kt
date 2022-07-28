@@ -65,12 +65,6 @@ class BookingDateFragment : Fragment(R.layout.fragment_booking_date) {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.selectedDay.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
-                dateAdapter.notifyDataSetChanged()
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.periods.combine(viewModel.selectedPeriod) { periods, selected ->
                 periods to selected
             }

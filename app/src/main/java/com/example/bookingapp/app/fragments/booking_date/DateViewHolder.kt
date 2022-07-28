@@ -23,14 +23,14 @@ class DateViewHolder(
         day = item
         binding.card.isChecked = day.isSelected
         date.text = DateTime(day.date).dayOfMonth().asText
-        dayWeek.text = when (DateTime(day.date).dayOfWeek().asText) {
-            "Monday" -> "Пн"
-            "Tuesday" -> "Вт"
-            "Wednesday" -> "Ср"
-            "Thursday" -> "Чт"
-            "Friday" -> "Пт"
-            "Saturday" -> "Сб"
-            "Sunday" -> "Вс"
+        dayWeek.text = when (DateTime(day.date).dayOfWeek) {
+            1 -> "Пн"
+            2 -> "Вт"
+            3 -> "Ср"
+            4 -> "Чт"
+            5 -> "Пт"
+            6 -> "Сб"
+            7 -> "Вс"
             else -> "ER"
         }
     }

@@ -12,7 +12,6 @@ import com.example.bookingapp.domain.usecases.date.GetBookingPeriodsByDateUseCas
 import com.example.bookingapp.domain.usecases.date.GetDaysInfoByPlaceIdUseCase
 import com.example.bookingapp.domain.usecases.date.GetPeriodsByDayIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -32,12 +31,12 @@ class BookingDateViewModel @Inject constructor(
 
     private val _selectedDay =
         MutableStateFlow(Day(0, DateTime.now().withTimeAtStartOfDay().millis))
-
+    private val _days = MutableStateFlow(emptyList<Day>())
     private val _selectedPeriod = MutableStateFlow<PeriodForFragment?>(null)
     private val _complete = MutableSharedFlow<BookingBuilder>()
     private val _errorMessage = MutableSharedFlow<Int>()
 
-    val selectedDay: StateFlow<Day> = _selectedDay
+    val days: StateFlow<List<Day>> = _days
     val selectedPeriod: StateFlow<PeriodForFragment?> = _selectedPeriod
     val complete: Flow<BookingBuilder> = _complete
     val errorMessage: Flow<Int> = _errorMessage
@@ -62,26 +61,33 @@ class BookingDateViewModel @Inject constructor(
     }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    val days: StateFlow<List<Day>> = getDaysInfoByPlaceId()
-        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     init {
         viewModelScope.launch {
-            days.collect { dayList ->
-                if (dayList.isNotEmpty())
-                    onDayClicked(dayList.first())
+            getDaysInfoByPlaceId().collect { dayList ->
+                _days.value = dayList
+                onDayClicked(dayList.first())
             }
         }
     }
 
-    fun onDayClicked(day: Day) {
+    fun onDayClicked(checkedDay: Day) {
         viewModelScope.launch {
-            days.value.firstOrNull {
-                it.isSelected
-            }?.isSelected = false
-            day.isSelected = true
-            _selectedPeriod.value = null
-            _selectedDay.emit(day)
+            _days.value = days.value.run {
+                map { day ->
+                    if (day.isSelected && day != checkedDay) {
+                        // убираем отметку с прошлого выбора
+                        _selectedPeriod.value = null
+                        day.copy(isSelected = false)
+                    } else if (day == checkedDay)
+                    // отмечаем новый элемент выбраным
+                        day.copy(isSelected = true).also {
+                            _selectedDay.emit(it)
+                        }
+                    else
+                        day
+                }
+            }
         }
 
     }
