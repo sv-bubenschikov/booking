@@ -47,7 +47,6 @@
         android:layout_marginHorizontal="?screenPaddingHorizontal"
         android:layout_marginTop="?verticalSpacing"
         app:helperText="@string/required_edit_text"
-        app:helperTextTextColor="?colorSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_user_name_layout">
