@@ -7,7 +7,7 @@
         <item name="colorOnPrimary">@color/primaryTextColor</item>
         <item name="colorOnBackground">@color/primaryLightColor</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/secondaryDarkColor</item>
+        <item name="colorSecondary">?colorPrimary</item>
         <item name="colorSecondaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <!-- Status bar color. -->
