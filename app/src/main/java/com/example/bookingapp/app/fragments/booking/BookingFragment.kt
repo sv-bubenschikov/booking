@@ -62,6 +62,11 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle)
                 .collect { bookingList ->
                     adapter.submitList(bookingList)
+                    if(bookingList.isEmpty()) {
+                        binding.emptyBookingsMock.visibility = View.VISIBLE
+                    } else {
+                        binding.emptyBookingsMock.visibility = View.GONE
+                    }
                 }
         }
 

@@ -52,4 +52,5 @@
     <string name="empty_tab_text" />
     <string name="insert_booking_name_here">Тема встречи</string>
     <string name="period_required">Нужно выбрать время</string>
+    <string name="empty_bookings_mock">На данный момент у вас нет забронированных мест</string>
 </resources>
