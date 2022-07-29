@@ -1,5 +1,6 @@
 package com.example.bookingapp.app.fragments.booking
 
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookingapp.databinding.BookingItemBinding
 import com.example.bookingapp.domain.entities.Booking
@@ -20,10 +21,14 @@ class BookingListViewHolder(
 
     fun bind(item: Booking) = with(binding) {
         data = item
-        // TODO: #50
+
         companyTitle.text = data.companyName
+
         placeName.text = data.placeName
+        placeName.isVisible = placeName.text.isNotEmpty()
+
         theme.text = data.theme
+        theme.isVisible = theme.text.isNotEmpty()
 
         dateTime.text = data.let {
             val dateTime = DateTime(it.bookingDate).toLocalDateTime().toString("dd-MM-yyyy")
