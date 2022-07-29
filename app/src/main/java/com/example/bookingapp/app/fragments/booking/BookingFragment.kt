@@ -49,6 +49,7 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentBookingBinding.bind(view)
+
         val adapter = BookingListAdapter { bookingId ->
             val arg = Bundle().apply {
                 putString(BOOKING_ID, bookingId)
@@ -62,6 +63,20 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle)
                 .collect { bookingList ->
                     adapter.submitList(bookingList)
+                }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isLoaded.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect {
+                    if(it) {
+                        if(viewModel.bookingList.value.isEmpty()) {
+                            binding.emptyBookingsMock.visibility = View.VISIBLE
+                        }
+                        else {
+                            binding.emptyBookingsMock.visibility = View.GONE
+                        }
+                    }
                 }
         }
 

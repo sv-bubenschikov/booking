@@ -12,4 +12,6 @@ interface BookingRepository {
     suspend fun createBooking(booking: Booking)
 
     suspend fun deleteBookingById(id: String)
+
+    suspend fun getBookingsByUserIdAsync(id: String): List<Booking>
 }

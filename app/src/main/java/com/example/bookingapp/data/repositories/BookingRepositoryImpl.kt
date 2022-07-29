@@ -57,6 +57,16 @@ class BookingRepositoryImpl @Inject constructor(
             .await()
     }
 
+    override suspend fun getBookingsByUserIdAsync(id: String): List<Booking> {
+        val snapshot = FirebaseDatabase.getInstance().reference
+            .child("Bookings").get().await()
+        val list = snapshot.children.mapNotNull { it.getValue(Booking::class.java) }.filter {
+            it.members.contains(id)
+        }
+
+        return list
+    }
+
     override suspend fun deleteBookingById(id: String) {
         FirebaseDatabase.getInstance().reference
             .child("Bookings")
