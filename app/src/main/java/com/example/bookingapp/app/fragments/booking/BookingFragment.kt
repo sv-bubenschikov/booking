@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -62,11 +63,7 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle)
                 .collect { bookingList ->
                     adapter.submitList(bookingList)
-                    if(bookingList.isEmpty()) {
-                        binding.emptyBookingsMock.visibility = View.VISIBLE
-                    } else {
-                        binding.emptyBookingsMock.visibility = View.GONE
-                    }
+                    binding.emptyBookingsPlaceholder.isVisible = bookingList.isEmpty()
                 }
         }
 

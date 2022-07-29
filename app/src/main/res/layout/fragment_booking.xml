@@ -15,7 +15,7 @@
         tools:listitem="@layout/booking_item" />
 
     <TextView
-        android:id="@+id/empty_bookings_mock"
+        android:id="@+id/empty_bookings_placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
