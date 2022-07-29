@@ -1,5 +1,6 @@
 package com.example.bookingapp.app.fragments.places
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookingapp.databinding.CardPlaceBinding
 import com.example.bookingapp.domain.entities.Place
@@ -21,10 +22,14 @@ class PlaceListViewHolder(
     fun bind(item: Place) = with(binding) {
         data = item
         placeType.text = data.type
-        placeName.text = data.name
+        if (data.name == "")
+            placeName.visibility = View.GONE
+        else
+            placeName.text = data.name
         placeFeatures.removeAllViews()
-        for (feature in item.features){
+        for (feature in item.features) {
             val chip = Chip(placeFeatures.context)
+            chip.isClickable = false
             chip.text = feature
             placeFeatures.addView(chip)
         }
