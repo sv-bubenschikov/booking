@@ -19,6 +19,12 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="textInputStyle">@style/AuthEditTextStyle</item>
+    </style>
+
+    <style name="AuthEditTextStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="helperTextTextColor">@color/auth_helper_text_color</item>
+        <item name="counterTextColor">@color/auth_helper_text_color</item>
     </style>
 
 </resources>

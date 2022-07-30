@@ -94,7 +94,7 @@
         android:layout_marginHorizontal="?screenPaddingHorizontal"
         android:layout_marginBottom="?screenPaddingVertical"
         android:gravity="center"
-        android:text="@string/register_text_ref"
+        android:text="@string/register_btn_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
