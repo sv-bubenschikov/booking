@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bookingapp.R
 import com.example.bookingapp.domain.entities.User
-import com.example.bookingapp.domain.usecases.user.GetCurrentUserRefUseCase
+import com.example.bookingapp.domain.usecases.user.GetCurrentUserUseCase
 import com.example.bookingapp.domain.usecases.user.RegisterUserUseCase
 import com.example.bookingapp.domain.usecases.user.UpdateUserInfoUseCase
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registerUserUseCase: RegisterUserUseCase,
-    private val getCurrentUserRefUseCase: GetCurrentUserRefUseCase,
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val updateUserInfoUseCase: UpdateUserInfoUseCase
 ) : ViewModel() {
 
@@ -44,8 +44,6 @@ class RegisterViewModel @Inject constructor(
     val editUserNameHelper: StateFlow<Int?> = _editUserNameHelper
     val editConfirmedPasswordHelper: StateFlow<Int?> = _editConfirmedPasswordHelper
     val editPasswordHelper: StateFlow<Int?> = _editPasswordHelper
-
-    private val userRef = getCurrentUserRefUseCase().stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     fun onEmailChanged(email: String) {
         if (email == _email.value) return
@@ -110,7 +108,7 @@ class RegisterViewModel @Inject constructor(
 
     private fun updateUserInfo() {
         viewModelScope.launch {
-            userRef.value?.let {
+            getCurrentUserUseCase()?.let {
                 updateUserInfoUseCase(User(it.uid, _email.value, _username.value))
             }
         }
