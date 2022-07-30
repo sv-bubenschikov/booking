@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AuthTheme" parent="@style/Theme.BookingApp">
+        <item name="backgroundColor">@color/black</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:colorBackground">?colorPrimaryVariant</item>
+        <item name="android:textColorPrimary">?colorOnSurface</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
+        <item name="colorOnSecondary">@color/secondaryLightColor</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="textInputStyle">@style/AuthEditTextStyle</item>
+    </style>
+
+    <style name="AuthEditTextStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="helperTextTextColor">@color/auth_helper_text_color</item>
+        <item name="counterTextColor">@color/auth_helper_text_color</item>
+    </style>
+
+</resources>
