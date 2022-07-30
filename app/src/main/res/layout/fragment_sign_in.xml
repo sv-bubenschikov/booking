@@ -1,82 +1,75 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.fragments.authorization.SignInFragment"
-    android:background="?colorPrimary">
+    android:theme="@style/AuthTheme"
+    android:background="?backgroundColor"
+    tools:context="app.fragments.authorization.SignInFragment">
 
     <TextView
-        android:layout_marginTop="60dp"
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:text="@string/app_name"
         android:textAppearance="?textAppearanceHeadline4"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_email_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="?screenPaddingHorizontal"
         android:layout_marginTop="60dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         app:helperText="@string/required_edit_text"
-        app:helperTextTextColor="?colorSecondary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_name">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:inputType="textEmailAddress"
-            android:hint="@string/login_hint"
             android:id="@+id/edit_email"
-            android:lines="1"
-            android:autofillHints="emailAddress"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:autofillHints="emailAddress"
+            android:hint="@string/login_hint"
+            android:inputType="textEmailAddress"
+            android:lines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_password_layout"
-        android:layout_marginTop="?verticalSpacing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="?screenPaddingHorizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="?verticalSpacing"
         app:counterEnabled="true"
         app:counterMaxLength="16"
-        app:counterTextColor="?colorSecondary"
-        app:passwordToggleEnabled="true"
         app:helperText="@string/required_edit_text"
-        app:helperTextTextColor="?colorSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_email_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_password"
-            android:maxLength="16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:lines="1"
             android:autofillHints="password"
             android:hint="@string/password_hint"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:lines="1"
+            android:maxLength="16" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/sign_in_btn"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginTop="?screenPaddingVertical"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="?screenPaddingHorizontal"
-        style="@style/ButtonStyle"
+        android:layout_marginTop="?screenPaddingVertical"
         android:text="@string/sign_in_btn_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,11 +77,10 @@
 
     <Button
         android:id="@+id/sign_in_as_guest"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginTop="?verticalSpacing"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="?screenPaddingHorizontal"
-        style="@style/ButtonStyle"
+        android:layout_marginTop="?verticalSpacing"
         android:text="@string/guest_sign_in_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,11 +88,12 @@
 
     <Button
         android:id="@+id/register_btn"
-        android:layout_height="wrap_content"
+        style="?borderlessButtonStyle"
         android:layout_width="match_parent"
-        android:layout_marginBottom="?screenPaddingVertical"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="?screenPaddingHorizontal"
-        style="@style/LoginButtonStyle"
+        android:layout_marginBottom="?screenPaddingVertical"
+        android:gravity="center"
         android:text="@string/register_btn_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
